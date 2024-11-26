@@ -14,8 +14,8 @@ return new class extends Migration {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('username');
             $table->string('email')->unique();
-            // Menambahkan kolom 'type' pada tabel 'users'
             $table->tinyInteger('type')->default(0);
             /* Users: 0=>User, 1=>Admin, 2=>petugas */
             $table->timestamp('email_verified_at')->nullable();

@@ -48,23 +48,27 @@ class LoginController extends Controller
     {
         $input = $request->all();
 
+        // Validate the email or username and password
         $this->validate($request, [
-            'email' => 'required|email',
+            'username_or_email' => 'required',
             'password' => 'required',
         ]);
 
-        if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
+        // Check if the input is an email or username
+        $field = filter_var($input['username_or_email'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        // Attempt login
+        if (auth()->attempt([$field => $input['username_or_email'], 'password' => $input['password']])) {
             if (auth()->user()->type == 'admin') {
                 return redirect()->route('admin.home');
-            } else if (auth()->user()->type == 'petugas') {
-                return redirect()->route('petugas.home');
+            } else if (auth()->user()->type == 'manager') {
+                return redirect()->route('manager.home');
             } else {
                 return redirect()->route('home');
             }
         } else {
             return redirect()->route('login')
-                ->with('error', 'Email-Address And Password Are Wrong.');
+                ->with('error', 'Email/Username and Password Are Wrong.');
         }
-
     }
 }
