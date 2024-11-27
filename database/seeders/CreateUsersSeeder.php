@@ -21,21 +21,21 @@ class CreateUsersSeeder extends Seeder
                'username'=>'admin',
                'email'=>'admin@admin.com',
                'type'=>1,
-               'password'=> bcrypt('123456'),
+               'password'=> bcrypt('admin'),
             ],
             [
                'name'=>'Petugas User',
                'username'=>'petugas',
                'email'=>'petugas@petugas.com',
                'type'=> 2,
-               'password'=> bcrypt('123456'),
+               'password'=> bcrypt('petugas'),
             ],
             [
                'name'=>'User',
                'username'=>'user',
                'email'=>'user@user.com',
                'type'=>0,
-               'password'=> bcrypt('123456'),
+               'password'=> bcrypt('user'),
             ],
         ];
     
