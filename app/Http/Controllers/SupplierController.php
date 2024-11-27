@@ -97,5 +97,5 @@ class SupplierController extends Controller
     {
         return view('admin.supplier.create');
     }
-    
+
 }
