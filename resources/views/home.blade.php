@@ -12,7 +12,7 @@
                         </div>
                     @endif
 
-                    <h2>You are a User.</h2>
+                    <h2>You are a Users.</h2>
                 </div>
             </div>
         </div>
