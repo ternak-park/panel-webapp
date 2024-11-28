@@ -44,7 +44,7 @@
 </head>
 
 <body>
-    <script src="{{ asset('js/demo-theme.min.js?1667333929') }}"></script>
+    <script src="{{ asset('assets/js/demo-theme.min.js?1667333929') }}"></script>
     {{-- sweet alert mas --}}
     @if (session('success'))
         <script>
@@ -68,21 +68,21 @@
     {{-- end sweet alert mas --}}
     <div id="app">
         {{-- gawe nyeluk component navbar --}}
+        @if (!in_array(Route::currentRouteName(), ['login', 'register']))
         <x-navbar />
+        @endif
         <main class="py-4">
             {{ $slot }}
         </main>
     </div>
 </body>
   <!-- Libs JS -->
-  <script src="{{ asset('dist/apexcharts.min.js?1667333929') }}"></script>
-  <script src="{{ asset('dist/js/jsvectormap.min.js?1667333929') }}"></script>
-  <script src="{{ asset('dist/maps/world.js?1667333929') }}"></script>
-  <script src="{{ asset('dist/maps/world-merc.js?1667333929') }}"></script>
-  <script src="{{ asset('js/tabler.min.js?1667333929') }}"></script>
-  <script src="{{ asset('js/demo.min.js?1667333929') }}"></script>
-
-
+  <script src="{{ asset('assets/libs/dist/apexchart/apexcharts.min.js?1667333929') }}"></script>
+  <script src="{{ asset('assets/dist/js/jsvectormap.min.js?1667333929') }}"></script>
+  <script src="{{ asset('assets/dist/maps/world.js?1667333929') }}"></script>
+  <script src="{{ asset('assets/dist/maps/world-merc.js?1667333929') }}"></script>
+  <script src="{{ asset('assets/js/tabler.min.js?1667333929') }}"></script>
+  <script src="{{ asset('assets/js/demo.min.js?1667333929') }}"></script>
 
 <script>
     $(document).ready(function() {
