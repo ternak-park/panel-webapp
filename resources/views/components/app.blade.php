@@ -8,9 +8,26 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- SweetAlert CDN -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> --}}
+
+    {{-- css --}}
+    <link rel="stylesheet" href="{{ asset('assets/css/tabler.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/tabler-flags.min.css?1667333929') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/tabler-payments.min.css?1667333929') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/tabler-vendors.min.css?1667333929') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/demo.min.css?1667333929') }}">
+
+    <style>
+        @import url('https://rsms.me/inter/inter.css');
+        :root {
+            --tblr-font-sans-serif: Inter, -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+        }
+      </style>
+
+    {{-- sssss --}}
     <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
@@ -23,10 +40,32 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 </head>
 
 <body>
+    <script src="{{ asset('js/demo-theme.min.js?1667333929') }}"></script>
+    {{-- sweet alert mas --}}
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                title: 'Success!',
+                text: "{{ session('success') }}",
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @elseif(session('error'))
+        <script>
+            Swal.fire({
+                title: 'Error!',
+                text: "{{ session('error') }}",
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
+    {{-- end sweet alert mas --}}
     <div id="app">
         {{-- gawe nyeluk component navbar --}}
         <x-navbar />
@@ -35,8 +74,18 @@
         </main>
     </div>
 </body>
+  <!-- Libs JS -->
+  <script src="{{ asset('dist/apexcharts.min.js?1667333929') }}"></script>
+  <script src="{{ asset('dist/js/jsvectormap.min.js?1667333929') }}"></script>
+  <script src="{{ asset('dist/maps/world.js?1667333929') }}"></script>
+  <script src="{{ asset('dist/maps/world-merc.js?1667333929') }}"></script>
+  <script src="{{ asset('js/tabler.min.js?1667333929') }}"></script>
+  <script src="{{ asset('js/demo.min.js?1667333929') }}"></script>
+
+
+
 <script>
-  $(document).ready(function() {
+    $(document).ready(function() {
         $(".data-table").each(function() {
             if (!$.fn.DataTable.isDataTable(this)) {
                 $(this).DataTable({

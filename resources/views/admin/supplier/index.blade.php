@@ -1,30 +1,7 @@
  <x-app>
-     {{-- sweet alert mas --}}
-     @if (session('success'))
-         <script>
-             Swal.fire({
-                 title: 'Success!',
-                 text: "{{ session('success') }}",
-                 icon: 'success',
-                 confirmButtonText: 'OK'
-             });
-         </script>
-     @elseif(session('error'))
-         <script>
-             Swal.fire({
-                 title: 'Error!',
-                 text: "{{ session('error') }}",
-                 icon: 'error',
-                 confirmButtonText: 'OK'
-             });
-         </script>
-     @endif
-     {{-- end sweet alert mas --}}
-
      <div class="container">
          <div class="row justify-content-center">
              <div class="col-md-8">
-
                  <div class="container">
                      <meta name="csrf-token" content="{{ csrf_token() }}">
                      <h1>Supplier</h1>
@@ -46,8 +23,6 @@
                          </tbody>
                      </table>
                  </div>
-
-
              </div>
          </div>
      </div>
