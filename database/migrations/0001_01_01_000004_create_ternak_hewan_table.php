@@ -4,14 +4,14 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTernakParkTable extends Migration
-{
+return new class extends Migration {
     public function up()
     {
-        Schema::create('ternak_park', function (Blueprint $table) {
+        Schema::create('ternak_hewan', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique(); // Tambahkan UUID untuk referensi
-            $table->enum('jenis', ['domba', 'kambing'])->default('domba');
+            $table->string('tag')->unique();
+            $table->enum('jenis_hewan', ['domba', 'kambing']);
+            $table->enum('sex', ['jantan', 'betina']);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -19,6 +19,6 @@ class CreateTernakParkTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('ternak_park');
+        Schema::dropIfExists('ternak_hewan');
     }
-}
+};

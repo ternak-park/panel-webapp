@@ -1,11 +1,12 @@
 <?php
-  
+
 namespace Database\Seeders;
-  
+
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
-  
+use Illuminate\Support\Str;
+
 class CreateUsersSeeder extends Seeder
 {
     /**
@@ -17,29 +18,47 @@ class CreateUsersSeeder extends Seeder
     {
         $users = [
             [
-               'name'=>'Admin User',
-               'username'=>'admin',
-               'email'=>'admin@admin.com',
-               'type'=>1,
-               'password'=> bcrypt('admin'),
+               'nama' => 'Admin User',
+               'jenis_kelamin' => 'lakilaki',
+               'telepon' => '123456789',
+               'alamat' => 'Jl. Admin No.1',
+               'daerah' => 'wonosalam',
+               'username' => 'admin',
+               'email' => 'admin@admin.com',
+               'type' => 1,
+               'password' => bcrypt('admin'),
+               'email_verified_at' => now(),
+               'remember_token' => Str::random(10),
             ],
             [
-               'name'=>'Petugas User',
-               'username'=>'petugas',
-               'email'=>'petugas@petugas.com',
-               'type'=> 2,
-               'password'=> bcrypt('petugas'),
+               'nama' => 'Petugas User',
+               'jenis_kelamin' => 'lakilaki',
+               'telepon' => '987654321',
+               'alamat' => 'Jl. Petugas No.2',
+               'daerah' => 'purwakarta',
+               'username' => 'petugas',
+               'email' => 'petugas@petugas.com',
+               'type' => 2,
+               'password' => bcrypt('petugas'),
+               'email_verified_at' => now(),
+               'remember_token' => Str::random(10),
             ],
             [
-               'name'=>'User',
-               'username'=>'user',
-               'email'=>'user@user.com',
-               'type'=>0,
-               'password'=> bcrypt('user'),
+               'nama' => 'User',
+               'jenis_kelamin' => 'perempuan',
+               'telepon' => '555666777',
+               'alamat' => 'Jl. User No.3',
+               'daerah' => 'cilegon',
+               'username' => 'user',
+               'email' => 'user@user.com',
+               'type' => 0,
+               'password' => bcrypt('user'),
+               'email_verified_at' => now(),
+               'remember_token' => Str::random(10),
             ],
         ];
-    
-        foreach ($users as $key => $user) {
+
+        foreach ($users as $user) {
             User::create($user);
         }
     }

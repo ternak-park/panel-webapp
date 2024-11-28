@@ -16,7 +16,7 @@ class CreateSupplierSeeder extends Seeder
     {
         $suppliers = [
             [
-                'kode' => 'PD-CES',
+                'kode_supplier' => 'PD-CES',
                 'jenis_pakan' => 'Pollard',
                 'nama' => 'CV ESHAN SENTOSA',
                 'harga_per_kg' => 4500,
@@ -24,7 +24,7 @@ class CreateSupplierSeeder extends Seeder
                 'telepon' => '087853881525'
             ],
             [
-                'kode' => 'AS-E',
+                'kode_supplier' => 'AS-E',
                 'jenis_pakan' => 'Ampas Sawit',
                 'nama' => 'Eko',
                 'harga_per_kg' => 2800,
