@@ -7,7 +7,7 @@
                     <div class="row g-2 align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                      Supplier
+                                {{ $judul }}
                             </h2>
                         </div>
                         <!-- Page title actions -->
@@ -18,8 +18,8 @@
                                         Cetak
                                     </a>
                                 </span>
-                                <a href="{{ route('suppliers.create') }}" class="btn btn-primary d-none d-sm-inline-block">
-                                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                <a href="{{ route('suppliers.create') }}"
+                                    class="btn btn-primary d-none d-sm-inline-block">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -29,9 +29,8 @@
                                     </svg>
                                     Tambah Produk
                                 </a>
-                                <a href="" class="btn btn-primary d-sm-none btn-icon"
-                                    data-bs-toggle="modal" data-bs-target="#modal-tambahData" aria-label="Tambah Produk">
-                                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                <a href="" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
+                                    data-bs-target="#modal-tambahData" aria-label="Tambah Produk">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -45,135 +44,101 @@
                     </div>
                 </div>
             </div>
-
             <!-- Page body -->
             <div class="page-body">
                 <div class="container-xl">
                     <div class="card">
-                        <div class="card-body">
-                            <div class="col-12">
-                                <div class="table-responsive">
-                                    <table class="table table-vcenter table-mobile-md card-table" id="tableBase">
-                                        <thead>
-                                            <br />
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Kode</th>
-                                                <th>Jenis Pakan</th>
-                                                <th>Supplier</th>
-                                                <th>Harga Per KG</th>
-                                                <th>Alamat</th>
-                                                <th>Telepon</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
+                        <div class="card-header">
+                            <h3 class="card-title">Daftar Supplier</h3>
+                        </div>
+                        <div class="card-body border-bottom py-3">
+                            <div class="d-flex">
+                                <div class="text-muted">
+                                    {{-- Show --}}
+                                    <div class="mx-2 d-inline-block">
+                                        <select id="pageLength" class="form-control form-control-sm" style="width:70px">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+                                    {{-- entries --}}
+                                </div>
+                                <div class="ms-auto text-muted">
+                                    {{-- Search: --}}
+                                    <div class="ms-2 d-inline-block">
+                                        <input type="text" id="searchInput" class="form-control form-control-sm"
+                                            placeholder="Cari Supplier" aria-label="Search supplier">
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="table-responsive">
+                            <table class="table card-table table-vcenter text-nowrap datatable" id="tableSupplier">
+                                <thead>
+                                    <tr>
+                                        <th>Kode</th>
+                                        <th>Jenis Pakan</th>
+                                        <th>Supplier</th>
+                                        <th>Harga Per KG</th>
+                                        <th>Alamat</th>
+                                        <th>Telepon</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="card-footer d-flex align-items-center">
+                            <p id="tableInfo" class="m-0 text-muted"></p>
+                            <ul id="tablePagination" class="pagination m-0 ms-auto"></ul>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
-
-     <script>
-         $(document).ready(function() {
-             let url = "{{ route('suppliers.index') }}";
-             $.ajaxSetup({
-                 headers: {
-                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                 }
-             });
-
-             $("#tableBase").DataTable({
-                 processing: true,
-                 serverSide: true,
-                 autoWidth: false,
-                 pageLength: 10,
-                 dom: "<'.row'<'col-12 col-md-6 pb-2'l><'col-12 col-md-4 ms-auto pb-2'f>><'.row'<'col-12'tr>><'.row'<'col-4'i><'col-8'p>>",
-                 language: {
-                     lengthMenu: "Tampilkan _MENU_ data",
-                     info: "Data ke _START_ - _END_ dari _TOTAL_",
-                     infoFiltered: "(disaring dari total _MAX_ data)",
-                     emptyTable: "Tidak ada data",
-                     infoEmpty: "Menampilkan 0 data",
-                     zeroRecords: "Data tidak ditemukan",
-                 },
-                 ajax: "{{ route('suppliers.index') }}",
-                 columns: [{
-                         "title": "kode",
-                         "data": "kode",
-                     },
-                     {
-                         "title": "jenis_pakan",
-                         "data": "jenis_pakan",
-                     },
-                     {
-                         "title": "nama",
-                         "data": "nama",
-                     },
-                     {
-                         "title": "harga_per_kg",
-                         "data": "harga_per_kg",
-                     },
-                     {
-                         "title": "alamat",
-                         "data": "alamat",
-                     },
-                     {
-                         "title": "telepon",
-                         "data": "telepon",
-                     },
-                     {
-                         "title": "action",
-                         "data": "action",
-                         "orderable": false,
-                     }
-                 ],
-             });
-             $(document).on('click', '.delete', function() {
-                 const id = $(this).data('id');
-                 Swal.fire({
-                     title: 'Are you sure?',
-                     text: 'This supplier will be deleted permanently!',
-                     icon: 'warning',
-                     showCancelButton: true,
-                     confirmButtonText: 'Yes, delete it!',
-                     cancelButtonText: 'No, cancel!',
-                     reverseButtons: true
-                 }).then((result) => {
-                     if (result.isConfirmed) {
-                         $.ajax({
-                             url: "/suppliers/" + id,
-                             type: 'DELETE',
-                             success: function(result) {
-                                 Swal.fire(
-                                     'Deleted!',
-                                     'The supplier has been deleted.',
-                                     'success'
-                                 );
-                                 $('#tableBase').DataTable().ajax.reload();
-                             },
-                             error: function(err) {
-                                 Swal.fire(
-                                     'Error!',
-                                     'There was an error deleting the supplier.',
-                                     'error'
-                                 );
-                             }
-                         });
-                     } else {
-                         Swal.fire(
-                             'Cancelled',
-                             'The supplier was not deleted.',
-                             'info'
-                         );
-                     }
-                 });
-             });
-         });
-     </script>
-
-
-
- </x-app>
+    </div>
+    <script>
+        // Delete handler
+        $(document).on('click', '.delete', function() {
+            const id = $(this).data('id');
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: 'Data akan dihapus secara permanen!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Tidak, batal!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/suppliers/" + id,
+                        type: 'DELETE',
+                        success: function(result) {
+                            Swal.fire(
+                                'Dihapus!',
+                                'Data telah dihapus.',
+                                'success'
+                            );
+                            table.ajax.reload();
+                        },
+                        error: function(err) {
+                            Swal.fire(
+                                'Error!',
+                                'There was an error deleting the supplier.',
+                                'error'
+                            );
+                        }
+                    });
+                } else {
+                    Swal.fire(
+                        'Cancelled',
+                        'Data tidak dihapus.',
+                        'info'
+                    );
+                }
+            });
+        });
+    </script>
+</x-app>

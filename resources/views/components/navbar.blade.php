@@ -212,16 +212,7 @@
                                data-bs-auto-close="outside" role="button" aria-expanded="false">
                                <span
                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
-                                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                       height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                       fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                       <polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3" />
-                                       <line x1="12" y1="12" x2="20" y2="7.5" />
-                                       <line x1="12" y1="12" x2="12" y2="21" />
-                                       <line x1="12" y1="12" x2="4" y2="7.5" />
-                                       <line x1="16" y1="5.25" x2="8" y2="9.75" />
-                                   </svg>
+                                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-building-cottage"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21l18 0" /><path d="M4 21v-11l2.5 -4.5l5.5 -2.5l5.5 2.5l2.5 4.5v11" /><path d="M12 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M9 21v-5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v5" /></svg>
                                </span>
                                <span class="nav-link-title"> Data Ternak </span>
                            </a>

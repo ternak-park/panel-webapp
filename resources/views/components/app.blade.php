@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="{{ asset('assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css') }}">
 
+
+
     <script src="{{ asset('assets/extra-libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/libs/list.js/dist/list.min.js?1684106062') }}"></script>
 
@@ -39,7 +41,7 @@
     {{-- <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet"> --}}
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-
+    <script src="{{ asset('assets/js/sihub-datatable.js') }}"></script>
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -50,7 +52,7 @@
     
 
     <!-- Scripts -->
-    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
+    @vite('resources/js/app.js')
 </head>
 
 <body>

@@ -15,6 +15,8 @@ class SupplierController extends Controller
      */
     public function index(Request $request)
     {
+        $data = [];
+        $data['judul'] = 'Supplier';
         if ($request->ajax()) {
             $data = Supplier::select('id', 'kode', 'jenis_pakan', 'nama', 'harga_per_kg', 'alamat', 'telepon');
             return Datatables::of($data)
@@ -25,8 +27,8 @@ class SupplierController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
+        return view('admin.supplier.index', $data);
 
-        return view('admin.supplier.index');
     }
 
 
