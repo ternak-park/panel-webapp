@@ -78,6 +78,7 @@
                             <table class="table card-table table-vcenter text-nowrap datatable" id="tableSupplier">
                                 <thead>
                                     <tr>
+                                        <th>Info</th> 
                                         <th>Kode</th>
                                         <th>Jenis Pakan</th>
                                         <th>Supplier</th>

@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_supplier');
+            $table->string('kode');
             $table->string('jenis_pakan');
             $table->decimal('harga_per_kg', 10, 2);
             $table->string('nama');

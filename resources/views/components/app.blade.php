@@ -12,6 +12,8 @@
 
 
     {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> --}}
+{{-- fontawesome --}}
+    <script src="https://kit.fontawesome.com/a45f001349.js" crossorigin="anonymous"></script>
 
     {{-- css --}}
     <link rel="stylesheet" href="{{ asset('assets/css/tabler.min.css') }}">
