@@ -39,8 +39,8 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::delete('admin/suppliers/{id}', [App\Http\Controllers\Admin\SupplierController::class, 'destroy'])->name('suppliers.destroy');
 
     // User List
-    Route::get('admin/users', [UserController::class, 'index'])->name('users.index');
-    Route::get('admin/users/users-admin', [UserController::class, 'adalahAdmin'])->name('users.adalahAdmin');
+    Route::get('admin/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
+    Route::get('admin/users/users-admin', [App\Http\Controllers\Admin\UserController::class, 'adalahAdmin'])->name('users.adalahAdmin');
 });
 
 /*------------------------------------------
