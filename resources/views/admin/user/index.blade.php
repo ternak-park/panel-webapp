@@ -4,29 +4,38 @@
             <!-- Page header -->
             <div class="page-header d-print-none">
                 <div class="container-xl">
-                    <div class="row g-2 align-items-center">
-                        <div class="col">
-                           <h2> {{ $judul }} </h2>
-                        </div>
-                        <div class="col-auto ms-auto d-print-none">
-                            <div class="btn-list">
-                                <a href="#"
-                                    class="btn btn-primary d-none d-sm-inline-block">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M12 5l0 14" />
-                                        <path d="M5 12l14 0" />
-                                    </svg>
-                                    Tambah Pengguna
-                                </a>
-                            </div>
-                        </div>
+                  <div class="row g-2 align-items-center">
+                    <div class="col">
+                      <!-- Page pre-title -->
+                      <div class="page-pretitle">
+                        Overview
+                      </div>
+                      <h2 class="page-title">
+                        {{ $judul }} 
+                      </h2>
                     </div>
+                    <!-- Page title actions -->
+                    <div class="col-12 col-md-auto ms-auto d-print-none">
+                      <div class="btn-list">
+                        <span class="d-none d-sm-inline">
+                          {{-- <a href="#" class="btn">
+                            New view
+                          </a> --}}
+                        </span>
+                        <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
+                          <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                          Tambah Pengguna
+                        </a>
+                        <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-report" aria-label="Create new report">
+                          <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-            </div>
-            
+              </div>
             <!-- Page body -->
             <div class="page-body">
                 <div class="container-xl">
@@ -83,61 +92,61 @@
     </div>
 
     <script>
-    $(document).ready(function() {
-        // Initialize DataTable
-       
+        $(document).ready(function() {
+            // Initialize DataTable
 
-        // Delete handler
-        $(document).on('click', '.delete', function() {
-            const id = $(this).data('id');
-            Swal.fire({
-                title: 'Anda yakin?',
-                text: 'Data pengguna akan dihapus secara permanen!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Ya, hapus!',
-                cancelButtonText: 'Tidak, batal!',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: `/users/${id}`,
-                        type: 'DELETE',
-                        success: function(result) {
-                            Swal.fire(
-                                'Dihapus!',
-                                'Data pengguna telah dihapus.',
-                                'success'
-                            );
-                            table.ajax.reload();
-                        },
-                        error: function(err) {
-                            Swal.fire(
-                                'Error!',
-                                'Terjadi kesalahan saat menghapus pengguna.',
-                                'error'
-                            );
-                        }
-                    });
-                } else {
-                    Swal.fire(
-                        'Dibatalkan',
-                        'Data pengguna tidak dihapus.',
-                        'info'
-                    );
-                }
+
+            // Delete handler
+            $(document).on('click', '.delete', function() {
+                const id = $(this).data('id');
+                Swal.fire({
+                    title: 'Anda yakin?',
+                    text: 'Data pengguna akan dihapus secara permanen!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Tidak, batal!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `/users/${id}`,
+                            type: 'DELETE',
+                            success: function(result) {
+                                Swal.fire(
+                                    'Dihapus!',
+                                    'Data pengguna telah dihapus.',
+                                    'success'
+                                );
+                                table.ajax.reload();
+                            },
+                            error: function(err) {
+                                Swal.fire(
+                                    'Error!',
+                                    'Terjadi kesalahan saat menghapus pengguna.',
+                                    'error'
+                                );
+                            }
+                        });
+                    } else {
+                        Swal.fire(
+                            'Dibatalkan',
+                            'Data pengguna tidak dihapus.',
+                            'info'
+                        );
+                    }
+                });
+            });
+
+            // Page length change
+            $('#pageLength').on('change', function() {
+                table.page.len($(this).val()).draw();
+            });
+
+            // Search input
+            $('#searchInput').on('keyup', function() {
+                table.search($(this).val()).draw();
             });
         });
-
-        // Page length change
-        $('#pageLength').on('change', function() {
-            table.page.len($(this).val()).draw();
-        });
-
-        // Search input
-        $('#searchInput').on('keyup', function() {
-            table.search($(this).val()).draw();
-        });
-    });
     </script>
 </x-app>

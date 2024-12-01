@@ -5,7 +5,7 @@
         <div class="page page-center">
             <div class="container container-tight py-4">
                 <div class="text-center mb-4">
-                    <a href="." class="navbar-brand navbar-brand-autodark"><img src="./static/logo.webp"
+                    <a href="." class="navbar-brand navbar-brand-autodark"><img src="{{ asset('static/logo.webp') }}"
                             height="36" alt=""></a>
                 </div>
                 <div class="card card-md">

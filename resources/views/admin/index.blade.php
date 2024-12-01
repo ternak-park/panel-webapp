@@ -730,7 +730,7 @@
                                             <tr>
                                                 <td class="w-1">
                                                     <span class="avatar avatar-sm"
-                                                        style="background-image: url(./static/avatars/000m.jpg)"></span>
+                                                        style="background-image: url({{ asset('static/avatars/AVATAR_SAPI.png') }})"></span>
                                                 </td>
                                                 <td class="td-truncate">
                                                     <div class="text-truncate">
@@ -1156,7 +1156,7 @@
                                             </td>
                                             <td>
                                                 <span class="avatar avatar-sm"
-                                                    style="background-image: url(./static/avatars/000m.jpg)"></span>
+                                                    style="background-image: url({{ asset('static/avatars/AVATAR_SAPI.png') }})"></span>
                                             </td>
                                         </tr>
                                         <tr>

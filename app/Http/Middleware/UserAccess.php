@@ -18,7 +18,8 @@ class UserAccess
         if(auth()->user()->type == $userType){
             return $next($request);
         }
-          
-        return response()->json(['You do not have permission to access for this page.']);
+        // return response()->view('errors.404', [], 404);
+        return redirect()->route('not-found');
+        // return response()->json(['You do not have permission to access for this page.']);
     }
 }

@@ -7,7 +7,7 @@
            </button>
            <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
                <a href=".">
-                   <img src="./static/logo.webp" width="110" height="32" alt="Tabler"
+                   <img src="{{ asset('static/logo.webp') }}" width="110" height="32" alt="Tabler"
                        class="navbar-brand-image" />
                </a>
            </h1>
@@ -162,10 +162,11 @@
                <div class="nav-item dropdown">
                    <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                        aria-label="Open user menu">
-                       <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
+                       <span class="avatar avatar-sm"
+                           style="background-image: url({{ asset('static/avatars/AVATAR_SAPI.png') }})"></span>
                        <div class="d-none d-xl-block ps-2">
-                           <div>El Peternak</div>
-                           <div class="mt-1 small text-muted">Iki Gawe Roke </div>
+                           <div>{{ ucfirst(Auth::user()->username) }}</div>
+                           <div class="mt-1 small text-muted">{{ ucfirst(Auth::user()->type) }}</div>
                        </div>
                    </a>
                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -294,8 +295,9 @@
                                <span class="nav-link-title"> Supplier </span>
                            </a>
                        </li>
-                   
-                       <li class="nav-item dropdown {{ Route::is('users.index' , 'users.adalahAdmin') ? 'active' : '' }}">
+
+                       <li
+                           class="nav-item dropdown {{ Route::is('users.index', 'users.adalahAdmin') ? 'active' : '' }}">
                            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                data-bs-auto-close="outside" role="button" aria-expanded="false">
                                <span

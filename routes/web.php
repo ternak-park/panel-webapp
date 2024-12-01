@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ErrorController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
@@ -8,7 +9,7 @@ use App\Http\Controllers\admin\UserController;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/not-found', [ErrorController::class, 'notFound'])->name('not-found');
 Auth::routes();
 
 /*------------------------------------------

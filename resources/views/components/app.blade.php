@@ -82,7 +82,7 @@
     {{-- end sweet alert mas --}}
     <div id="app">
         {{-- gawe nyeluk component navbar --}}
-        @if (!in_array(Route::currentRouteName(), ['login', 'register']))
+        @if (!in_array(Route::currentRouteName(), ['login', 'register', 'not-found']))
             <x-navbar />
         @endif
         <main class="py-4">

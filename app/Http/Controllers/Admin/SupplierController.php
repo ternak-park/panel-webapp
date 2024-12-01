@@ -17,7 +17,7 @@ class SupplierController extends Controller
     public function index(Request $request)
     {
         $data = [];
-        $data['judul'] = 'Supplier';
+        $data['judul'] = 'Manajemen Supplier';
         if ($request->ajax()) {
             $data = Supplier::select('id', 'kode', 'jenis_pakan', 'nama', 'harga_per_kg', 'alamat', 'telepon');
             return Datatables::of($data)

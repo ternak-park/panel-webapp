@@ -16,7 +16,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $data = [];
-        $data['judul'] = 'Users';
+        $data['judul'] = 'Manajemen User';
         if ($request->ajax()) {
             $query = User::where('type', 0);
 
@@ -39,7 +39,7 @@ class UserController extends Controller
     public function adalahAdmin(Request $request)
     {
         $data = [];
-        $data['judul'] = 'Admin';
+        $data['judul'] = 'Manajemen Admin';
         if ($request->ajax()) {
             $query = User::whereIn('type', [1, 2]);
 
