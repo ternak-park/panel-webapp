@@ -12,7 +12,7 @@
 
 
     {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> --}}
-{{-- fontawesome --}}
+    {{-- fontawesome --}}
     <script src="https://kit.fontawesome.com/a45f001349.js" crossorigin="anonymous"></script>
 
     {{-- css --}}
@@ -51,7 +51,7 @@
     {{-- <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet"> --}}
     {{-- script --}}
-    
+
 
     <!-- Scripts -->
     @vite('resources/js/app.js')
@@ -82,7 +82,7 @@
     {{-- end sweet alert mas --}}
     <div id="app">
         {{-- gawe nyeluk component navbar --}}
-        @if (!in_array(Route::currentRouteName(), ['login', 'register', 'not-found']))
+        @if (!in_array(Route::currentRouteName(), ['login', 'register', 'not-found']) && Route::has(Route::currentRouteName()))
             <x-navbar />
         @endif
         <main class="py-4">
