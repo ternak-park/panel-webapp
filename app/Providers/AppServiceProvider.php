@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
                 return redirect()->route('not-found');
             }
 
-            return response()->view('errors.500', [], 500);
+            // return response()->view('errors.500', [], 500);
         });
     }
 }

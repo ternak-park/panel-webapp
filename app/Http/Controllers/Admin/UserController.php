@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -17,36 +18,73 @@ class UserController extends Controller
     {
         $data = [];
         $data['judul'] = 'Manajemen User';
+
+        $search = $request->query('search');
+        $tiangBiasa = User::where('type', 0);
+
+        if ($search) {
+            $tiangBiasa = $tiangBiasa->where(function ($query) use ($search) {
+                $query->where('nama', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%');
+            });
+        }
+        $tiangBiasa = $tiangBiasa->paginate(8);
+        $totalUsers = User::where('type', 0)->count();
+
         if ($request->ajax()) {
             $query = User::where('type', 0);
 
-            return DataTables::of($query)
+            if ($search) {
+                $query = $query->where(function ($query) use ($search) {
+                    $query->where('nama', 'like', '%' . $search . '%')
+                        ->orWhere('email', 'like', '%' . $search . '%');
+                });
+            }
 
-                ->editColumn('type', function ($user) {
-                    return ucfirst($user->type);
-                })
+            return DataTables::of($query)
                 ->addIndexColumn()
+                ->editColumn('type', function ($user) {
+                    return 'User';
+                })
                 ->addColumn('action', function ($row) {
                     return view('admin.supplier.action', ['id' => $row->id])->render();
                 })
                 ->rawColumns(['action'])
                 ->make(true);
-
         }
-        return view('admin.user.index', $data);
+
+        return view('admin.user.index', $data, compact('tiangBiasa', 'totalUsers'));
     }
+
 
     public function adalahAdmin(Request $request)
     {
         $data = [];
         $data['judul'] = 'Manajemen Admin';
+
+        $search = $request->query('search');
+        $tiangPusat = User::whereIn('type', [1, 2]);
+
+        if ($search) {
+            $tiangPusat = $tiangPusat->where(function ($query) use ($search) {
+                $query->where('nama', 'like', '%' . $search . '%') // Ngawe 'nama' 
+                    ->orWhere('email', 'like', '%' . $search . '%');
+            });
+        }
+        $tiangPusat = $tiangPusat->paginate(8);
+        $totalUsers = User::whereIn('type', [1, 2])->count(); // Total user 
+
         if ($request->ajax()) {
             $query = User::whereIn('type', [1, 2]);
 
+            if ($search) {
+                $query = $query->where(function ($query) use ($search) {
+                    $query->where('nama', 'like', '%' . $search . '%')
+                        ->orWhere('email', 'like', '%' . $search . '%');
+                });
+            }
             return DataTables::of($query)
-
                 ->editColumn('type', function ($user) {
-                    // Use the accessor from your model
                     return ucfirst($user->type);
                 })
                 ->addIndexColumn()
@@ -55,11 +93,9 @@ class UserController extends Controller
                 })
                 ->rawColumns(['action'])
                 ->make(true);
-
         }
-        return view('admin.user.admin', $data);
+        return view('admin.user.admin', $data, compact('tiangPusat', 'totalUsers'));
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -136,21 +172,23 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        try {
-            $user->delete();
-            return response()->json([
-                'success' => true,
-                'message' => 'Pengguna berhasil dihapus'
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Gagal menghapus pengguna'
-            ], 500);
+        $user = User::find($id);
+
+        // Pastikan ID pengguna yang akan dihapus tidak sama dengan ID pengguna yang sedang login
+        if (!$user) {
+            return response()->json(['message' => 'Pengguna tidak ditemukan'], 404);
         }
+
+        if ($user->id === Auth::id()) {
+            return response()->json(['message' => 'kamu tidak bisa menghapus dirimu sendiri'], 403);
+        }
+
+        $user->delete();
+        return response()->json(['message' => 'Penguna berhasil dihapus']);
     }
+
 
     /**
      * Generate action buttons for DataTables
