@@ -46,4 +46,20 @@ class HomeController extends Controller
     {
         return view('petugas.index');
     }
+
+    public function redirectToHome()
+    {
+        $userType = auth()->user()->type;
+
+        switch ($userType) {
+            case 'admin':
+                return redirect()->route('admin.home');
+            case 'user':
+                return redirect()->route('home');
+            case 'petugas':
+                return redirect()->route('petugas.home');
+            default:
+                return redirect()->route('not-found');
+        }
+    }
 }

@@ -10,6 +10,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/not-found', [ErrorController::class, 'notFound'])->name('not-found');
+Route::get('/redirect-home', [HomeController::class, 'redirectToHome'])->name('redirect.home');
 Auth::routes();
 
 /*------------------------------------------
