@@ -8,14 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class TernakKandang extends Model
 {
     use HasFactory;
-
+    protected $table = 'ternak_kandang';
     protected $fillable = [
         'kode_kandang',
-        'nama_pemilik',
+        'pemilik',
     ];
 
-    public function user()
+    public function pemilik()
     {
-        return $this->belongsTo(User::class, 'nama_pemilik');
+        return $this->belongsTo(User::class, 'id'); 
     }
+    
+    
 }

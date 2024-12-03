@@ -4,7 +4,7 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
-    var supplierShowUrl = "/admin/hewan/{id}/show";
+    var hewanShowUrl = "/admin/hewan/{id}/show";
 
     let table = $("#tableHewan").DataTable({
         processing: true,
@@ -30,7 +30,16 @@ $(document).ready(function () {
         },
         ajax: "/admin/hewan",
         columns: [
-            { data: "id" },
+            {
+                data: "id",
+                render: function (data, type, row) {
+                    // Mengganti {id} dengan ID yang sesuai
+                    var showUrl = hewanShowUrl.replace("{id}", data);
+                    return `<a href="${showUrl}" class="view btn btn-primary btn-sm" style="width: 30px; font-size: 12px; padding: 5px;"><i class="fa-solid fa-eye"></i></a>`;
+                },
+                orderable: false,
+                searchable: false,
+            },
             { data: "tag" },
             { data: "jenis_hewan" },
             { data: "sex" },

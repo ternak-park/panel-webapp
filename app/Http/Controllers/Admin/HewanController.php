@@ -28,4 +28,23 @@ class HewanController extends Controller
         return view('admin.hewan.index', $data);
 
     }
+
+    public function show($id)
+    {
+        // Ambil detail ternak berdasarkan id/tag, termasuk relasi status dan jenis
+        $ternakHewan = TernakHewan::with([
+            'kandang.pemilik',
+            'ternakDetail.status',
+            'jenis',
+            'program',
+            'kandang'
+        ])
+            ->where('id', $id)
+            ->firstOrFail();
+
+        return view('admin.hewan.show', compact('ternakHewan'));
+    }
+
+
+
 }

@@ -17,7 +17,10 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    protected $table = 'users';
     protected $fillable = [
+        'id',
         'name',
         'username',
         'email',
@@ -57,7 +60,12 @@ class User extends Authenticatable
     protected function type(): Attribute
     {
         return new Attribute(
-            get: fn ($value) =>  ["user", "admin", "petugas"][$value],
+            get: fn($value) => ["user", "admin", "petugas"][$value],
         );
     }
+
+    // public function pemilik()
+    // {
+    //     return $this->belongsTo(User::class,  'nama_pemilik','id'); // 'pemilik' adalah foreign key di tabel `ternak_kandang`
+    // }
 }

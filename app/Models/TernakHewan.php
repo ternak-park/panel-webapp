@@ -20,4 +20,31 @@ class TernakHewan extends Model
         'type',
         'password',
     ];
+    public function detail()
+    {
+        return $this->hasOne(TernakDetail::class, 'ternak_tag', 'tag');
+    }
+    public function ternakDetail()
+    {
+        return $this->hasOne(TernakDetail::class, 'ternak_tag', 'tag');
+    }
+    public function jenis()
+    {
+        return $this->belongsTo(Jenis::class, 'id');
+    }
+
+    public function program()
+    {
+        return $this->belongsTo(Program::class, 'id');
+    }
+
+    public function kandang()
+    {
+        return $this->belongsTo(TernakKandang::class, 'id', 'pemilik');
+    }
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class, 'id');
+    // }
+
 }
