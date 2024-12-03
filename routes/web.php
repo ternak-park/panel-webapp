@@ -45,6 +45,9 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
     // Jenis
     Route::get('admin/jenis', [App\Http\Controllers\Admin\JenisController::class, 'index'])->name('jenis.index');
+
+    // hewan
+    Route::get('admin/hewan', [App\Http\Controllers\Admin\HewanController::class, 'index'])->name('hewan.index');
     // User List
     Route::get('admin/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
     Route::delete('/users/{id}', [App\Http\Controllers\Admin\UserController::class, 'destroy']);

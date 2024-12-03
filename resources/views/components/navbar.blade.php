@@ -208,7 +208,7 @@
                                <span class="nav-link-title"> Dashboard </span>
                            </a>
                        </li>
-                       <li class="nav-item dropdown {{ Route::is('status.index', 'jenis.index') ? 'active' : '' }}" >
+                       <li class="nav-item dropdown {{ Route::is('status.index', 'jenis.index', 'hewan.index') ? 'active' : '' }}" >
                            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                data-bs-auto-close="outside" role="button" aria-expanded="false" >
                                <span
@@ -237,15 +237,16 @@
                                            <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">Test</span>
                                        </a> --}}
 
-                                       <div class="dropend">
-                                           <a class="dropdown-item dropdown-toggle" href="#sidebar-cards"
+                                       <div class="dropend ">
+                                           <a class="dropdown-item dropdown-toggle {{ Route::is('hewan.index') ? 'active' : '' }}" href="#sidebar-cards"
                                                data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button"
                                                aria-expanded="false">
-                                               Domba
+                                               Hewan
                                                <span
                                                    class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
                                            </a>
                                            <div class="dropdown-menu">
+                                            <a href="{{ route('hewan.index') }}" class="dropdown-item {{ Route::is('hewan.index') ? 'active' : '' }}"> Data </a>
                                                <a href="./cards.html" class="dropdown-item"> Kesehatan </a>
                                                <a href="./card-actions.html" class="dropdown-item">
                                                    Kondisi
