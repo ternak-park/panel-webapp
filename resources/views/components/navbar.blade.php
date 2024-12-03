@@ -208,9 +208,9 @@
                                <span class="nav-link-title"> Dashboard </span>
                            </a>
                        </li>
-                       <li class="nav-item dropdown">
+                       <li class="nav-item dropdown {{ Route::is('status.index', 'jenis.index') ? 'active' : '' }}" >
                            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
-                               data-bs-auto-close="outside" role="button" aria-expanded="false">
+                               data-bs-auto-close="outside" role="button" aria-expanded="false" >
                                <span
                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -224,18 +224,18 @@
                                        <path d="M9 21v-5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v5" />
                                    </svg>
                                </span>
-                               <span class="nav-link-title"> Data Ternak </span>
+                               <span class="nav-link-title" > Data Ternak </span>
                            </a>
-                           <div class="dropdown-menu">
-                               <div class="dropdown-menu-columns">
-                                   <div class="dropdown-menu-column">
+                           <div class="dropdown-menu" >
+                               <div class="dropdown-menu-columns" >
+                                   <div class="dropdown-menu-column" >
                                        <a class="dropdown-item" href="./empty.html"> Pemilik </a>
                                        <a class="dropdown-item" href="./accordion.html"> Kandang </a>
-                                       <a class="dropdown-item" href="./blank.html"> Jenis </a>
+                                       {{-- <a class="dropdown-item" href="./blank.html"> Jenis </a>
                                        <a class="dropdown-item" href="./badges.html">
                                            Status
                                            <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">Test</span>
-                                       </a>
+                                       </a> --}}
 
                                        <div class="dropend">
                                            <a class="dropdown-item dropdown-toggle" href="#sidebar-cards"
@@ -257,13 +257,13 @@
                                            </div>
                                        </div>
                                    </div>
-                                   <div class="dropdown-menu-column">
-                                       <a class="dropdown-item" href="./pagination.html">
+                                   <div class="dropdown-menu-column" >
+                                       <a class="dropdown-item {{ Route::is('status.index') ? 'active' : '' }}"  href="{{ route('status.index') }}">
                                            <!-- Download SVG icon from http://tabler-icons.io/i/pie-chart -->
-                                           Test
+                                           Status
                                        </a>
-                                       <a class="dropdown-item" href="./placeholder.html"> Test </a>
-                                       <a class="dropdown-item" href="./tabs.html"> Test </a>
+                                       <a class="dropdown-item {{ Route::is('jenis.index') ? 'active' : '' }}" href="{{ route('jenis.index') }}"> Jenis </a>
+                                       {{-- <a class="dropdown-item" href="./tabs.html"> Test </a>
 
                                        <div class="dropend">
                                            <a class="dropdown-item dropdown-toggle" href="#sidebar-authentication"
@@ -275,7 +275,7 @@
                                                <a href="./sign-in-cover.html" class="dropdown-item"> Test </a>
                                                <a href="./sign-up.html" class="dropdown-item"> Sign up </a>
                                            </div>
-                                       </div>
+                                       </div> --}}
                                    </div>
                                </div>
                            </div>

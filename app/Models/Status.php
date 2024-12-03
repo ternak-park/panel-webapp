@@ -9,5 +9,5 @@ class Status extends Model
 {
     use HasFactory;
     protected $table = 'status';
-    protected $fillable = ['kode_kandang', 'nama_pemilik'];
+    protected $fillable = ['id', 'nama_status', 'created_at', 'updated_at'];
 }

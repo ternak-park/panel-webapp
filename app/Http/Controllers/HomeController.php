@@ -34,8 +34,23 @@ class HomeController extends Controller
      */
     public function adminHome(): View
     {
-        return view(view: 'admin.index');
+        // Ambil 5 user terbaru
+        $userAnyar = \DB::table('users')
+            ->where('type', 0) // Filter hanya user dengan type = 0
+            ->orderBy('id', 'desc') // Urutkan berdasarkan ID dari yang terbaru
+            ->limit(5) // Batasi hasil maksimal 5 user
+            ->get();
+    
+        // Siapkan data yang akan diteruskan ke tampilan
+        $data = [
+            'judul' => 'Dashboard',
+            'userAnyar' => $userAnyar, // Masukkan data userAnyar ke dalam array data
+        ];
+    
+        // Return tampilan dengan data
+        return view('admin.index', $data);
     }
+    
   
     /**
      * Show the application dashboard.

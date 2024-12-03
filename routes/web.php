@@ -40,6 +40,11 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::put('admin/suppliers/{id}', [App\Http\Controllers\Admin\SupplierController::class, 'update'])->name('suppliers.update');
     Route::delete('admin/suppliers/{id}', [App\Http\Controllers\Admin\SupplierController::class, 'destroy'])->name('suppliers.destroy');
 
+    // status
+    Route::get('admin/status', [App\Http\Controllers\Admin\StatusController::class, 'index'])->name('status.index');
+
+    // Jenis
+    Route::get('admin/jenis', [App\Http\Controllers\Admin\JenisController::class, 'index'])->name('jenis.index');
     // User List
     Route::get('admin/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
     Route::delete('/users/{id}', [App\Http\Controllers\Admin\UserController::class, 'destroy']);
