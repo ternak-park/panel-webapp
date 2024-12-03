@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             TernakFisikSeeder::class,
             TernakReproduksiSeeder::class,
             TernakEkonomiSeeder::class,
+            TernakDetailSeeder::class,
         ]);
     }
 }
