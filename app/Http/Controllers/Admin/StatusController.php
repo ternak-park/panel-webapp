@@ -11,7 +11,9 @@ class StatusController extends Controller
     public function index(Request $request)
     {
         $data = [];
+        $data['main'] = 'Status';
         $data['judul'] = 'Manajemen Status';
+        $data['sub_judul'] = 'Data Status Domba';
         if ($request->ajax()) {
             $data = Status::select('id', 'nama_status', 'created_at', 'updated_at');
             return Datatables::of($data)

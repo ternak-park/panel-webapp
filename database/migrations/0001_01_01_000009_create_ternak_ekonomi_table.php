@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('ternak_ekonomi', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('ternak_tag');
+            $table->string('ternak_tag'); 
 
             $table->decimal('harga_beli', 12, 2)->nullable();
             $table->decimal('harga_jual', 12, 2)->nullable();
@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->decimal('biaya_transportasi', 12, 2)->nullable();
 
             $table->foreign('ternak_tag')
-                  ->references('id')
+                  ->references('tag')
                   ->on('ternak_hewan')
                   ->onDelete('cascade');
 

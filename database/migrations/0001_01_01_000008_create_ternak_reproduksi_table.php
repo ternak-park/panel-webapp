@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('ternak_reproduksi', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('ternak_tag');
+            $table->string('ternak_tag'); 
             $table->date('tanggal_birahi')->nullable();
             $table->date('tanggal_kawin')->nullable();
             $table->date('tanggal_ib')->nullable();
@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('jenis_semen')->nullable();
 
             $table->foreign('ternak_tag')
-                  ->references('id')
+                  ->references('tag')
                   ->on('ternak_hewan')
                   ->onDelete('cascade');
 

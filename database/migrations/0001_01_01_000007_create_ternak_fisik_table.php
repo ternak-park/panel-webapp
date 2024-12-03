@@ -9,15 +9,15 @@ return new class extends Migration {
     {
         Schema::create('ternak_fisik', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('ternak_tag');
+            $table->string('ternak_tag'); 
             $table->decimal('berat_masuk', 8, 2)->nullable();
             $table->decimal('berat_terakhir', 8, 2)->nullable();
             $table->decimal('kenaikan_berat', 8, 2)->nullable();
 
             $table->foreign('ternak_tag')
-                  ->references('id')
-                  ->on('ternak_hewan')
-                  ->onDelete('cascade');
+                ->references('tag')
+                ->on('ternak_hewan')
+                ->onDelete('cascade');
 
             $table->timestamps();
         });

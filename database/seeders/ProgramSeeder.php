@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Program;
 
-class CreateProgramSeeder extends Seeder
+class ProgramSeeder extends Seeder
 {
     public function run()
     {

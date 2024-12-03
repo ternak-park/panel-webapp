@@ -18,6 +18,7 @@ class UserController extends Controller
     {
         $data = [];
         $data['judul'] = 'Manajemen User';
+        $data['sub_judul'] = 'Data User';
 
         $search = $request->query('search');
         $tiangBiasa = User::where('type', 0);
@@ -60,7 +61,9 @@ class UserController extends Controller
     public function adalahAdmin(Request $request)
     {
         $data = [];
+        $data['main'] = 'User';
         $data['judul'] = 'Manajemen Admin';
+        $data['sub_judul'] = 'Data Admin';
 
         $search = $request->query('search');
         $tiangPusat = User::whereIn('type', [1, 2]);

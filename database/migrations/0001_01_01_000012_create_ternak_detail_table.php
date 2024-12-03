@@ -10,17 +10,17 @@ class CreateTernakDetailTable extends Migration
     {
         Schema::create('ternak_detail', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('ternak_tag');
+            $table->string('ternak_tag'); 
             $table->string('sex')->nullable();
             $table->date('tanggal_masuk')->nullable();
             $table->unsignedBigInteger('ternak_status')->nullable();
             $table->unsignedBigInteger('ternak_jenis')->nullable();
             $table->unsignedBigInteger('ternak_program')->nullable();
             $table->unsignedBigInteger('ternak_kandang')->nullable();
-            $table->unsignedBigInteger('jenis_kandang')->nullable(); // Tambahkan kolom jenis_kandang
+            $table->unsignedBigInteger('jenis_kandang')->nullable(); 
 
             $table->foreign('ternak_tag')
-                  ->references('id')
+                  ->references('tag')
                   ->on('ternak_hewan')
                   ->onDelete('cascade');
 

@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Jenis;
 
-class CreateJenisSeeder extends Seeder
+class JenisSeeder extends Seeder
 {
     public function run()
     {

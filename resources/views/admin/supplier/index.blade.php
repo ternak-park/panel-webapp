@@ -31,7 +31,7 @@
                                         <path d="M12 5l0 14" />
                                         <path d="M5 12l14 0" />
                                     </svg>
-                                    Tambah Supplier
+                                    Tambah {{ $main }}
                                 </a>
                                 <a href="" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
                                     data-bs-target="#modal-tambahData" aria-label="Tambah Produk">
@@ -55,7 +55,7 @@
                 <div class="container-xl">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Daftar Supplier</h3>
+                            <h3 class="card-title">{{ $sub_judul }}</h3>
                         </div>
                         <div class="card-body border-bottom py-3">
                             <div class="d-flex">

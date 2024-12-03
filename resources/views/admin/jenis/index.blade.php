@@ -55,7 +55,7 @@
                 <div class="container-xl">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Daftar Supplier</h3>
+                            <h3 class="card-title">{{ $sub_judul }}</h3>
                         </div>
                         <div class="card-body border-bottom py-3">
                             <div class="d-flex">
@@ -75,7 +75,7 @@
                                     {{-- Search: --}}
                                     <div class="ms-2 d-inline-block">
                                         <input type="text" id="searchInput" class="form-control form-control-sm"
-                                            placeholder="Cari Supplier" aria-label="Search supplier">
+                                            placeholder="Cari Jenis" aria-label="Search supplier">
                                     </div>
                                 </div>
                             </div>

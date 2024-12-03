@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Status;
 
-class CreateStatusSeeder extends Seeder
+class StatusSeeder extends Seeder
 {
     public function run()
     {
