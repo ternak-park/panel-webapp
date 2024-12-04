@@ -45,9 +45,11 @@
                             <div class="col-md-6 col-lg-3">
                                 <div class="card">
                                     <div class="card-body p-4 text-center">
-                                        <span class="avatar avatar-xl mb-3 avatar-rounded">
+                                        <span class="avatar avatar-xl mb-3 avatar-rounded"
+                                            style="background-image: url('{{ $user->gambar_profile_mas }}')"></span>
+                                        {{-- <span class="avatar avatar-xl mb-3 avatar-rounded">
                                             {{ strtoupper(substr($user->username, 0, 2)) }}
-                                        </span>
+                                        </span> --}}
                                         <h3 class="m-0 mb-1"><a href="#">{{ ucfirst($user->username) }}</a></h3>
                                         <div class="text-muted">{{ $user->email }}</div>
                                         <div class="mt-3">
@@ -165,7 +167,7 @@
                                     ).then(() => {
                                         setTimeout(function() {
                                             location
-                                        .reload();
+                                                .reload();
                                         }, 500);
                                     });
                                 },

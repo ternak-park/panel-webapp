@@ -45,10 +45,14 @@
                             <div class="col-md-6 col-lg-3">
                                 <div class="card">
                                     <div class="card-body p-4 text-center">
-                                        <span class="avatar avatar-xl mb-3 avatar-rounded">
-                                            {{ strtoupper(substr($user->username, 0, 2)) }}
-                                        </span>
-                                        <h3 class="m-0 mb-1"><a href="#">{{  ucfirst($user->username) }}</a></h3>
+                                        <span class="avatar avatar-xl mb-3 avatar-rounded"
+                                        style="background-image: url('{{ $user->gambar_profile_mas }}')"></span>
+                                        {{-- <span class="avatar avatar-xl mb-3 avatar-rounded">
+                                        {{ strtoupper(substr($user->username, 0, 2)) }}
+
+                                        </span> --}}
+                                        <h3 class="m-0 mb-1"><a href="#">{{ ucfirst($user->username) }}
+                                            </a></h3>
                                         <div class="text-muted">{{ $user->email }}</div>
                                         <div class="mt-3">
                                             <span
@@ -77,7 +81,8 @@
                                             </svg>
                                             Ubah
                                         </a>
-                                        <a href="#" class="delete card-btn delete-user" data-id="{{ $user->id }}">
+                                        <a href="#" class="delete card-btn delete-user"
+                                            data-id="{{ $user->id }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -168,8 +173,8 @@
                                     ).then(() => {
                                         setTimeout(function() {
                                             location
-                                        .reload();
-                                        }, 500); 
+                                                .reload();
+                                        }, 500);
                                     });
                                 },
                                 error: function(err) {

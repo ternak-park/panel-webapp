@@ -25,7 +25,8 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
-        'type'
+        'type',
+        'gambar_profile'
     ];
 
     /**
@@ -63,7 +64,12 @@ class User extends Authenticatable
             get: fn($value) => ["user", "admin", "petugas"][$value],
         );
     }
-
+    public function getGambarProfileMasAttribute()
+    {
+        return $this->gambar_profile
+            ? url('storage/' . $this->gambar_profile)
+            : asset('static/avatars/AVATAR_SAPI.png');
+    }
     // public function pemilik()
     // {
     //     return $this->belongsTo(User::class,  'nama_pemilik','id'); // 'pemilik' adalah foreign key di tabel `ternak_kandang`

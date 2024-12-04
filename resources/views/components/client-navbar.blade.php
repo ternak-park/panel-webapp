@@ -190,7 +190,13 @@
                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                            aria-label="Open user menu">
                            <span class="avatar avatar-sm"
-                               style="background-image: url({{ asset('static/avatars/AVATAR_SAPI.png') }})"></span>
+                               style="background-image: url(
+             @if (Auth::user()->gambar_profile) {{ url('storage/' . Auth::user()->gambar_profile) }}
+             @else{{ asset('static/avatars/AVATAR_SAPI.png') }} @endif
+           )">
+                           </span>
+                           {{-- <span class="avatar avatar-sm"
+                           style="background-image: url({{ asset('static/avatars/AVATAR_SAPI.png') }})"></span> --}}
                            <div class="d-none d-xl-block ps-2">
                                <div>{{ ucfirst(Auth::user()->username ?? 'Guest') }}</div>
                                <div class="mt-1 small text-muted">{{ ucfirst(Auth::user()->type ?? 'Guest') }}</div>
