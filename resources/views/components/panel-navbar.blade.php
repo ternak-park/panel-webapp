@@ -163,7 +163,13 @@
                    <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                        aria-label="Open user menu">
                        <span class="avatar avatar-sm"
-                           style="background-image: url({{ asset('static/avatars/AVATAR_SAPI.png') }})"></span>
+                           style="background-image: url(
+             @if (Auth::user()->gambar_profile) {{ url('storage/' . Auth::user()->gambar_profile) }}
+             @else{{ asset('static/avatars/AVATAR_SAPI.png') }} @endif
+           )">
+                       </span>
+                       {{-- <span class="avatar avatar-sm"
+                           style="background-image: url({{ asset('static/avatars/AVATAR_SAPI.png') }})"></span> --}}
                        <div class="d-none d-xl-block ps-2">
                            <div>{{ ucfirst(Auth::user()->username ?? 'Guest') }}</div>
                            <div class="mt-1 small text-muted">{{ ucfirst(Auth::user()->type ?? 'Guest') }}</div>
@@ -208,9 +214,10 @@
                                <span class="nav-link-title"> Dashboard </span>
                            </a>
                        </li>
-                       <li class="nav-item dropdown {{ Route::is('status.index', 'jenis.index', 'hewan.index') ? 'active' : '' }}" >
+                       <li
+                           class="nav-item dropdown {{ Route::is('status.index', 'jenis.index', 'hewan.index') ? 'active' : '' }}">
                            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
-                               data-bs-auto-close="outside" role="button" aria-expanded="false" >
+                               data-bs-auto-close="outside" role="button" aria-expanded="false">
                                <span
                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -224,11 +231,11 @@
                                        <path d="M9 21v-5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v5" />
                                    </svg>
                                </span>
-                               <span class="nav-link-title" > Data Ternak </span>
+                               <span class="nav-link-title"> Data Ternak </span>
                            </a>
-                           <div class="dropdown-menu" >
-                               <div class="dropdown-menu-columns" >
-                                   <div class="dropdown-menu-column" >
+                           <div class="dropdown-menu">
+                               <div class="dropdown-menu-columns">
+                                   <div class="dropdown-menu-column">
                                        <a class="dropdown-item" href="./empty.html"> Pemilik </a>
                                        <a class="dropdown-item" href="./accordion.html"> Kandang </a>
                                        {{-- <a class="dropdown-item" href="./blank.html"> Jenis </a>
@@ -238,15 +245,17 @@
                                        </a> --}}
 
                                        <div class="dropend ">
-                                           <a class="dropdown-item dropdown-toggle {{ Route::is('hewan.index') ? 'active' : '' }}" href="#sidebar-cards"
-                                               data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button"
-                                               aria-expanded="false">
+                                           <a class="dropdown-item dropdown-toggle {{ Route::is('hewan.index') ? 'active' : '' }}"
+                                               href="#sidebar-cards" data-bs-toggle="dropdown"
+                                               data-bs-auto-close="outside" role="button" aria-expanded="false">
                                                Hewan
                                                <span
                                                    class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
                                            </a>
                                            <div class="dropdown-menu">
-                                            <a href="{{ route('hewan.index') }}" class="dropdown-item {{ Route::is('hewan.index') ? 'active' : '' }}"> Data </a>
+                                               <a href="{{ route('hewan.index') }}"
+                                                   class="dropdown-item {{ Route::is('hewan.index') ? 'active' : '' }}">
+                                                   Data </a>
                                                <a href="./cards.html" class="dropdown-item"> Kesehatan </a>
                                                <a href="./card-actions.html" class="dropdown-item">
                                                    Kondisi
@@ -258,12 +267,14 @@
                                            </div>
                                        </div>
                                    </div>
-                                   <div class="dropdown-menu-column" >
-                                       <a class="dropdown-item {{ Route::is('status.index') ? 'active' : '' }}"  href="{{ route('status.index') }}">
+                                   <div class="dropdown-menu-column">
+                                       <a class="dropdown-item {{ Route::is('status.index') ? 'active' : '' }}"
+                                           href="{{ route('status.index') }}">
                                            <!-- Download SVG icon from http://tabler-icons.io/i/pie-chart -->
                                            Status
                                        </a>
-                                       <a class="dropdown-item {{ Route::is('jenis.index') ? 'active' : '' }}" href="{{ route('jenis.index') }}"> Jenis </a>
+                                       <a class="dropdown-item {{ Route::is('jenis.index') ? 'active' : '' }}"
+                                           href="{{ route('jenis.index') }}"> Jenis </a>
                                        {{-- <a class="dropdown-item" href="./tabs.html"> Test </a>
 
                                        <div class="dropend">
