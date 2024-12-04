@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -66,9 +67,11 @@ class User extends Authenticatable
     }
     public function getGambarProfileMasAttribute()
     {
-        return $this->gambar_profile
-            ? url('storage/' . $this->gambar_profile)
-            : asset('static/avatars/AVATAR_SAPI.png');
+        if ($this->gambar_profile && Storage::exists('public/' . $this->gambar_profile)) {
+            return url('storage/' . $this->gambar_profile);
+        }
+        // iki default lek gaono
+        return asset('static/avatars/AVATAR_SAPI.png');
     }
     // public function pemilik()
     // {
