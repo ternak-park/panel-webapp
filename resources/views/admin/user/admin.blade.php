@@ -175,7 +175,7 @@
                                 error: function(err) {
                                     Swal.fire(
                                         'Error!',
-                                        'message.',
+                                        'Terjadi kesalahan saat menghapus pengguna.',
                                         'error'
                                     );
                                 }

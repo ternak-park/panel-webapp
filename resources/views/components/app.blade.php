@@ -7,9 +7,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!-- SweetAlert CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <!-- SweetAlert Udah pake local di app.js -->
 
     {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> --}}
     {{-- fontawesome --}}
@@ -58,6 +56,7 @@
 </head>
 
 <body>
+    @include('sweetalert::alert')
     <script src="{{ asset('assets/js/demo-theme.min.js?1667333929') }}"></script>
     {{-- sweet alert mas --}}
     @if (session('success'))
@@ -83,7 +82,18 @@
     <div id="app">
         {{-- gawe nyeluk component navbar --}}
         @if (!in_array(Route::currentRouteName(), ['login', 'register', 'not-found']) && Route::has(Route::currentRouteName()))
-            <x-navbar />
+            @if (Auth::check())
+                @if (Auth::user()->type === 'admin' || Auth::user()->type === 'petugas')
+                    {{-- Tipe admin atau petugas --}}
+                    <x-panel-navbar />
+                @elseif (Auth::user()->type === 'user')
+                    {{-- Tipe user biasa --}}
+                    <x-client-navbar />
+                @endif
+            @else
+                {{-- Tampilkan navbar untuk pengguna yang belum login --}}
+                <x-client-navbar />
+            @endif
         @endif
         <main class="py-4">
             {{ $slot }}

@@ -14,9 +14,10 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('guest');
+        // $this->middleware('auth');
     }
-  
+
     /**
      * Show the application dashboard.
      *
@@ -25,8 +26,14 @@ class HomeController extends Controller
     public function index(): View
     {
         return view('home');
-    } 
-  
+    }
+
+    public function welcome(): View
+    {
+        return view('welcome');
+    }
+
+
     /**
      * Show the application dashboard.
      *
@@ -40,18 +47,18 @@ class HomeController extends Controller
             ->orderBy('id', 'desc') // Urutkan berdasarkan ID dari yang terbaru
             ->limit(5) // Batasi hasil maksimal 5 user
             ->get();
-    
+
         // Siapkan data yang akan diteruskan ke tampilan
         $data = [
             'judul' => 'Dashboard',
             'userAnyar' => $userAnyar, // Masukkan data userAnyar ke dalam array data
         ];
-    
+
         // Return tampilan dengan data
         return view('admin.index', $data);
     }
-    
-  
+
+
     /**
      * Show the application dashboard.
      *

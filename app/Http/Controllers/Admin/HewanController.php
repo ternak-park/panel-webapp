@@ -31,7 +31,6 @@ class HewanController extends Controller
 
     public function show($id)
     {
-        // Ambil detail ternak berdasarkan id/tag, termasuk relasi status dan jenis
         $ternakHewan = TernakHewan::with([
             'kandang.pemilik',
             'ternakDetail.status',

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;// Import SweetAlert facade
 
 class LoginController extends Controller
 {
@@ -40,7 +42,7 @@ class LoginController extends Controller
     }
 
     /**
-     * Create a new controller instance.
+     * Handle the login process with SweetAlert for success/error.
      *
      * @return RedirectResponse
      */
@@ -53,22 +55,24 @@ class LoginController extends Controller
             'username_or_email' => 'required',
             'password' => 'required',
         ]);
-
-        // Check if the input is an email or username
         $field = filter_var($input['username_or_email'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-
-        // Attempt login
         if (auth()->attempt([$field => $input['username_or_email'], 'password' => $input['password']])) {
+
+
             if (auth()->user()->type == 'admin') {
+                Session::flash('success', 'Login berhasil!');
                 return redirect()->route('admin.home');
             } else if (auth()->user()->type == 'manager') {
+                Session::flash('success', 'Login berhasil!');
                 return redirect()->route('manager.home');
             } else {
+                Session::flash('success', 'Login berhasil!');
                 return redirect()->route('home');
             }
         } else {
-            return redirect()->route('login')
-                ->with('error', 'Email/Username and Password Are Wrong.');
+            Session::flash('error', 'Username atau password salah!');
+
+            return redirect()->route('login');
         }
     }
 }

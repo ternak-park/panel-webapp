@@ -6,9 +6,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\admin\UserController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'welcome'])->name('welcome');
+
+
+// Route::get('/', [App\Http\Controllers\HomeController::class, 'welcome'])->name('welcome');
 Route::get('/not-found', [ErrorController::class, 'notFound'])->name('not-found');
 Route::get('/redirect-home', [HomeController::class, 'redirectToHome'])->name('redirect.home');
 Auth::routes();

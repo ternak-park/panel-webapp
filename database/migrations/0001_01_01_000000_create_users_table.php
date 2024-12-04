@@ -18,12 +18,13 @@ return new class extends Migration {
                 'lakilaki',
                 'perempuan'
             ]);
-            $table->integer('telepon');
-            $table->string('alamat');
+            $table->string('telepon', 20)->nullable(); 
+            $table->string('alamat')->nullable(); 
             $table->enum('daerah', [
                 'wonosalam',
                 'purwakarta',
-                'cilegon'
+                'cilegon',
+                'lainya'
             ]);
 
             $table->string('username');
