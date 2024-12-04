@@ -25,7 +25,7 @@ class UserController extends Controller
 
         if ($search) {
             $tiangBiasa = $tiangBiasa->where(function ($query) use ($search) {
-                $query->where('nama', 'like', '%' . $search . '%')
+                $query->where('name', 'like', '%' . $search . '%')
                     ->orWhere('email', 'like', '%' . $search . '%');
             });
         }
@@ -37,7 +37,7 @@ class UserController extends Controller
 
             if ($search) {
                 $query = $query->where(function ($query) use ($search) {
-                    $query->where('nama', 'like', '%' . $search . '%')
+                    $query->where('name', 'like', '%' . $search . '%')
                         ->orWhere('email', 'like', '%' . $search . '%');
                 });
             }
@@ -70,7 +70,7 @@ class UserController extends Controller
 
         if ($search) {
             $tiangPusat = $tiangPusat->where(function ($query) use ($search) {
-                $query->where('nama', 'like', '%' . $search . '%') // Ngawe 'nama' 
+                $query->where('name', 'like', '%' . $search . '%') // Ngawe 'name' 
                     ->orWhere('email', 'like', '%' . $search . '%');
             });
         }
@@ -82,7 +82,7 @@ class UserController extends Controller
 
             if ($search) {
                 $query = $query->where(function ($query) use ($search) {
-                    $query->where('nama', 'like', '%' . $search . '%')
+                    $query->where('name', 'like', '%' . $search . '%')
                         ->orWhere('email', 'like', '%' . $search . '%');
                 });
             }
