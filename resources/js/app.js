@@ -4,6 +4,7 @@ window.Swal = Swal;
 import './datatable/supplier';
 import './datatable/users';
 import './datatable/admin';
+import './datatable/reproduksi';
 import './datatable/status';
 import './datatable/fisik';
 import './datatable/hewan';

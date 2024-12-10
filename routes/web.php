@@ -53,6 +53,10 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     // kandang
     Route::get('admin/kandang', [App\Http\Controllers\Admin\KandangController::class, 'index'])->name('kandang.index');
 
+    // kandang
+    Route::get('admin/ternak-reproduksi', [App\Http\Controllers\Admin\ReproduksiController::class, 'index'])->name('reproduksi.index');
+
+
     // hewan
     Route::get('admin/hewan', [App\Http\Controllers\Admin\HewanController::class, 'index'])->name('hewan.index');
     Route::get('admin/hewan/{id}/show', [App\Http\Controllers\Admin\HewanController::class, 'show'])->name('hewan.show');

@@ -215,7 +215,7 @@
                            </a>
                        </li>
                        <li
-                           class="nav-item dropdown {{ Route::is('status.index', 'jenis.index', 'hewan.index', 'fisik.index', 'kandang.index') ? 'active' : '' }}">
+                           class="nav-item dropdown {{ Route::is('status.index', 'jenis.index', 'hewan.index', 'fisik.index', 'kandang.index' , 'reproduksi.index') ? 'active' : '' }}">
                            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                data-bs-auto-close="outside" role="button" aria-expanded="false">
                                <span
@@ -246,7 +246,7 @@
                                        </a> --}}
 
                                        <div class="dropend ">
-                                           <a class="dropdown-item dropdown-toggle {{ Route::is('hewan.index', 'fisik.index') ? 'active' : '' }}"
+                                           <a class="dropdown-item dropdown-toggle {{ Route::is('hewan.index', 'fisik.index' , 'reproduksi.index') ? 'active' : '' }}"
                                                href="#sidebar-cards" data-bs-toggle="dropdown"
                                                data-bs-auto-close="outside" role="button" aria-expanded="false">
                                                Hewan
@@ -264,9 +264,8 @@
                                                </a>
                                                <a class="dropdown-item {{ Route::is('jenis.index') ? 'active' : '' }}"
                                                    href="{{ route('jenis.index') }}"> Jenis </a>
-                                               <a href="./cards.html" class="dropdown-item"> Kesehatan </a>
-                                               <a href="./card-actions.html" class="dropdown-item">
-                                                   Kondisi
+                                               <a href="{{ route('reproduksi.index') }}" class="dropdown-item {{ Route::is('reproduksi.index') ? 'active' : '' }}">
+                                                   Reproduksi
                                                    <span
                                                        class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
                                                </a>
