@@ -50,12 +50,9 @@ $(document).ready(function () {
             // },
             { data: "tag" },
             {
-                data: "jenis",
+                data: "ternak_tipe",
                 render: function (data, type, row) {
-                    // Kapital awal huruf
-                    return data
-                        ? data.charAt(0).toUpperCase() + data.slice(1)
-                        : data;
+                    return data ? data : "Tidak tersedia"; // Menampilkan nama tipe
                 },
             },
             {
@@ -65,12 +62,6 @@ $(document).ready(function () {
                     return data
                         ? data.charAt(0).toUpperCase() + data.slice(1)
                         : data;
-                },
-            },
-            {
-                data: "ternak_tipe",
-                render: function (data, type, row) {
-                    return data ? data : "Tidak tersedia"; // Menampilkan nama tipe
                 },
             },
             { data: "action", orderable: false, searchable: false },
