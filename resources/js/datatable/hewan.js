@@ -10,7 +10,7 @@ $(document).ready(function () {
         processing: true,
         serverSide: true,
         autoWidth: false,
-        scrollX: true,
+        // scrollX: true,
         responsive: true,
         pageLength: 10,
         dom: "t", // Remove default search and pagination
@@ -32,14 +32,22 @@ $(document).ready(function () {
         columns: [
             {
                 data: "id",
-                render: function (data, type, row) {
-                    // Mengganti {id} dengan ID yang sesuai
-                    var showUrl = hewanShowUrl.replace("{id}", data);
-                    return `<a href="${showUrl}" class="view btn btn-primary btn-sm" style="width: 30px; font-size: 12px; padding: 5px;"><i class="fa-solid fa-eye"></i></a>`;
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
                 },
                 orderable: false,
                 searchable: false,
             },
+            // {
+            //     data: "id",
+            //     render: function (data, type, row) {
+            //         // Mengganti {id} dengan ID yang sesuai
+            //         var showUrl = hewanShowUrl.replace("{id}", data);
+            //         return `<a href="${showUrl}" class="view btn btn-primary btn-sm" style="width: 30px; font-size: 12px; padding: 5px;"><i class="fa-solid fa-eye"></i></a>`;
+            //     },
+            //     orderable: false,
+            //     searchable: false,
+            // },
             { data: "tag" },
             {
                 data: "jenis",

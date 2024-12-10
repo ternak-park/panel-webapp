@@ -21,7 +21,7 @@ class HewanController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    return view('admin.status.action', ['id' => $row->id])->render();
+                    return view('admin.hewan.action', ['id' => $row->id])->render();
                 })
                 ->editColumn('ternak_tipe', function ($row) {
                     return $row->tipe->nama_tipe ?? 'Tidak tersedia';

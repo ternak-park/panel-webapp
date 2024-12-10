@@ -44,11 +44,18 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     // status
     Route::get('admin/status', [App\Http\Controllers\Admin\StatusController::class, 'index'])->name('status.index');
 
+    // fisik
+    Route::get('admin/ternak-fisik', [App\Http\Controllers\Admin\FisikController::class, 'index'])->name('fisik.index');
+
     // Jenis
     Route::get('admin/jenis', [App\Http\Controllers\Admin\JenisController::class, 'index'])->name('jenis.index');
 
     // kandang
     Route::get('admin/kandang', [App\Http\Controllers\Admin\KandangController::class, 'index'])->name('kandang.index');
+
+    // kandang
+    Route::get('admin/ternak-reproduksi', [App\Http\Controllers\Admin\ReproduksiController::class, 'index'])->name('reproduksi.index');
+
 
     // hewan
     Route::get('admin/hewan', [App\Http\Controllers\Admin\HewanController::class, 'index'])->name('hewan.index');

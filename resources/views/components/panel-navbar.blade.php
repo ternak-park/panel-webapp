@@ -215,7 +215,7 @@
                            </a>
                        </li>
                        <li
-                           class="nav-item dropdown {{ Route::is('status.index', 'jenis.index', 'hewan.index') ? 'active' : '' }}">
+                           class="nav-item dropdown {{ Route::is('status.index', 'jenis.index', 'hewan.index', 'fisik.index', 'kandang.index' , 'reproduksi.index') ? 'active' : '' }}">
                            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                data-bs-auto-close="outside" role="button" aria-expanded="false">
                                <span
@@ -237,7 +237,8 @@
                                <div class="dropdown-menu-columns">
                                    <div class="dropdown-menu-column">
                                        <a class="dropdown-item" href="./empty.html"> Pemilik </a>
-                                       <a class="dropdown-item" href="{{ route('kandang.index') }}"> Kandang </a>
+                                       <a class="dropdown-item {{ Route::is('kandang.index') ? 'active' : '' }}"
+                                           href="{{ route('kandang.index') }}"> Kandang </a>
                                        {{-- <a class="dropdown-item" href="./blank.html"> Jenis </a>
                                        <a class="dropdown-item" href="./badges.html">
                                            Status
@@ -245,7 +246,7 @@
                                        </a> --}}
 
                                        <div class="dropend ">
-                                           <a class="dropdown-item dropdown-toggle {{ Route::is('hewan.index') ? 'active' : '' }}"
+                                           <a class="dropdown-item dropdown-toggle {{ Route::is('hewan.index', 'fisik.index' , 'reproduksi.index') ? 'active' : '' }}"
                                                href="#sidebar-cards" data-bs-toggle="dropdown"
                                                data-bs-auto-close="outside" role="button" aria-expanded="false">
                                                Hewan
@@ -256,18 +257,26 @@
                                                <a href="{{ route('hewan.index') }}"
                                                    class="dropdown-item {{ Route::is('hewan.index') ? 'active' : '' }}">
                                                    Data </a>
-                                               <a href="./cards.html" class="dropdown-item"> Kesehatan </a>
-                                               <a href="./card-actions.html" class="dropdown-item">
-                                                   Kondisi
+                                               <a class="dropdown-item {{ Route::is('status.index') ? 'active' : '' }}"
+                                                   href="{{ route('status.index') }}">
+                                                   <!-- Download SVG icon from http://tabler-icons.io/i/pie-chart -->
+                                                   Status
+                                               </a>
+                                               <a class="dropdown-item {{ Route::is('jenis.index') ? 'active' : '' }}"
+                                                   href="{{ route('jenis.index') }}"> Jenis </a>
+                                               <a href="{{ route('reproduksi.index') }}" class="dropdown-item {{ Route::is('reproduksi.index') ? 'active' : '' }}">
+                                                   Reproduksi
                                                    <span
                                                        class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
                                                </a>
-                                               <a href="./cards-masonry.html" class="dropdown-item"> Pakanan
+                                               <a href="{{ route('fisik.index') }}"
+                                                   class="dropdown-item {{ Route::is('fisik.index') ? 'active' : '' }}">
+                                                   Fisik
                                                </a>
                                            </div>
                                        </div>
                                    </div>
-                                   <div class="dropdown-menu-column">
+                                   {{-- <div class="dropdown-menu-column">
                                        <a class="dropdown-item {{ Route::is('status.index') ? 'active' : '' }}"
                                            href="{{ route('status.index') }}">
                                            <!-- Download SVG icon from http://tabler-icons.io/i/pie-chart -->
@@ -275,7 +284,7 @@
                                        </a>
                                        <a class="dropdown-item {{ Route::is('jenis.index') ? 'active' : '' }}"
                                            href="{{ route('jenis.index') }}"> Jenis </a>
-                                       {{-- <a class="dropdown-item" href="./tabs.html"> Test </a>
+                                       <a class="dropdown-item" href="./tabs.html"> Test </a>
 
                                        <div class="dropend">
                                            <a class="dropdown-item dropdown-toggle" href="#sidebar-authentication"
@@ -287,8 +296,8 @@
                                                <a href="./sign-in-cover.html" class="dropdown-item"> Test </a>
                                                <a href="./sign-up.html" class="dropdown-item"> Sign up </a>
                                            </div>
-                                       </div> --}}
-                                   </div>
+                                       </div>
+                                   </div> --}}
                                </div>
                            </div>
                        </li>

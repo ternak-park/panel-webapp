@@ -4,9 +4,9 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
-    var supplierShowUrl = "/admin/status/{id}/show";
+    var supplierShowUrl = "/admin/ternak-reproduksi/{id}/show";
 
-    let table = $("#tableStatus").DataTable({
+    let table = $("#tableReproduksi").DataTable({
         processing: true,
         serverSide: true,
         autoWidth: false,
@@ -28,12 +28,55 @@ $(document).ready(function () {
             },
             processing: "Loading...", // Custom processing message
         },
-        ajax: "/admin/status",
+        ajax: "/admin/ternak-reproduksi",
         columns: [
             { data: "id" },
-            { data: "nama_status" },
             {
-                data: "created_at",
+                data: "ternak_tag",
+                render: function (data, type, row) {
+                    // Kapital awal huruf
+                    return data
+                        ? data.charAt(0).toUpperCase() + data.slice(1)
+                        : data;
+                },
+            },
+            { data: "tanggal_birahi",
+                render: function(data, type, row) {
+                    if (!data) return data;
+                    
+                    // Months in Indonesian
+                    const months = [
+                        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
+                        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+                    ];
+                    
+                    const date = new Date(data);
+                    const day = date.getDate().toString().padStart(2, '0');
+                    const month = months[date.getMonth()];
+                    const year = date.getFullYear();
+                    
+                    return `${day} ${month} ${year}`;
+                }
+             },
+            { data: "tanggal_kawin",
+                render: function(data, type, row) {
+                    if (!data) return data;
+                    
+                    // Months in Indonesian
+                    const months = [
+                        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
+                        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+                    ];
+                    
+                    const date = new Date(data);
+                    const day = date.getDate().toString().padStart(2, '0');
+                    const month = months[date.getMonth()];
+                    const year = date.getFullYear();
+                    
+                    return `${day} ${month} ${year}`;
+                }
+             },
+            { data: "tanggal_ib",
                 render: function(data, type, row) {
                     if (!data) return data;
                     
@@ -51,6 +94,8 @@ $(document).ready(function () {
                     return `${day} ${month} ${year}`;
                 }
             },
+            { data: "nomor_semen" },
+            { data: "jenis_semen" },
             { data: "action", orderable: false, searchable: false },
         ],
         drawCallback: sihubDrawCallback, // Gawe Nyelok Callback
