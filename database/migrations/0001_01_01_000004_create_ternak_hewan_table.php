@@ -13,6 +13,7 @@ return new class extends Migration {
             $table->enum('jenis', ['Domba', 'Kambing']);
             $table->enum('sex', ['Jantan', 'Betina']);
             $table->unsignedBigInteger('ternak_tipe')->nullable();
+            $table->string('gambar_hewan')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

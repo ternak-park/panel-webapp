@@ -239,11 +239,6 @@
                                        <a class="dropdown-item" href="./empty.html"> Pemilik </a>
                                        <a class="dropdown-item {{ Route::is('kandang.index') ? 'active' : '' }}"
                                            href="{{ route('kandang.index') }}"> Kandang </a>
-                                       {{-- <a class="dropdown-item" href="./blank.html"> Jenis </a>
-                                       <a class="dropdown-item" href="./badges.html">
-                                           Status
-                                           <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">Test</span>
-                                       </a> --}}
 
                                        <div class="dropend ">
                                            <a class="dropdown-item dropdown-toggle {{ Route::is('hewan.index', 'fisik.index', 'reproduksi.index') ? 'active' : '' }}"
@@ -257,13 +252,6 @@
                                                <a href="{{ route('hewan.index') }}"
                                                    class="dropdown-item {{ Route::is('hewan.index') ? 'active' : '' }}">
                                                    Data </a>
-                                               <a class="dropdown-item {{ Route::is('status.index') ? 'active' : '' }}"
-                                                   href="{{ route('status.index') }}">
-                                                   <!-- Download SVG icon from http://tabler-icons.io/i/pie-chart -->
-                                                   Status
-                                               </a>
-                                               <a class="dropdown-item {{ Route::is('tipe.index') ? 'active' : '' }}"
-                                                   href="{{ route('tipe.index') }}"> Jenis </a>
                                                <a href="{{ route('reproduksi.index') }}"
                                                    class="dropdown-item {{ Route::is('reproduksi.index') ? 'active' : '' }}">
                                                    Reproduksi

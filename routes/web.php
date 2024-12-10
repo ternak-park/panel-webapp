@@ -32,6 +32,7 @@ All Admin Routes List
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
 
+    
     // Supplier
     Route::get('admin/suppliers', [App\Http\Controllers\Admin\SupplierController::class, 'index'])->name('suppliers.index');
     Route::get('admin/suppliers/create', [App\Http\Controllers\Admin\SupplierController::class, 'create'])->name('suppliers.create');
@@ -62,7 +63,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     // hewan
     Route::get('admin/hewan', [App\Http\Controllers\Admin\HewanController::class, 'index'])->name('hewan.index');
     Route::get('admin/hewan/{id}/show', [App\Http\Controllers\Admin\HewanController::class, 'show'])->name('hewan.show');
-
+    Route::get('/download-image/{namafile}', [pp\Http\Controllers\Admin\HewanController::class, 'downloadGambar'])->name('download.gambar');
     // User List
     Route::get('admin/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
     Route::delete('/users/{id}', [App\Http\Controllers\Admin\UserController::class, 'destroy']);

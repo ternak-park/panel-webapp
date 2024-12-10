@@ -15,6 +15,7 @@ class TernakHewan extends Model
         'jenis',
         'sex',
         'ternak_tipe',
+        'gambar_hewan',
         'created_at',
         'updated_at',
         'deleted_at'

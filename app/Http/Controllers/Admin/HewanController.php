@@ -17,7 +17,7 @@ class HewanController extends Controller
         $data['sub_judul'] = 'Data Hewan';
         if ($request->ajax()) {
             $data = TernakHewan::with('tipe:id,nama_tipe')
-                ->select('id', 'tag', 'jenis', 'sex', 'ternak_tipe');
+                ->select('id', 'tag', 'jenis', 'sex', 'ternak_tipe', 'gambar_hewan');
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -49,5 +49,12 @@ class HewanController extends Controller
     }
 
 
-
+    public function downloadGambar($namafile)
+    {
+        $path = storage_path("app/public/hewan/{$namafile}");
+        if (!file_exists($path)) {
+            abort(404, "File not found");
+        }
+        return response()->download($path, $namafile);
+    }
 }

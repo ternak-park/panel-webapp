@@ -22,6 +22,7 @@ class TernakHewanSeeder extends Seeder
                 'jenis' => 'domba',
                 'sex' => 'jantan',
                 'ternak_tipe' => 4,
+                'gambar_hewan' => 'hewan1.jpg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -30,6 +31,7 @@ class TernakHewanSeeder extends Seeder
                 'jenis' => 'kambing',
                 'sex' => 'betina',
                 'ternak_tipe' => 3,
+                'gambar_hewan' => 'hewan2.jpg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -38,6 +40,7 @@ class TernakHewanSeeder extends Seeder
                 'jenis' => 'domba',
                 'sex' => 'jantan',
                 'ternak_tipe' => 2,
+                'gambar_hewan' => 'hewan3.jpg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
