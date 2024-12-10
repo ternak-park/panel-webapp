@@ -11,5 +11,6 @@ import './datatable/hewan';
 import './datatable/kandang';
 import './datatable/hewanDetail';
 import './datatable/tipe';
+import './datatable/program';
 import './kode';
 

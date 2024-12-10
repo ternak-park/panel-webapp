@@ -47,15 +47,17 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     // fisik
     Route::get('admin/ternak-fisik', [App\Http\Controllers\Admin\FisikController::class, 'index'])->name('fisik.index');
 
-    // Jenis
+    // Tipe
     Route::get('admin/ternak-tipe', [App\Http\Controllers\Admin\TipeController::class, 'index'])->name('tipe.index');
+
+    // Program
+    Route::get('admin/ternak-program', [App\Http\Controllers\Admin\ProgramController::class, 'index'])->name('program.index');
 
     // kandang
     Route::get('admin/kandang', [App\Http\Controllers\Admin\KandangController::class, 'index'])->name('kandang.index');
 
     // kandang
     Route::get('admin/ternak-reproduksi', [App\Http\Controllers\Admin\ReproduksiController::class, 'index'])->name('reproduksi.index');
-
 
     // hewan
     Route::get('admin/hewan', [App\Http\Controllers\Admin\HewanController::class, 'index'])->name('hewan.index');
