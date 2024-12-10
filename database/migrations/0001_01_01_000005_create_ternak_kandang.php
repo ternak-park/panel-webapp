@@ -13,8 +13,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('pemilik')->nullable();
 
             $table->foreign('pemilik')
-                  ->references('id')
-                  ->on('users');
+                ->references('id')
+                ->on('users');
 
             $table->timestamps();
         });

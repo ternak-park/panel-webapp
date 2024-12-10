@@ -44,14 +44,6 @@
     <script src="{{ asset('assets/js/sihub-datatable.js') }}"></script>
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Fonts -->
-    {{-- <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet"> --}}
-    {{-- script --}}
-
-
-    <!-- Scripts -->
     @vite('resources/js/app.js')
 </head>
 

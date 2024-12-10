@@ -10,6 +10,7 @@ class StatusController extends Controller
 {
     public function index(Request $request)
     {
+        $status = Status::all(); 
         $data = [];
         $data['main'] = 'Status';
         $data['judul'] = 'Manajemen Status';

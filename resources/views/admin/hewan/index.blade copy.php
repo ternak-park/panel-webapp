@@ -48,8 +48,6 @@
                     </div>
                 </div>
             </div>
-
-
             <!-- Page body -->
             <div class="page-body">
                 <div class="container-xl">
@@ -75,23 +73,20 @@
                                     {{-- Search: --}}
                                     <div class="ms-2 d-inline-block">
                                         <input type="text" id="searchInput" class="form-control form-control-sm"
-                                            placeholder="Cari Supplier" aria-label="Search supplier">
+                                            placeholder="Cari Hewan" aria-label="Search supplier">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <table class="table card-table table-vcenter text-nowrap datatable" id="tableSupplier">
+                            <table class="table card-table table-vcenter text-nowrap datatable" id="tableHewan">
                                 <thead>
                                     <tr>
-                                        <th style="width: 10%;">Info</th>
-                                        <th style="width: 10%;">Kode</th>
-                                        <th style="width: 20%;">Jenis Pakan</th>
-                                        <th style="width: 50%;">Supplier</th>
-                                        <th style="width: 20%;">Harga Per KG</th>
-                                        {{-- <th>Alamat</th>
-                                        <th>Telepon</th> --}}
-                                        <th style="width: 20%;">Aksi</th>
+                                        <th>ID</th>
+                                        <th>Tag</th>
+                                        <th>Jenis</th>
+                                        <th>Sex</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                             </table>

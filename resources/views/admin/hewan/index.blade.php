@@ -1,60 +1,9 @@
 <x-app>
-    <div class="page">
-        <div class="page-wrapper">
-            <!-- Page header -->
-            <div class="page-header d-print-none">
-                <div class="container-xl">
-                    <div class="row g-2 align-items-center">
-                        <div class="col">
-                            <!-- Page pre-title -->
-                            <div class="page-pretitle">
-                                Overview
-                            </div>
-                            <h2 class="page-title">
-                                {{ $judul }}
-                            </h2>
-                        </div>
-                        <!-- Page title actions -->
-                        <div class="col-12 col-md-auto ms-auto d-print-none">
-                            <div class="btn-list">
-                                <span class="d-none d-sm-inline">
-                                    <a href="sad" class="btn">
-                                        Cetak
-                                    </a>
-                                </span>
-                                <a href="{{ route('suppliers.create') }}"
-                                    class="btn btn-primary d-none d-sm-inline-block">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M12 5l0 14" />
-                                        <path d="M5 12l14 0" />
-                                    </svg>
-                                    Tambah {{ $main }}
-                                </a>
-                                <a href="" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
-                                    data-bs-target="#modal-tambahData" aria-label="Tambah Produk">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M12 5l0 14" />
-                                        <path d="M5 12l14 0" />
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Page body -->
-            <div class="page-body">
-                <div class="container-xl">
+    <div class="page-body">
+        <div class="container-xl">
+            <div class="row row-cards">
+                <div class="col-lg-8">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">{{ $sub_judul }}</h3>
-                        </div>
                         <div class="card-body border-bottom py-3">
                             <div class="d-flex">
                                 <div class="text-muted">
@@ -79,7 +28,7 @@
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <table class="table card-table table-vcenter text-nowrap datatable" id="tableHewan">
+                            <table class="table table-vcenter card-table" id="tableHewan">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -89,6 +38,8 @@
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
+                                <tbody>
+                                </tbody>
                             </table>
                         </div>
                         <div class="card-footer d-flex align-items-center">
@@ -97,9 +48,50 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Tracker</h3>
+                            <table class="table table-sm table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>Sex</th>
+                                        <th class="text-end">Jumlah</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="progressbg">
+                                                <div class="progress progressbg-progress">
+                                                    <div class="progress-bar bg-primary-lt" style="width: 82.54%" role="progressbar" aria-valuenow="82.54" aria-valuemin="0" aria-valuemax="100" aria-label="82.54% Complete">
+                                                        <span class="visually-hidden">82.54% Complete</span>
+                                                    </div>
+                                                </div>
+                                                <div class="progressbg-text">Jantan</div>
+                                            </div>
+                                        </td>
+                                        <td class="w-1 fw-bold text-end">4896</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="progressbg">
+                                                <div class="progress progressbg-progress">
+                                                    <div class="progress-bar bg-primary-lt" style="width: 76.29%" role="progressbar" aria-valuenow="76.29" aria-valuemin="0" aria-valuemax="100" aria-label="76.29% Complete">
+                                                        <span class="visually-hidden">76.29% Complete</span>
+                                                    </div>
+                                                </div>
+                                                <div class="progressbg-text">Betina</div>
+                                            </div>
+                                        </td>
+                                        <td class="w-1 fw-bold text-end">3652</td>
+                                    </tr>
+                               
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
     <script>
         // Delete handler
         $(document).on('click', '.delete', function() {

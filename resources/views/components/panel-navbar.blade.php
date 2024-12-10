@@ -237,7 +237,7 @@
                                <div class="dropdown-menu-columns">
                                    <div class="dropdown-menu-column">
                                        <a class="dropdown-item" href="./empty.html"> Pemilik </a>
-                                       <a class="dropdown-item" href="./accordion.html"> Kandang </a>
+                                       <a class="dropdown-item" href="{{ route('kandang.index') }}"> Kandang </a>
                                        {{-- <a class="dropdown-item" href="./blank.html"> Jenis </a>
                                        <a class="dropdown-item" href="./badges.html">
                                            Status

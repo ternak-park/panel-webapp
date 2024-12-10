@@ -13,11 +13,14 @@ class TernakKandang extends Model
         'kode_kandang',
         'pemilik',
     ];
+    // public function pemilik()
+    // {
+    //     return $this->belongsTo(User::class, 'id');
+    // }
 
     public function pemilik()
     {
-        return $this->belongsTo(User::class, 'id'); 
+        return $this->belongsTo(User::class, 'pemilik', 'id');
     }
-    
-    
+
 }

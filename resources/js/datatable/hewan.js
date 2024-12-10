@@ -41,8 +41,24 @@ $(document).ready(function () {
                 searchable: false,
             },
             { data: "tag" },
-            { data: "jenis_hewan" },
-            { data: "sex" },
+            {
+                data: "jenis_hewan",
+                render: function (data, type, row) {
+                    // Kapital awal huruf
+                    return data
+                        ? data.charAt(0).toUpperCase() + data.slice(1)
+                        : data;
+                },
+            },
+            {
+                data: "sex",
+                render: function (data, type, row) {
+                    // Kapital awal huruf
+                    return data
+                        ? data.charAt(0).toUpperCase() + data.slice(1)
+                        : data;
+                },
+            },
             { data: "action", orderable: false, searchable: false },
         ],
         drawCallback: sihubDrawCallback, // Gawe Nyelok Callback

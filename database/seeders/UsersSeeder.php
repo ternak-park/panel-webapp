@@ -18,6 +18,7 @@ class UsersSeeder extends Seeder
     {
         $users = [
             [
+    
                'name' => 'Admin User',
                'jenis_kelamin' => 'lakilaki',
                'telepon' => '123456789',
@@ -32,6 +33,7 @@ class UsersSeeder extends Seeder
                'remember_token' => Str::random(10),
             ],
             [
+   
                'name' => 'Petugas User',
                'jenis_kelamin' => 'lakilaki',
                'telepon' => '987654321',
@@ -46,6 +48,7 @@ class UsersSeeder extends Seeder
                'remember_token' => Str::random(10),
             ],
             [
+           
                'name' => 'User',
                'jenis_kelamin' => 'perempuan',
                'telepon' => '555666777',

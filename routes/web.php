@@ -47,6 +47,9 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     // Jenis
     Route::get('admin/jenis', [App\Http\Controllers\Admin\JenisController::class, 'index'])->name('jenis.index');
 
+    // kandang
+    Route::get('admin/kandang', [App\Http\Controllers\Admin\KandangController::class, 'index'])->name('kandang.index');
+
     // hewan
     Route::get('admin/hewan', [App\Http\Controllers\Admin\HewanController::class, 'index'])->name('hewan.index');
     Route::get('admin/hewan/{id}/show', [App\Http\Controllers\Admin\HewanController::class, 'show'])->name('hewan.show');

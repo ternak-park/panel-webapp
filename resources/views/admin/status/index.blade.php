@@ -88,6 +88,7 @@
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
+                                <tbody>
                             </table>
                         </div>
                         <div class="card-footer d-flex align-items-center">

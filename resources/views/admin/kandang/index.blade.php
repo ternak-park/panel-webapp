@@ -10,6 +10,8 @@
                             <div class="page-pretitle">
                                 Overview
                             </div>
+                            {{-- <td>{{ $kandang->pemilik->name ?? 'Tidak Ada Pemilik' }}</td> --}}
+
                             <h2 class="page-title">
                                 {{ $judul }}
                             </h2>
@@ -75,23 +77,19 @@
                                     {{-- Search: --}}
                                     <div class="ms-2 d-inline-block">
                                         <input type="text" id="searchInput" class="form-control form-control-sm"
-                                            placeholder="Cari Supplier" aria-label="Search supplier">
+                                            placeholder="Cari Jenis" aria-label="Search supplier">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <table class="table card-table table-vcenter text-nowrap datatable" id="tableSupplier">
+                            <table class="table card-table table-vcenter text-nowrap datatable" id="tableKandang">
                                 <thead>
                                     <tr>
-                                        <th style="width: 10%;">Info</th>
-                                        <th style="width: 10%;">Kode</th>
-                                        <th style="width: 20%;">Jenis Pakan</th>
-                                        <th style="width: 50%;">Supplier</th>
-                                        <th style="width: 20%;">Harga Per KG</th>
-                                        {{-- <th>Alamat</th>
-                                        <th>Telepon</th> --}}
-                                        <th style="width: 20%;">Aksi</th>
+                                        <th></th>
+                                        <th>Kode</th>
+                                        <th>Pemilik</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                             </table>

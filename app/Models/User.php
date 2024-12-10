@@ -73,8 +73,10 @@ class User extends Authenticatable
         // iki default lek gaono
         return asset('static/avatars/AVATAR_SAPI.png');
     }
-    // public function pemilik()
-    // {
-    //     return $this->belongsTo(User::class,  'nama_pemilik','id'); // 'pemilik' adalah foreign key di tabel `ternak_kandang`
-    // }
+// Model User.php
+public function ternakKandang()
+{
+    return $this->hasMany(TernakKandang::class, 'pemilik', 'id');
+}
+    
 }

@@ -30,12 +30,23 @@ $(document).ready(function () {
         },
         ajax: "/admin/suppliers",
         columns: [
+            // {
+            //     data: "id",
+            //     render: function (data, type, row) {
+            //         // Mengganti {id} dengan ID yang sesuai
+            //         var showUrl = supplierShowUrl.replace("{id}", data);
+            //         // return `<a href="${showUrl}" class="view btn btn-primary btn-sm" style="width: 30px; font-size: 12px; padding: 5px;"><i class="fa-solid fa-eye"></i></a>`;
+            //         return `<a href="${showUrl}" class="view btn btn-outline-primary btn-sm" style="width: 30px; font-size: 12px; padding: 5px;"><i class="fa-solid fa-eye"></i></a>`;
+    
+            //     },
+            //     orderable: false,
+            //     searchable: false,
+            // },
             {
                 data: "id",
-                render: function (data, type, row) {
-                    // Mengganti {id} dengan ID yang sesuai
-                    var showUrl = supplierShowUrl.replace("{id}", data);
-                    return `<a href="${showUrl}" class="view btn btn-primary btn-sm" style="width: 30px; font-size: 12px; padding: 5px;"><i class="fa-solid fa-eye"></i></a>`;
+                render: function (data, type, row, meta) {
+          
+                    return meta.row + 1;  
                 },
                 orderable: false,
                 searchable: false,
@@ -46,14 +57,7 @@ $(document).ready(function () {
                     return `
                         <div class="input-icon">
                                  <input type="text" value="${data}" class="form-control" placeholder="Search…" readonly style="width: 80px; font-size: 12px; padding: 5px;">
-                            <span class="input-icon-addon">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                    <path d="M15 3v4a1 1 0 0 0 1 1h4" />
-                                    <path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2z" />
-                                    <path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" />
-                                </svg>
-                            </span>
+                       
                         </div>
                     `;
                 },
@@ -63,8 +67,8 @@ $(document).ready(function () {
             { data: "jenis_pakan" },
             { data: "nama" },
             { data: "harga_per_kg" },
-            { data: "alamat" },
-            { data: "telepon" },
+            // { data: "alamat" },
+            // { data: "telepon" },
             { data: "action", orderable: false, searchable: false },
         ],
         drawCallback: sihubDrawCallback, // Gawe Nyelok Callback

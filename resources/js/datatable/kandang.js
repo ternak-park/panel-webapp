@@ -4,9 +4,9 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
-    var supplierShowUrl = "/admin/jenis/{id}/show";
+    var hewanShowUrl = "/admin/kandang/{id}/show";
 
-    let table = $("#tableJenis").DataTable({
+    let table = $("#tableKandang").DataTable({
         processing: true,
         serverSide: true,
         autoWidth: false,
@@ -28,36 +28,27 @@ $(document).ready(function () {
             },
             processing: "Loading...", // Custom processing message
         },
-        ajax: "/admin/jenis",
+        ajax: "/admin/kandang",
         columns: [
-            { data: "id" },
             {
-                data: "nama_jenis",
+                data: "id",
+                render: function (data, type, row) {
+                    // Mengganti {id} dengan ID yang sesuai
+                    var showUrl = hewanShowUrl.replace("{id}", data);
+                    return `<a href="${showUrl}" class="view btn btn-primary btn-sm" style="width: 30px; font-size: 12px; padding: 5px;"><i class="fa-solid fa-eye"></i></a>`;
+                },
+                orderable: false,
+                searchable: false,
+            },
+            { data: "kode_kandang" },
+            {
+                data: "pemilik_username",
                 render: function (data, type, row) {
                     // Kapital awal huruf
                     return data
                         ? data.charAt(0).toUpperCase() + data.slice(1)
                         : data;
                 },
-            },
-            {
-                data: "created_at",
-                render: function(data, type, row) {
-                    if (!data) return data;
-                    
-                    // Months in Indonesian
-                    const months = [
-                        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
-                        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-                    ];
-                    
-                    const date = new Date(data);
-                    const day = date.getDate().toString().padStart(2, '0');
-                    const month = months[date.getMonth()];
-                    const year = date.getFullYear();
-                    
-                    return `${day} ${month} ${year}`;
-                }
             },
             { data: "action", orderable: false, searchable: false },
         ],
