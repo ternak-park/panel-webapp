@@ -19,11 +19,11 @@ class TernakDetailSeeder extends Seeder
                 'ternak_tag' => 'HEW-001',
                 'sex' => 'jantan',
                 'tanggal_masuk' => '2024-01-01',
-                'ternak_status' => 1, // ini  tabel `status`
-                'ternak_jenis' => 1, // ini  tabel `jenis`
-                'ternak_program' => 1, // ini  tabel `program`
-                'ternak_kandang' => 1, // ini  tabel `ternak_kandang`
-                'jenis_kandang' => 1, // ini  tabel `jenis`
+                'ternak_status' => 1,
+                'ternak_tipe' => 4,
+                'ternak_program' => 1,
+                'ternak_kandang' => 1,
+                'pemilik' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -32,10 +32,10 @@ class TernakDetailSeeder extends Seeder
                 'sex' => 'betina',
                 'tanggal_masuk' => '2024-02-01',
                 'ternak_status' => 2,
-                'ternak_jenis' => 2,
+                'ternak_tipe' => 3,
                 'ternak_program' => 2,
                 'ternak_kandang' => 2,
-                'jenis_kandang' => 2,
+                'pemilik' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -44,10 +44,10 @@ class TernakDetailSeeder extends Seeder
                 'sex' => 'jantan',
                 'tanggal_masuk' => '2024-03-01',
                 'ternak_status' => 1,
-                'ternak_jenis' => 3,
+                'ternak_tipe' => 2,
                 'ternak_program' => 3,
                 'ternak_kandang' => 3,
-                'jenis_kandang' => 1,
+                'pemilik' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

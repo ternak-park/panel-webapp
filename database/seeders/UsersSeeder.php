@@ -18,12 +18,12 @@ class UsersSeeder extends Seeder
     {
         $users = [
             [
-    
+
                'name' => 'Admin User',
-               'jenis_kelamin' => 'lakilaki',
+               'jenis_kelamin' => 'Laki-Laki',
                'telepon' => '123456789',
                'alamat' => 'Jl. Admin No.1',
-               'daerah' => 'wonosalam',
+               'daerah' => 'Wonosalam',
                'username' => 'admin',
                'email' => 'admin@admin.com',
                'type' => 1,
@@ -33,12 +33,12 @@ class UsersSeeder extends Seeder
                'remember_token' => Str::random(10),
             ],
             [
-   
+
                'name' => 'Petugas User',
-               'jenis_kelamin' => 'lakilaki',
+               'jenis_kelamin' => 'Laki-Laki',
                'telepon' => '987654321',
                'alamat' => 'Jl. Petugas No.2',
-               'daerah' => 'purwakarta',
+               'daerah' => 'Purwakarta',
                'username' => 'petugas',
                'email' => 'petugas@petugas.com',
                'type' => 2,
@@ -48,12 +48,12 @@ class UsersSeeder extends Seeder
                'remember_token' => Str::random(10),
             ],
             [
-           
+
                'name' => 'User',
-               'jenis_kelamin' => 'perempuan',
+               'jenis_kelamin' => 'Perempuan',
                'telepon' => '555666777',
                'alamat' => 'Jl. User No.3',
-               'daerah' => 'cilegon',
+               'daerah' => 'Cilegon',
                'username' => 'user',
                'email' => 'user@user.com',
                'type' => 0,

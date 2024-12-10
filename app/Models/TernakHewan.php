@@ -10,15 +10,14 @@ class TernakHewan extends Model
     use HasFactory;
     protected $table = 'ternak_hewan';
     protected $fillable = [
-        'nama',
-        'jenis_kelamin',
-        'telepon',
-        'alamat',
-        'daerah',
-        'username',
-        'email',
-        'type',
-        'password',
+        'id',
+        'tag',
+        'jenis',
+        'sex',
+        'ternak_tipe',
+        'created_at',
+        'updated_at',
+        'deleted_at'
     ];
     public function detail()
     {
@@ -28,9 +27,9 @@ class TernakHewan extends Model
     {
         return $this->hasOne(TernakDetail::class, 'ternak_tag', 'tag');
     }
-    public function jenis()
+    public function tipe()
     {
-        return $this->belongsTo(Jenis::class, 'id');
+        return $this->belongsTo(Tipe::class, 'ternak_tipe', 'id');
     }
 
     public function program()
@@ -40,11 +39,20 @@ class TernakHewan extends Model
 
     public function kandang()
     {
-        return $this->belongsTo(TernakKandang::class, 'id', 'pemilik');
+        return $this->belongsTo(TernakKandang::class, 'id');
     }
-    // public function user()
-    // {
-    //     return $this->belongsTo(User::class, 'id');
-    // }
+
+    public function pemilik()
+    {
+        return $this->hasOneThrough(
+            User::class,
+            TernakDetail::class,
+            'ternak_tag',  // Foreign key di TernakDetail
+            'id',          // Foreign key di User
+            'tag',         // Local key di TernakHewan
+            'pemilik'      // Local key di TernakDetail
+        );
+    }
+
 
 }

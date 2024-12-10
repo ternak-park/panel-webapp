@@ -16,15 +16,20 @@ class HewanController extends Controller
         $data['judul'] = 'Manajemen Hewan';
         $data['sub_judul'] = 'Data Hewan';
         if ($request->ajax()) {
-            $data = TernakHewan::select('id', 'tag', 'jenis_hewan', 'sex');
+            $data = TernakHewan::with('tipe:id,nama_tipe')
+                ->select('id', 'tag', 'jenis', 'sex', 'ternak_tipe');
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     return view('admin.status.action', ['id' => $row->id])->render();
                 })
+                ->editColumn('ternak_tipe', function ($row) {
+                    return $row->tipe->nama_tipe ?? 'Tidak tersedia';
+                })
                 ->rawColumns(['action'])
                 ->make(true);
         }
+
         return view('admin.hewan.index', $data);
 
     }
@@ -32,11 +37,10 @@ class HewanController extends Controller
     public function show($id)
     {
         $ternakHewan = TernakHewan::with([
-            'kandang.pemilik',
             'ternakDetail.status',
-            'jenis',
             'program',
-            'kandang'
+            'kandang',
+            'pemilik'
         ])
             ->where('id', $id)
             ->firstOrFail();

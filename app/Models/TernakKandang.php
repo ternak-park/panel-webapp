@@ -18,9 +18,5 @@ class TernakKandang extends Model
     //     return $this->belongsTo(User::class, 'id');
     // }
 
-    public function pemilik()
-    {
-        return $this->belongsTo(User::class, 'pemilik', 'id');
-    }
 
 }

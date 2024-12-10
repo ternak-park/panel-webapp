@@ -18,6 +18,7 @@ class TernakDetail extends Model
         'ternak_jenis',
         'ternak_program',
         'ternak_kandang',
+        'pemilik'
     ];
 
     protected $casts = [
@@ -43,4 +44,10 @@ class TernakDetail extends Model
     {
         return $this->belongsTo(TernakKandang::class, 'ternak_kandang');
     }
+
+    public function pemilik()
+    {
+        return $this->belongsTo(User::class, 'pemilik', 'id');
+    }
+
 }

@@ -10,10 +10,16 @@ return new class extends Migration {
         Schema::create('ternak_hewan', function (Blueprint $table) {
             $table->id();
             $table->string('tag')->unique();
-            $table->enum('jenis_hewan', ['domba', 'kambing']);
-            $table->enum('sex', ['jantan', 'betina']);
+            $table->enum('jenis', ['Domba', 'Kambing']);
+            $table->enum('sex', ['Jantan', 'Betina']);
+            $table->unsignedBigInteger('ternak_tipe')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('ternak_tipe')
+                  ->references('id')
+                  ->on('tipe')
+                  ->onDelete('cascade');
         });
     }
 

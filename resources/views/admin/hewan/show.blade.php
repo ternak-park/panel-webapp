@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <div class="datagrid">
                         <div class="datagrid-item">
-                            <div class="datagrid-title">Tag Hewan</div>
+                            <div class="datagrid-title">Tag</div>
                             <div class="input-icon">
                                 <input type="text" value="{{ $ternakHewan->tag }}" class="form-control"
                                     placeholder="Search…" readonly />
@@ -28,10 +28,10 @@
                         </div>
                         <div class="datagrid-item">
                             <div class="datagrid-title">Jenis</div>
-                            <div class="datagrid-content">{{ $ternakHewan->jenis_hewan }}</div>
+                            <div class="datagrid-content">{{ $ternakHewan->jenis }}</div>
                         </div>
                         <div class="datagrid-item">
-                            <div class="datagrid-title">Sex</div>
+                            <div class="datagrid-title">Kelamin</div>
                             <div class="datagrid-content">{{ $ternakHewan->sex }}</div>
                         </div>
                         <div class="datagrid-item">
@@ -40,25 +40,25 @@
                             </div>
                         </div>
                         <div class="datagrid-item">
-                            <div class="datagrid-title">Status</div>
+                            <div class="datagrid-title">Kondisi</div>
                             <div class="datagrid-content">
                                 {{ $ternakHewan->ternakDetail->status->nama_status ?? 'Tidak ada status' }}</div>
                         </div>
                         <div class="datagrid-item">
-                            <div class="datagrid-title">Jenis</div>
-                            <div class="datagrid-content">{{ $ternakHewan->jenis->nama_jenis }}</div>
+                            <div class="datagrid-title">Tipe</div>
+                            <div class="datagrid-content">{{ $ternakHewan->tipe->nama_tipe }}</div>
                         </div>
                         <div class="datagrid-item">
                             <div class="datagrid-title">Program</div>
                             <div class="datagrid-content">{{ $ternakHewan->program->nama_program }}</div>
                         </div>
                         <div class="datagrid-item">
-                          <div class="datagrid-title">Kandang</div>
+                          <div class="datagrid-title">Kode Kandang</div>
                           <div class="datagrid-content">{{ $ternakHewan->kandang->kode_kandang }}</div>
                       </div>
                       <div class="datagrid-item">
                         <div class="datagrid-title">Pemilik</div>
-                        <div class="datagrid-content">{{ $ternakHewan->kandang->pemilik }}</div>
+                        <div class="datagrid-content">{{ $ternakHewan->pemilik->name }}</div>
                     </div>
                         <div class="datagrid-item">
                             <div class="datagrid-title">Status</div>
@@ -70,15 +70,8 @@
                         </div>
 
                         <div class="datagrid-item">
-                            <div class="datagrid-title">Tgl Dibuat</div>
+                            <div class="datagrid-title">Tgl Data Dibuat</div>
                             <div class="datagrid-content">{{ $ternakHewan->created_at }}</div>
-                        </div>
-
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">Alamat</div>
-                            <div class="datagrid-content">
-                                {{ $ternakHewan->alamat }}
-                            </div>
                         </div>
 
                     </div>

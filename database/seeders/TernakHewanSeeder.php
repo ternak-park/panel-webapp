@@ -19,32 +19,28 @@ class TernakHewanSeeder extends Seeder
         $data = [
             [
                 'tag' => 'HEW-001',
-                'jenis_hewan' => 'domba',
+                'jenis' => 'domba',
                 'sex' => 'jantan',
+                'ternak_tipe' => 4,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'tag' => 'HEW-002',
-                'jenis_hewan' => 'domba',
+                'jenis' => 'kambing',
                 'sex' => 'betina',
+                'ternak_tipe' => 3,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'tag' => 'HEW-003',
-                'jenis_hewan' => 'kambing',
+                'jenis' => 'domba',
                 'sex' => 'jantan',
+                'ternak_tipe' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
-            [
-                'tag' => 'HEW-004',
-                'jenis_hewan' => 'kambing',
-                'sex' => 'betina',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+            ]
         ];
         DB::table('ternak_hewan')->insert($data);
     }

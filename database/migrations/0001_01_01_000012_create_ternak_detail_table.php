@@ -10,14 +10,14 @@ class CreateTernakDetailTable extends Migration
     {
         Schema::create('ternak_detail', function (Blueprint $table) {
             $table->id();
-            $table->string('ternak_tag'); 
+            $table->string('ternak_tag');
             $table->string('sex')->nullable();
             $table->date('tanggal_masuk')->nullable();
             $table->unsignedBigInteger('ternak_status')->nullable();
-            $table->unsignedBigInteger('ternak_jenis')->nullable();
+            $table->unsignedBigInteger('ternak_tipe')->nullable();
             $table->unsignedBigInteger('ternak_program')->nullable();
             $table->unsignedBigInteger('ternak_kandang')->nullable();
-            $table->unsignedBigInteger('jenis_kandang')->nullable(); 
+            $table->unsignedBigInteger('pemilik')->nullable();
 
             $table->foreign('ternak_tag')
                   ->references('tag')
@@ -29,6 +29,11 @@ class CreateTernakDetailTable extends Migration
                   ->on('status')
                   ->onDelete('cascade');
 
+            $table->foreign('ternak_tipe')
+                  ->references('id')
+                  ->on('tipe')
+                  ->onDelete(action: 'cascade');
+
             $table->foreign('ternak_program')
                   ->references('id')
                   ->on('program')
@@ -39,9 +44,9 @@ class CreateTernakDetailTable extends Migration
                   ->on('ternak_kandang')
                   ->onDelete('cascade');
 
-            $table->foreign('jenis_kandang')  // Pastikan ada foreign key untuk jenis_kandang
+            $table->foreign('pemilik')
                   ->references('id')
-                  ->on('jenis')
+                  ->on('users')
                   ->onDelete('cascade');
 
             $table->timestamps();

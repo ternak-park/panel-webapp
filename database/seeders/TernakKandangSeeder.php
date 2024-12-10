@@ -23,13 +23,13 @@ class TernakKandangSeeder extends Seeder
             ],
             [
                 'kode_kandang' => 'KDG002',
-                'pemilik' => 2, 
+                'pemilik' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'kode_kandang' => 'KDG003',
-                'pemilik' => null, // Kandang tanpa pemilik
+                'pemilik' => null, 
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

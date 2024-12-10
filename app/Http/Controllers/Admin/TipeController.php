@@ -1,31 +1,30 @@
 <?php
 
 namespace App\Http\Controllers\admin;
-use App\Models\Jenis;
+use App\Models\Tipe;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-
-class JenisController extends Controller
+class TipeController extends Controller
 {
     public function index(Request $request)
     {
         $data = [];
-        $data['main'] = 'Jenis';
-        $data['judul'] = 'Manajemen Jenis';
-        $data['sub_judul'] = 'Data Jenis Domba';
+        $data['main'] = 'Tipe';
+        $data['judul'] = 'Manajemen Tipe';
+        $data['sub_judul'] = 'Data Tipe Hewan';
         if ($request->ajax()) {
-            $data = Jenis::select('id', 'nama_jenis', 'created_at', 'updated_at');
+            $data = Tipe::select('id', 'nama_tipe', 'created_at', 'updated_at');
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    return view('admin.jenis.action', ['id' => $row->id])->render();
+                    return view('admin.tipe.action', ['id' => $row->id])->render();
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('admin.jenis.index', $data);
+        return view('admin.tipe.index', $data);
 
     }
 }

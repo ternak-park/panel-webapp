@@ -86,8 +86,8 @@
                             <table class="table card-table table-vcenter text-nowrap datatable" id="tableKandang">
                                 <thead>
                                     <tr>
-                                        <th></th>
-                                        <th>Kode</th>
+                                        <th>Detail</th>
+                                        <th>Kode Kandang</th>
                                         <th>Pemilik</th>
                                         <th>Aksi</th>
                                     </tr>

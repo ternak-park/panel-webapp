@@ -31,10 +31,11 @@
                             <table class="table table-vcenter card-table" id="tableHewan">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th>Detail</th>
                                         <th>Tag</th>
                                         <th>Jenis</th>
-                                        <th>Sex</th>
+                                        <th>Kelamin</th>
+                                        <th>Tipe</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -86,7 +87,7 @@
                                         </td>
                                         <td class="w-1 fw-bold text-end">3652</td>
                                     </tr>
-                               
+
                                 </tbody>
                             </table>
                         </div>

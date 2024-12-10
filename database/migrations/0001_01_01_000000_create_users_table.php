@@ -15,16 +15,15 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->enum('jenis_kelamin', [
-                'lakilaki',
-                'perempuan'
+                'Laki-Laki',
+                'Perempuan'
             ]);
-            $table->string('telepon', 20)->nullable(); 
-            $table->string('alamat')->nullable(); 
+            $table->string('telepon', 20)->nullable();
+            $table->string('alamat')->nullable();
             $table->enum('daerah', [
-                'wonosalam',
-                'purwakarta',
-                'cilegon',
-                'lainya'
+                'Wonosalam',
+                'Purwakarta',
+                'Cilegon'
             ]);
 
             $table->string('username');

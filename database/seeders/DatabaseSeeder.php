@@ -2,12 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Supplier;
-use App\Models\Jenis;
-use App\Models\Program;
-use App\Models\Status;
-
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -21,7 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UsersSeeder::class,
             SupplierSeeder::class,
-            JenisSeeder::class,
+            TipeSeeder::class,
             StatusSeeder::class,
             ProgramSeeder::class,
             TernakHewanSeeder::class,

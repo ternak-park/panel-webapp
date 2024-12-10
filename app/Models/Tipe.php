@@ -1,14 +1,13 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Jenis extends Model
+class Tipe extends Model
 {
     use HasFactory;
 
-    protected $table = 'jenis';
-    protected $fillable = ['id', 'nama_jenis'];
+    protected $table = 'tipe';
+    protected $fillable = ['id', 'nama_tipe'];
 }
