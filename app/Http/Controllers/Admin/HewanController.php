@@ -20,7 +20,7 @@ class HewanController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    return view('admin.status.action', ['id' => $row->id])->render();
+                    return view('admin.hewan.action', ['id' => $row->id])->render();
                 })
                 ->rawColumns(['action'])
                 ->make(true);

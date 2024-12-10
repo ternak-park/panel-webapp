@@ -1,6 +1,8 @@
 <x-app>
     <div class="page-body">
         <div class="container-xl">
+
+            {{-- page header nya --}}
             <div class="page-header d-print-none">
                 <div class="container-xl">
                     <div class="row g-2 align-items-center">
@@ -78,14 +80,15 @@
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-vcenter card-table" id="tableHewan">
+                                <table class="table table-vcenter card-table" id="tableFisik">
                                     <thead>
                                         <tr>
-                                            <th style="width: 10%;">No</th>
-                                            <th style="width: 20%;">Tag</th>
-                                            <th style="width: 30%;">Jenis</th>
-                                            <th style="width: 20%;">Sex</th>
-                                            <th class="w-1" style="width: 30%;">Aksi</th>
+                                            <th>No</th>
+                                            <th>Tag Hewan</th>
+                                            <th>Berat Masuk</th>
+                                            <th>Berat Terakhir</th>
+                                            <th>Kenaikan Berat</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -105,7 +108,7 @@
                                 <table class="table table-sm table-borderless">
                                     <thead>
                                         <tr>
-                                            <th>Sex</th>
+                                            <th>Average</th>
                                             <th class="text-end">Jumlah</th>
                                         </tr>
                                     </thead>
@@ -120,8 +123,9 @@
                                                             <span class="visually-hidden">82.54% Complete</span>
                                                         </div>
                                                     </div>
-                                                    <div class="progressbg-text">Jantan</div>
-                                                </div>
+                                                    <div class="progressbg-text">
+                                                        < 30</div>
+                                                    </div>
                                             </td>
                                             <td class="w-1 fw-bold text-end">4896</td>
                                         </tr>
@@ -130,13 +134,12 @@
                                                 <div class="progressbg">
                                                     <div class="progress progressbg-progress">
                                                         <div class="progress-bar bg-primary-lt" style="width: 76.29%"
-                                                            role="progressbar" aria-valuenow="76.29"
-                                                            aria-valuemin="0" aria-valuemax="100"
-                                                            aria-label="76.29% Complete">
+                                                            role="progressbar" aria-valuenow="76.29" aria-valuemin="0"
+                                                            aria-valuemax="100" aria-label="76.29% Complete">
                                                             <span class="visually-hidden">76.29% Complete</span>
                                                         </div>
                                                     </div>
-                                                    <div class="progressbg-text">Betina</div>
+                                                    <div class="progressbg-text">> 30</div>
                                                 </div>
                                             </td>
                                             <td class="w-1 fw-bold text-end">3652</td>
@@ -147,6 +150,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <script>
                     // Delete handler

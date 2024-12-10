@@ -286,7 +286,7 @@
                                     </a> --}}
 
                                        <div class="dropend ">
-                                           <a class="dropdown-item dropdown-toggle {{ Route::is('hewan.index') ? 'active' : '' }}"
+                                           <a class="dropdown-item dropdown-toggle {{ Route::is('hewan.index', '(fisik.index)') ? 'active' : '' }}"
                                                href="#sidebar-cards" data-bs-toggle="dropdown"
                                                data-bs-auto-close="outside" role="button" aria-expanded="false">
                                                Hewan
@@ -303,12 +303,14 @@
                                                    <span
                                                        class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
                                                </a>
-                                               <a href="./cards-masonry.html" class="dropdown-item"> Pakanan
+                                               <a href="{{ route('fisik.index') }}"
+                                                   class="dropdown-item {{ Route::is('hewan.index') ? 'active' : '' }}">
+                                                   Fisik
                                                </a>
                                            </div>
                                        </div>
                                    </div>
-                                   <div class="dropdown-menu-column">
+                                   {{-- <div class="dropdown-menu-column">
                                        <a class="dropdown-item {{ Route::is('status.index') ? 'active' : '' }}"
                                            href="{{ route('status.index') }}">
                                            <!-- Download SVG icon from http://tabler-icons.io/i/pie-chart -->
@@ -316,9 +318,9 @@
                                        </a>
                                        <a class="dropdown-item {{ Route::is('jenis.index') ? 'active' : '' }}"
                                            href="{{ route('jenis.index') }}"> Jenis </a>
-                                       {{-- <a class="dropdown-item" href="./tabs.html"> Test </a>
+                                       <a class="dropdown-item" href="./tabs.html"> Test </a>
 
-                                    <div class="dropend">
+                                     <div class="dropend">
                                         <a class="dropdown-item dropdown-toggle" href="#sidebar-authentication"
                                             data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button"
                                             aria-expanded="false"> Test </a>
@@ -328,8 +330,8 @@
                                             <a href="./sign-in-cover.html" class="dropdown-item"> Test </a>
                                             <a href="./sign-up.html" class="dropdown-item"> Sign up </a>
                                         </div>
-                                    </div> --}}
-                                   </div>
+                                         </div>
+                                   </div> --}}
                                </div>
                            </div>
                        </li>

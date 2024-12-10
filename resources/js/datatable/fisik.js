@@ -4,13 +4,13 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
-    var hewanShowUrl = "/admin/hewan/{id}/show";
+    var supplierShowUrl = "/admin/fisik-fisik/{id}/show";
 
-    let table = $("#tableHewan").DataTable({
+    let table = $("#tableFisik").DataTable({
         processing: true,
         serverSide: true,
         autoWidth: false,
-        // scrollX: true,
+        scrollX: true,
         responsive: true,
         pageLength: 10,
         dom: "t", // Remove default search and pagination
@@ -28,29 +28,11 @@ $(document).ready(function () {
             },
             processing: "Loading...", // Custom processing message
         },
-        ajax: "/admin/hewan",
+        ajax: "/admin/ternak-fisik",
         columns: [
+            { data: "id" },
             {
-                data: "id",
-                render: function (data, type, row, meta) {
-                    return meta.row + 1;
-                },
-                orderable: false,
-                searchable: false,
-            },
-            // {
-            //     data: "id",
-            //     render: function (data, type, row) {
-            //         // Mengganti {id} dengan ID yang sesuai
-            //         var showUrl = hewanShowUrl.replace("{id}", data);
-            //         return `<a href="${showUrl}" class="view btn btn-primary btn-sm" style="width: 30px; font-size: 12px; padding: 5px;"><i class="fa-solid fa-eye"></i></a>`;
-            //     },
-            //     orderable: false,
-            //     searchable: false,
-            // },
-            { data: "tag" },
-            {
-                data: "jenis_hewan",
+                data: "ternak_tag",
                 render: function (data, type, row) {
                     // Kapital awal huruf
                     return data
@@ -58,15 +40,9 @@ $(document).ready(function () {
                         : data;
                 },
             },
-            {
-                data: "sex",
-                render: function (data, type, row) {
-                    // Kapital awal huruf
-                    return data
-                        ? data.charAt(0).toUpperCase() + data.slice(1)
-                        : data;
-                },
-            },
+            { data: "berat_masuk" },
+            { data: "berat_terakhir" },
+            { data: "kenaikan_berat" },
             { data: "action", orderable: false, searchable: false },
         ],
         drawCallback: sihubDrawCallback, // Gawe Nyelok Callback

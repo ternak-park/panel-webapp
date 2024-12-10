@@ -32,7 +32,25 @@ $(document).ready(function () {
         columns: [
             { data: "id" },
             { data: "nama_status" },
-            { data: "created_at" },
+            {
+                data: "created_at",
+                render: function(data, type, row) {
+                    if (!data) return data;
+                    
+                    // Months in Indonesian
+                    const months = [
+                        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
+                        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+                    ];
+                    
+                    const date = new Date(data);
+                    const day = date.getDate().toString().padStart(2, '0');
+                    const month = months[date.getMonth()];
+                    const year = date.getFullYear();
+                    
+                    return `${day} ${month} ${year}`;
+                }
+            },
             { data: "action", orderable: false, searchable: false },
         ],
         drawCallback: sihubDrawCallback, // Gawe Nyelok Callback

@@ -44,6 +44,9 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     // status
     Route::get('admin/status', [App\Http\Controllers\Admin\StatusController::class, 'index'])->name('status.index');
 
+    // fisik
+    Route::get('admin/ternak-fisik', [App\Http\Controllers\Admin\FisikController::class, 'index'])->name('fisik.index');
+
     // Jenis
     Route::get('admin/jenis', [App\Http\Controllers\Admin\JenisController::class, 'index'])->name('jenis.index');
 
