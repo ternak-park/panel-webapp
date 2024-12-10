@@ -255,7 +255,7 @@
                            </a>
                        </li>
                        <li
-                           class="nav-item dropdown {{ Route::is('status.index', 'jenis.index', 'hewan.index') ? 'active' : '' }}">
+                           class="nav-item dropdown {{ Route::is('status.index', 'tipe.index', 'hewan.index') ? 'active' : '' }}">
                            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                data-bs-auto-close="outside" role="button" aria-expanded="false">
                                <span
@@ -316,8 +316,8 @@
                                            <!-- Download SVG icon from http://tabler-icons.io/i/pie-chart -->
                                            Status
                                        </a>
-                                       <a class="dropdown-item {{ Route::is('jenis.index') ? 'active' : '' }}"
-                                           href="{{ route('jenis.index') }}"> Jenis </a>
+                                       <a class="dropdown-item {{ Route::is('tipe.index') ? 'active' : '' }}"
+                                           href="{{ route('tipe.index') }}"> Jenis </a>
                                        <a class="dropdown-item" href="./tabs.html"> Test </a>
 
                                      <div class="dropend">

@@ -4,9 +4,9 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
-    var supplierShowUrl = "/admin/jenis/{id}/show";
+    var supplierShowUrl = "/admin/ternak-tipe/{id}/show";
 
-    let table = $("#tableJenis").DataTable({
+    let table = $("#tableTipe").DataTable({
         processing: true,
         serverSide: true,
         autoWidth: false,
@@ -28,11 +28,11 @@ $(document).ready(function () {
             },
             processing: "Loading...", // Custom processing message
         },
-        ajax: "/admin/jenis",
+        ajax: "/admin/ternak-tipe",
         columns: [
             { data: "id" },
             {
-                data: "nama_jenis",
+                data: "nama_tipe",
                 render: function (data, type, row) {
                     // Kapital awal huruf
                     return data
@@ -44,18 +44,18 @@ $(document).ready(function () {
                 data: "created_at",
                 render: function(data, type, row) {
                     if (!data) return data;
-                    
+
                     // Months in Indonesian
                     const months = [
-                        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
+                        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
                         'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
                     ];
-                    
+
                     const date = new Date(data);
                     const day = date.getDate().toString().padStart(2, '0');
                     const month = months[date.getMonth()];
                     const year = date.getFullYear();
-                    
+
                     return `${day} ${month} ${year}`;
                 }
             },

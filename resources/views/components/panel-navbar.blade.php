@@ -215,7 +215,7 @@
                            </a>
                        </li>
                        <li
-                           class="nav-item dropdown {{ Route::is('status.index', 'jenis.index', 'hewan.index', 'fisik.index', 'kandang.index' , 'reproduksi.index') ? 'active' : '' }}">
+                           class="nav-item dropdown {{ Route::is('hewan.index', 'fisik.index', 'kandang.index', 'reproduksi.index') ? 'active' : '' }}">
                            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                data-bs-auto-close="outside" role="button" aria-expanded="false">
                                <span
@@ -246,7 +246,7 @@
                                        </a> --}}
 
                                        <div class="dropend ">
-                                           <a class="dropdown-item dropdown-toggle {{ Route::is('hewan.index', 'fisik.index' , 'reproduksi.index') ? 'active' : '' }}"
+                                           <a class="dropdown-item dropdown-toggle {{ Route::is('hewan.index', 'fisik.index', 'reproduksi.index') ? 'active' : '' }}"
                                                href="#sidebar-cards" data-bs-toggle="dropdown"
                                                data-bs-auto-close="outside" role="button" aria-expanded="false">
                                                Hewan
@@ -262,9 +262,10 @@
                                                    <!-- Download SVG icon from http://tabler-icons.io/i/pie-chart -->
                                                    Status
                                                </a>
-                                               <a class="dropdown-item {{ Route::is('jenis.index') ? 'active' : '' }}"
-                                                   href="{{ route('jenis.index') }}"> Jenis </a>
-                                               <a href="{{ route('reproduksi.index') }}" class="dropdown-item {{ Route::is('reproduksi.index') ? 'active' : '' }}">
+                                               <a class="dropdown-item {{ Route::is('tipe.index') ? 'active' : '' }}"
+                                                   href="{{ route('tipe.index') }}"> Jenis </a>
+                                               <a href="{{ route('reproduksi.index') }}"
+                                                   class="dropdown-item {{ Route::is('reproduksi.index') ? 'active' : '' }}">
                                                    Reproduksi
                                                    <span
                                                        class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
@@ -276,31 +277,43 @@
                                            </div>
                                        </div>
                                    </div>
-                                   {{-- <div class="dropdown-menu-column">
-                                       <a class="dropdown-item {{ Route::is('status.index') ? 'active' : '' }}"
-                                           href="{{ route('status.index') }}">
-                                           <!-- Download SVG icon from http://tabler-icons.io/i/pie-chart -->
-                                           Status
-                                       </a>
-                                       <a class="dropdown-item {{ Route::is('jenis.index') ? 'active' : '' }}"
-                                           href="{{ route('jenis.index') }}"> Jenis </a>
-                                       <a class="dropdown-item" href="./tabs.html"> Test </a>
-
-                                       <div class="dropend">
-                                           <a class="dropdown-item dropdown-toggle" href="#sidebar-authentication"
-                                               data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button"
-                                               aria-expanded="false"> Test </a>
-                                           <div class="dropdown-menu">
-                                               <a href="./sign-in.html" class="dropdown-item"> Test </a>
-                                               <a href="./sign-in-illustration.html" class="dropdown-item"> Test </a>
-                                               <a href="./sign-in-cover.html" class="dropdown-item"> Test </a>
-                                               <a href="./sign-up.html" class="dropdown-item"> Sign up </a>
-                                           </div>
-                                       </div>
-                                   </div> --}}
                                </div>
                            </div>
                        </li>
+
+                       {{-- ATRIBUT --}}
+                       <li class="nav-item dropdown {{ Route::is('status.index', 'tipe.index') ? 'active' : '' }}">
+                           <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                               data-bs-auto-close="outside" role="button" aria-expanded="false">
+                               <span
+                                   class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                       stroke-linecap="round" stroke-linejoin="round"
+                                       class="icon icon-tabler icons-tabler-outline icon-tabler-building-cottage">
+                                       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                       <path d="M3 21l18 0" />
+                                       <path d="M4 21v-11l2.5 -4.5l5.5 -2.5l5.5 2.5l2.5 4.5v11" />
+                                       <path d="M12 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                       <path d="M9 21v-5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v5" />
+                                   </svg>
+                               </span>
+                               <span class="nav-link-title"> Atribut </span>
+                           </a>
+                           <div class="dropdown-menu">
+                               <div class="dropdown-menu-columns">
+                                   <div class="dropdown-menu-column">
+
+                                       <a class="dropdown-item {{ Route::is('status.index') ? 'active' : '' }}"
+                                           href="{{ route('status.index') }}"> Status </a>
+                                       <a class="dropdown-item {{ Route::is('tipe.index') ? 'active' : '' }}"
+                                           href="{{ route('tipe.index') }}"> Tipe </a>
+                                   </div>
+
+                               </div>
+                           </div>
+                       </li>
+
                        <li class="nav-item {{ Route::is('suppliers.index') ? 'active' : '' }}">
                            <a class="nav-link" href="{{ route('suppliers.index') }}">
                                <span

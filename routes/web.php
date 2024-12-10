@@ -48,7 +48,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('admin/ternak-fisik', [App\Http\Controllers\Admin\FisikController::class, 'index'])->name('fisik.index');
 
     // Jenis
-    Route::get('admin/jenis', [App\Http\Controllers\Admin\JenisController::class, 'index'])->name('jenis.index');
+    Route::get('admin/ternak-tipe', [App\Http\Controllers\Admin\TipeController::class, 'index'])->name('tipe.index');
 
     // kandang
     Route::get('admin/kandang', [App\Http\Controllers\Admin\KandangController::class, 'index'])->name('kandang.index');
@@ -60,8 +60,6 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     // hewan
     Route::get('admin/hewan', [App\Http\Controllers\Admin\HewanController::class, 'index'])->name('hewan.index');
     Route::get('admin/hewan/{id}/show', [App\Http\Controllers\Admin\HewanController::class, 'show'])->name('hewan.show');
-    // detail hewan
-    Route::get('admin/hewan/detail', [App\Http\Controllers\Admin\HewanDetailController::class, 'index'])->name('hewanDetail.index');
 
     // User List
     Route::get('admin/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
@@ -69,7 +67,6 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
     Route::get('admin/users/users-admin', [App\Http\Controllers\Admin\UserController::class, 'adalahAdmin'])->name('users.adalahAdmin');
     Route::delete('/users/users-admin/{id}', [App\Http\Controllers\Admin\UserController::class, 'destroy']);
-
 });
 
 /*------------------------------------------
@@ -81,5 +78,3 @@ Route::middleware(['auth', 'user-access:petugas'])->group(function () {
 
     Route::get('/petugas/home', [HomeController::class, 'petugasHome'])->name('petugas.home');
 });
-
-

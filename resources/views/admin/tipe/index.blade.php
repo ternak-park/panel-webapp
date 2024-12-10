@@ -81,7 +81,7 @@
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <table class="table card-table table-vcenter text-nowrap datatable" id="tableJenis">
+                            <table class="table card-table table-vcenter text-nowrap datatable" id="tableTipe">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
