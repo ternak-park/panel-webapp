@@ -1,5 +1,5 @@
 <script src="{{ asset('assets/js/kode/status.js') }}"></script>
-
+<script src="{{ asset('assets/libs/tom-select/dist/js/tom-select.base.min.js?1667333929') }}" defer></script>
 
 <x-app>
     <div class="page-body">

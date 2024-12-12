@@ -1,4 +1,5 @@
 <script src="{{ asset('assets/js/kode/hewan.js') }}"></script>
+<script src="{{ asset('assets/js/tom-select/hewan.js') }}"></script>
 <x-app>
     <div class="page-body">
         <div class="container-xl">
@@ -30,7 +31,7 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-group mb-3">
+                                    <div class="mb-3">
                                         <label for="sex">Jenis Kelamin</label>
                                         <select class="form-control" id="sex" name="sex" required>
                                             <option value="Jantan" {{ old('sex') == 'Jantan' ? 'selected' : '' }}>Jantan
@@ -39,28 +40,46 @@
                                             </option>
                                         </select>
                                     </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="tanggal_masuk">Tanggal Masuk</label>
+                                        <input type="date" class="form-control" id="tanggal_masuk"
+                                            name="tanggal_masuk" value="{{ old('tanggal_masuk') }}" required>
+                                    </div>
+                                </div>
 
-                                </div>
-                                <div class="form-group">
-                                    <label for="tanggal_masuk">Tanggal Masuk</label>
-                                    <input type="date" class="form-control" id="tanggal_masuk" name="tanggal_masuk"
-                                        value="{{ old('tanggal_masuk') }}" required>
-                                </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Status</label>
-                                        <input type="number" class="form-control" id="ternak_status_indeks"
-                                            name="ternak_status_indeks" value="{{ old('ternak_status_indeks') }}">
+                                        <label class="form-label">Pilih Ternak</label>
+                                        <select type="text" class="form-select" id="select-labels-status"
+                                            name="ternak_status_indeks">
+                                            @foreach ($statusTernak as $status)
+                                                <option value="{{ $status->id }}"
+                                                    data-custom-properties='&lt;span class="badge bg-primary-lt"&gt;{{ $status->kode_status }}&lt;/span&gt;'>
+                                                    {{ $status->nama_status }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Tipe</label>
-                                        <input type="number" class="form-control" id="ternak_tipe_indeks"
-                                            name="ternak_tipe_indeks" value="{{ old('ternak_tipe_indeks') }}">
+                                        <select type="text" class="form-select" id="select-labels-tipe"
+                                        name="ternak_tipe_indeks">
+                                        @foreach ($tipeTernak as $tipe)
+                                            <option value="{{ $tipe->id }}"
+                                                data-custom-properties='&lt;span class="badge bg-primary-lt"&gt;{{ $tipe->kode_tipe }}&lt;/span&gt;'>
+                                                {{ $tipe->nama_tipe }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -69,15 +88,29 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Kesehatan</label>
-                                        <input type="number" class="form-control" id="ternak_kesehatan_indeks"
-                                            name="ternak_kesehatan_indeks" value="{{ old('ternak_kesehatan_indeks') }}">
+                                        <select class="form-control" id="ternak_kesehatan_indeks"
+                                            name="ternak_kesehatan_indeks">
+                                            <option value="">-- Pilih Kesehatan --</option>
+                                            @foreach ($kesehatanTernak as $kesehatan)
+                                                <option value="{{ $kesehatan->id }}">{{ $kesehatan->nama_kesehatan }}
+                                                    ({{ $kesehatan->kode }})
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Kandang</label>
-                                        <input type="number" class="form-control" id="ternak_program_indeks"
-                                            name="ternak_program_indeks" value="{{ old('ternak_program_indeks') }}">
+                                        <label class="form-label">Program</label>
+                                        <select class="form-control" id="ternak_program_indeks"
+                                            name="ternak_program_indeks">
+                                            <option value="">-- Pilih Program --</option>
+                                            @foreach ($programTernak as $program)
+                                                <option value="{{ $program->id }}">{{ $program->nama_program }}
+                                                    ({{ $program->kode }})
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -86,20 +119,34 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Kandang Ternak</label>
-                                        <input type="number" class="form-control" id="ternak_kandang_indeks"
-                                            name="ternak_kandang_indeks" value="{{ old('ternak_kandang_indeks') }}">
+                                        <select class="form-control" id="ternak_kandang_indeks"
+                                            name="ternak_kandang_indeks">
+                                            <option value="">-- Pilih Kandang --</option>
+                                            @foreach ($kandangTernak as $kandang)
+                                                <option value="{{ $kandang->id }}">{{ $kandang->nama }}
+                                                    ({{ $kandang->kode_kandang }})
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Pemilik</label>
-                                        <input type="number" class="form-control" id="pemilik_indeks"
-                                            name="pemilik_indeks" value="{{ old('pemilik_indeks') }}">
+                                        <select class="form-control" id="pemilik_indeks" name="pemilik_indeks">
+                                            <option value="">-- Pilih Pemilik --</option>
+                                            @foreach ($pemilikTernak as $pemilik)
+                                                <option value="{{ $pemilik->id }}">{{ $pemilik->username }}
+                                                    ({{ $pemilik->kode }})
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="gambar_hewan">Gambar Hewan</label>
-                                    <input type="file" class="form-control" id="gambar_hewan" name="gambar_hewan">
+                                    <input type="file" class="form-control" id="gambar_hewan"
+                                        name="gambar_hewan">
                                 </div>
                             </div>
 
@@ -107,7 +154,7 @@
                         </div>
                         <div class="card-footer text-end">
                             <div class="d-flex">
-                                <a href="{{ route('status.index') }}" class="btn btn-link">Batal</a>
+                                <a href="{{ route('hewan.index') }}" class="btn btn-link">Batal</a>
                                 <button type="submit" class="btn btn-primary ms-auto">Simpan Data</button>
                             </div>
                         </div>

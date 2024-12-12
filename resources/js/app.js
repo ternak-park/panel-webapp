@@ -21,3 +21,4 @@ import './datatable/program';
 import './kode';
 
 import './kode/status';
+import './tom-select.base.min';

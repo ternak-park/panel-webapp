@@ -3,6 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kesehatan;
+use App\Models\Program;
+use App\Models\Status;
+use App\Models\TernakKandang;
+use App\Models\Tipe;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\TernakHewan;
 use Yajra\DataTables\Facades\DataTables;
@@ -138,6 +144,16 @@ class HewanController extends Controller
     }
     public function create()
     {
-        return view('admin.hewan.create');
+        // Ambil data yang dibutuhkan dari database
+        $statusTernak = Status::all();  // Mengambil semua data status ternak
+        $tipeTernak = Tipe::all();      // Mengambil semua data tipe ternak
+        $kesehatanTernak = Kesehatan::all();  // Mengambil semua data kesehatan ternak
+        $programTernak = Program::all();  // Mengambil semua data program ternak
+        $kandangTernak = TernakKandang::all();  // Mengambil semua data kandang ternak
+        $pemilikTernak = User::all();  // Mengambil semua data pemilik ternak
+    
+        // Mengirim data ke view admin.hewan.create
+        return view('admin.hewan.create', compact('statusTernak', 'tipeTernak', 'kesehatanTernak', 'programTernak', 'kandangTernak', 'pemilikTernak'));
     }
+    
 }

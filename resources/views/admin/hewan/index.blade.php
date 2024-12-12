@@ -81,12 +81,11 @@
                                 <table class="table table-vcenter card-table" id="tableHewan">
                                     <thead>
                                         <tr>
-                                            <th style="width: 10%;">No</th>
+                                            <th style="width: 5%;">No</th>
                                             <th style="width: 15%;">Tag</th>
                                             <th style="width: 15%;">Jenis</th>
                                             <th style="width: 15%;">Sex</th>
                                             <th style="width: 25%;">Tipe</th>
-
                                             <th class="w-1" style="width: 30%;">Aksi</th>
                                         </tr>
                                     </thead>
