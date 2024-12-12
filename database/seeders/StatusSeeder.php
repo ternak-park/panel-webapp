@@ -12,19 +12,16 @@ class StatusSeeder extends Seeder
     {
         $statuss = [
             [
-                'nama_status' => 'Sehat',
+                'nama_status' => 'Aktif',
             ],
             [
-                'nama_status' => 'Malnutrisi',
+                'nama_status' => 'Dijual',
             ],
             [
-                'nama_status' => 'Sakit',
+                'nama_status' => 'Mati',
             ],
             [
-                'nama_status' => 'Karantina',
-            ],
-            [
-                'nama_status' => 'Sedang Diobati',
+                'nama_status' => 'Hilang',
             ]
         ];
 

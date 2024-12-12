@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             UsersSeeder::class,
             SupplierSeeder::class,
             TipeSeeder::class,
+            KesehatanSeeder::class,
             StatusSeeder::class,
             ProgramSeeder::class,
             TernakHewanSeeder::class,
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder
             TernakFisikSeeder::class,
             TernakReproduksiSeeder::class,
             TernakEkonomiSeeder::class,
+            TernakKondisiSeeder::class,
             TernakDetailSeeder::class,
         ]);
     }

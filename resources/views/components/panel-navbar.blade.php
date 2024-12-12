@@ -262,6 +262,10 @@
                                                    class="dropdown-item {{ Route::is('fisik.index') ? 'active' : '' }}">
                                                    Fisik
                                                </a>
+                                               <a href="{{ route('kondisi.index') }}"
+                                                   class="dropdown-item {{ Route::is('kondisi.index') ? 'active' : '' }}">
+                                                   Kondisi
+                                               </a>
                                            </div>
                                        </div>
                                    </div>
@@ -270,7 +274,7 @@
                        </li>
 
                        {{-- ATRIBUT --}}
-                       <li class="nav-item dropdown {{ Route::is('status.index', 'tipe.index') ? 'active' : '' }}">
+                       <li class="nav-item dropdown {{ Route::is('status.index', 'tipe.index','program.index', 'kesehatan.index') ? 'active' : '' }}">
                            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                data-bs-auto-close="outside" role="button" aria-expanded="false">
                                <span
@@ -298,6 +302,8 @@
                                            href="{{ route('tipe.index') }}"> Tipe </a>
                                         <a class="dropdown-item {{ Route::is('program.index') ? 'active' : '' }}"
                                            href="{{ route('program.index') }}"> Program </a>
+                                           <a class="dropdown-item {{ Route::is('kesehatan.index') ? 'active' : '' }}"
+                                           href="{{ route('kesehatan.index') }}"> Kesehatan </a>
                                    </div>
 
                                </div>

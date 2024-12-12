@@ -4,9 +4,9 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
-    var supplierShowUrl = "/admin/hewan/detail/{id}/show";
+    var supplierShowUrl = "/admin/ternak-kondisi/{id}/show";
 
-    let table = $("#tableHewanDetail").DataTable({
+    let table = $("#tableKondisi").DataTable({
         processing: true,
         serverSide: true,
         autoWidth: false,
@@ -28,18 +28,27 @@ $(document).ready(function () {
             },
             processing: "Loading...", // Custom processing message
         },
-        ajax: "/admin/hewan/detail",
+        ajax: "/admin/ternak-kondisi",
         columns: [
             { data: "id" },
-            { data: "ternak_tag" },
-            { data: "sex" },
-            { data: "tanggal_masuk" },
-            { data: "ternak_status" },
-            { data: "ternak_jenis" },
-            { data: "ternak_kesehatan" },
-            { data: "ternak_program" },
-            { data: "ternak_kandang" },
-            { data: "jenis_kandang" },
+            {
+                data: "ternak_tag",
+                render: function (data, type, row) {
+                    return data ? data : "Tidak tersedia";
+                },
+            },
+            {
+                data: "ternak_kesehatan", 
+                render: function (data, type, row) {
+                    return row.kesehatan ? row.kesehatan.nama_kesehatan : "Tidak tersedia";
+                },
+            },
+            {
+                data: "ternak_status",
+                render: function (data, type, row) {
+                    return row.status ? row.status.nama_status : "Tidak tersedia";
+                },
+            },
             { data: "action", orderable: false, searchable: false },
         ],
         drawCallback: sihubDrawCallback, // Gawe Nyelok Callback

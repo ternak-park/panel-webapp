@@ -19,12 +19,12 @@
                                             <span class="avatar avatar-xl mb-4 rounded"
                                                 style="
                                                     background-image: url('{{ $ternakHewan->gambar_hewan ? asset('storage/hewan/' . $ternakHewan->gambar_hewan) : asset('storage/hewan/default.jpg') }}');
-                                                    background-size: cover; 
-                                                    background-position: center; 
-                                                    width: 100%; 
-                                                    max-width: 500px; 
-                                                    height: auto; 
-                                                    aspect-ratio: 1/1; 
+                                                    background-size: cover;
+                                                    background-position: center;
+                                                    width: 100%;
+                                                    max-width: 500px;
+                                                    height: auto;
+                                                    aspect-ratio: 1/1;
                                                     border-radius: 50%;
                                                 ">
                                             </span>
@@ -86,7 +86,7 @@
                             </div>
                         </div>
                         <div class="datagrid-item">
-                            <div class="datagrid-title">Kondisi</div>
+                            <div class="datagrid-title">Status</div>
                             <div class="datagrid-content">
                                 {{ $ternakHewan->ternakDetail->status->nama_status ?? 'Tidak ada status' }}</div>
                         </div>
@@ -94,6 +94,10 @@
                             <div class="datagrid-title">Tipe</div>
                             <div class="datagrid-content">{{ $ternakHewan->tipe->nama_tipe }}</div>
                         </div>
+                        {{-- <div class="datagrid-item">
+                            <div class="datagrid-title">Kondisi</div>
+                            <div class="datagrid-content">{{ $ternakHewan->kesehatan->nama_kesehatan }}</div>
+                        </div> --}}
                         <div class="datagrid-item">
                             <div class="datagrid-title">Program</div>
                             <div class="datagrid-content">{{ $ternakHewan->program->nama_program }}</div>
@@ -127,15 +131,6 @@
                             <div class="datagrid-content">{{ $ternakHewan->pemilik->name }}</div>
                         </div>
                         <div class="datagrid-item">
-                            <div class="datagrid-title">Status</div>
-                            <div class="datagrid-content">
-                                <span class="status status-green">
-                                    Aktif
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="datagrid-item">
                             <div class="datagrid-title">Tgl Data Dibuat</div>
                             <div class="datagrid-content">{{ $ternakHewan->created_at }}</div>
                         </div>
@@ -153,13 +148,13 @@
 
     <script>
         document.getElementById('downloadLink').addEventListener('click', function (e) {
-            e.preventDefault(); 
+            e.preventDefault();
             const namafile = '{{ $ternakHewan->gambar_hewan ? $ternakHewan->gambar_hewan : "default.jpg" }}';
             const filePath = '{{ asset("storage/hewan/") }}/' + namafile;
-    
+
             const link = document.createElement('a');
             link.href = filePath;
-            link.download = namafile; 
+            link.download = namafile;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);

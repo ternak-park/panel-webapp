@@ -4,9 +4,9 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
-    var supplierShowUrl = "/admin/hewan/detail/{id}/show";
+    var hewanShowUrl = "/admin/ternak-kesehatan/{id}/show";
 
-    let table = $("#tableHewanDetail").DataTable({
+    let table = $("#tableKesehatan").DataTable({
         processing: true,
         serverSide: true,
         autoWidth: false,
@@ -28,18 +28,20 @@ $(document).ready(function () {
             },
             processing: "Loading...", // Custom processing message
         },
-        ajax: "/admin/hewan/detail",
+        ajax: "/admin/ternak-kesehatan",
         columns: [
-            { data: "id" },
-            { data: "ternak_tag" },
-            { data: "sex" },
-            { data: "tanggal_masuk" },
-            { data: "ternak_status" },
-            { data: "ternak_jenis" },
-            { data: "ternak_kesehatan" },
-            { data: "ternak_program" },
-            { data: "ternak_kandang" },
-            { data: "jenis_kandang" },
+            {
+                data: "id",
+                render: function (data, type, row) {
+                    // Mengganti {id} dengan ID yang sesuai
+                    var showUrl = hewanShowUrl.replace("{id}", data);
+                    return `<a href="${showUrl}" class="view btn btn-primary btn-sm" style="width: 30px; font-size: 12px; padding: 5px;"><i class="fa-solid fa-eye"></i></a>`;
+                },
+                orderable: false,
+                searchable: false,
+            },
+            { data: "nama_kesehatan" },
+
             { data: "action", orderable: false, searchable: false },
         ],
         drawCallback: sihubDrawCallback, // Gawe Nyelok Callback

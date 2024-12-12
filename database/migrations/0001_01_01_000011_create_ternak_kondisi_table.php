@@ -9,19 +9,13 @@ return new class extends Migration {
     {
         Schema::create('ternak_kondisi', function (Blueprint $table) {
             $table->id();
-            $table->enum('status_kepemilikan', [
-                'aktif',
-                'dijual',
-                'mati',
-                'hilang'
-            ])->default('aktif');
-
-            $table->unsignedBigInteger('ternak_tag');
+            $table->string('ternak_tag');
+            $table->unsignedBigInteger('ternak_kesehatan');
             $table->unsignedBigInteger('ternak_status');
 
-            $table->foreign('ternak_tag')
+            $table->foreign('ternak_kesehatan')
                   ->references('id')
-                  ->on('ternak_hewan')
+                  ->on('kesehatan')
                   ->onDelete('cascade');
 
             $table->foreign('ternak_status')

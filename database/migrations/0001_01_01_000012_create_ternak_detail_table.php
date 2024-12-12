@@ -15,6 +15,7 @@ class CreateTernakDetailTable extends Migration
             $table->date('tanggal_masuk')->nullable();
             $table->unsignedBigInteger('ternak_status')->nullable();
             $table->unsignedBigInteger('ternak_tipe')->nullable();
+            $table->unsignedBigInteger('ternak_kesehatan')->nullable();
             $table->unsignedBigInteger('ternak_program')->nullable();
             $table->unsignedBigInteger('ternak_kandang')->nullable();
             $table->unsignedBigInteger('pemilik')->nullable();
@@ -33,6 +34,11 @@ class CreateTernakDetailTable extends Migration
                   ->references('id')
                   ->on('tipe')
                   ->onDelete(action: 'cascade');
+
+            $table->foreign('ternak_kesehatan')
+                  ->references('id')
+                  ->on('kesehatan')
+                  ->onDelete('cascade');
 
             $table->foreign('ternak_program')
                   ->references('id')

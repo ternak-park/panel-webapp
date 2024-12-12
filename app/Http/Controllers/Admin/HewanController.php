@@ -38,6 +38,7 @@ class HewanController extends Controller
     {
         $ternakHewan = TernakHewan::with([
             'ternakDetail.status',
+            'kesehatan',
             'program',
             'kandang',
             'pemilik'

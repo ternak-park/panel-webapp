@@ -32,7 +32,7 @@ All Admin Routes List
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
 
-    
+
     // Supplier
     Route::get('admin/suppliers', [App\Http\Controllers\Admin\SupplierController::class, 'index'])->name('suppliers.index');
     Route::get('admin/suppliers/create', [App\Http\Controllers\Admin\SupplierController::class, 'create'])->name('suppliers.create');
@@ -48,6 +48,9 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     // fisik
     Route::get('admin/ternak-fisik', [App\Http\Controllers\Admin\FisikController::class, 'index'])->name('fisik.index');
 
+    // Kondisi
+    Route::get('admin/ternak-kondisi', [App\Http\Controllers\Admin\KondisiController::class, 'index'])->name('kondisi.index');
+
     // Tipe
     Route::get('admin/ternak-tipe', [App\Http\Controllers\Admin\TipeController::class, 'index'])->name('tipe.index');
 
@@ -59,6 +62,9 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
     // kandang
     Route::get('admin/ternak-reproduksi', [App\Http\Controllers\Admin\ReproduksiController::class, 'index'])->name('reproduksi.index');
+
+    // kesehatan
+    Route::get('admin/ternak-kesehatan', [App\Http\Controllers\Admin\KesehatanController::class, 'index'])->name('kesehatan.index');
 
     // hewan
     Route::get('admin/hewan', [App\Http\Controllers\Admin\HewanController::class, 'index'])->name('hewan.index');

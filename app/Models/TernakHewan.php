@@ -33,6 +33,12 @@ class TernakHewan extends Model
         return $this->belongsTo(Tipe::class, 'ternak_tipe', 'id');
     }
 
+    public function kesehatan()
+{
+    return $this->belongsTo(Kesehatan::class, 'ternak_kesehatan', 'id');
+}
+
+
     public function program()
     {
         return $this->belongsTo(Program::class, 'id');

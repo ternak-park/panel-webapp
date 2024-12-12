@@ -16,6 +16,7 @@ class TernakDetail extends Model
         'tanggal_masuk',
         'ternak_status',
         'ternak_jenis',
+        'ternak_kesehatan',
         'ternak_program',
         'ternak_kandang',
         'pemilik'
@@ -33,6 +34,11 @@ class TernakDetail extends Model
     public function status()
     {
         return $this->belongsTo(Status::class, 'ternak_status');
+    }
+
+    public function kesehatan()
+    {
+        return $this->belongsTo(Kesehatan::class, 'ternak_kesehatan');
     }
 
     public function program()
