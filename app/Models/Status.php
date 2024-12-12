@@ -9,7 +9,7 @@ class Status extends Model
 {
     use HasFactory;
     protected $table = 'status';
-    protected $fillable = ['id', 'nama_status', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'kode_status', 'nama_status', 'deskripsi', 'created_at', 'updated_at'];
 
     public function ternakDetails()
 {

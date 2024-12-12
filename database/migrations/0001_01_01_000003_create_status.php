@@ -9,7 +9,9 @@ return new class extends Migration {
     {
         Schema::create('status', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_status');
             $table->string('nama_status');
+            $table->string('deskripsi');
             $table->timestamps();
         });
     }

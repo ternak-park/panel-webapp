@@ -27,8 +27,7 @@
 
     <script src="{{ asset('assets/extra-libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/libs/list.js/dist/list.min.js?1684106062') }}"></script>
-
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         @import url('https://rsms.me/inter/inter.css');
 
@@ -48,11 +47,12 @@
 </head>
 
 <body>
-    @include('sweetalert::alert')
+    {{-- @include('sweetalert::alert') --}}
     <script src="{{ asset('assets/js/demo-theme.min.js?1667333929') }}"></script>
     {{-- sweet alert mas --}}
     @if (session('success'))
         <script>
+            Swal.fire("SweetAlert2 is working!");
             Swal.fire({
                 title: 'Success!',
                 text: "{{ session('success') }}",

@@ -8,6 +8,7 @@
         return result;
     }
 
+
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('supplierForm');
         const submitButton = document.getElementById('submitButton');

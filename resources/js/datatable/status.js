@@ -4,7 +4,7 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
-    var supplierShowUrl = "/admin/status/{id}/show";
+    var supplierShowUrl = "/admin/ternak-status/{id}/show";
 
     let table = $("#tableStatus").DataTable({
         processing: true,
@@ -23,12 +23,12 @@ $(document).ready(function () {
             zeroRecords: "Data tidak ditemukan",
             pagingType: "simple",
             paginate: {
-                previous: "", // Menghilangkan teks "Previous"
-                next: "", // Menghilangkan teks "Next"
+                previous: "", 
+                next: "", 
             },
-            processing: "Loading...", // Custom processing message
+            processing: "Loading...", 
         },
-        ajax: "/admin/status",
+        ajax: "/admin/ternak-status",
         columns: [
             { data: "id" },
             { data: "nama_status" },

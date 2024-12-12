@@ -43,7 +43,11 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::delete('admin/suppliers/{id}', [App\Http\Controllers\Admin\SupplierController::class, 'destroy'])->name('suppliers.destroy');
 
     // status
-    Route::get('admin/status', [App\Http\Controllers\Admin\StatusController::class, 'index'])->name('status.index');
+    Route::get('admin/ternak-status', [App\Http\Controllers\Admin\StatusController::class, 'index'])->name('status.index');
+    Route::get('admin/ternak-status/{id}/edit', [App\Http\Controllers\Admin\StatusController::class, 'edit'])->name('status.edit');
+    Route::put('admin/ternak-status/{id}', [App\Http\Controllers\Admin\StatusController::class, 'update'])->name('status.update');
+    Route::post('admin/ternak-status', [App\Http\Controllers\Admin\StatusController::class, 'store'])->name('status.store');
+    Route::get('admin/ternak-status/create', [App\Http\Controllers\Admin\StatusController::class, 'create'])->name('status.create');
 
     // fisik
     Route::get('admin/ternak-fisik', [App\Http\Controllers\Admin\FisikController::class, 'index'])->name('fisik.index');
