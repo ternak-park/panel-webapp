@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\admin;
+use App\Exports\StatusExport;
 use App\Models\Status;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StatusController extends Controller
 {
@@ -103,5 +105,11 @@ class StatusController extends Controller
     public function create()
     {
         return view('admin.status.create');
+    }
+
+    // gawe export excel
+    public function excel()
+    {
+        return Excel::download(new StatusExport, 'status.xlsx');
     }
 }

@@ -48,6 +48,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::put('admin/ternak-status/{id}', [App\Http\Controllers\Admin\StatusController::class, 'update'])->name('status.update');
     Route::post('admin/ternak-status', [App\Http\Controllers\Admin\StatusController::class, 'store'])->name('status.store');
     Route::get('admin/ternak-status/create', [App\Http\Controllers\Admin\StatusController::class, 'create'])->name('status.create');
+    Route::get('admin/ternak-status/excel', [App\Http\Controllers\Admin\StatusController::class, 'excel'])->name('status.excel');
 
     // fisik
     Route::get('admin/ternak-fisik', [App\Http\Controllers\Admin\FisikController::class, 'index'])->name('fisik.index');
