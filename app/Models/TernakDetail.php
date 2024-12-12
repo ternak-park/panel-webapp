@@ -12,6 +12,7 @@ class TernakDetail extends Model
     protected $fillable = [
         'id',
         'ternak_tag',
+        'ternak_induk',
         'sex',
         'tanggal_masuk',
         'ternak_status',

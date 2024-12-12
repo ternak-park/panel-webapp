@@ -11,6 +11,7 @@ class CreateTernakDetailTable extends Migration
         Schema::create('ternak_detail', function (Blueprint $table) {
             $table->id();
             $table->string('ternak_tag');
+            $table->string('ternak_induk')->nullable();
             $table->string('sex')->nullable();
             $table->date('tanggal_masuk')->nullable();
             $table->unsignedBigInteger('ternak_status')->nullable();

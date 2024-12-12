@@ -32,6 +32,7 @@ $(document).ready(function () {
         columns: [
             { data: "id" },
             { data: "ternak_tag" },
+            { data: "ternak_induk" },
             { data: "sex" },
             { data: "tanggal_masuk" },
             { data: "ternak_status" },

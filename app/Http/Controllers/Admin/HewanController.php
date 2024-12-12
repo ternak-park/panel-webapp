@@ -37,14 +37,15 @@ class HewanController extends Controller
     public function show($id)
     {
         $ternakHewan = TernakHewan::with([
-            'ternakDetail.status',
+            'status',
             'kesehatan',
             'program',
             'kandang',
             'pemilik'
         ])
-            ->where('id', $id)
-            ->firstOrFail();
+        ->where('id', $id)
+        ->firstOrFail();
+
 
         return view('admin.hewan.show', compact('ternakHewan'));
     }

@@ -34,19 +34,51 @@ class TernakHewan extends Model
     }
 
     public function kesehatan()
-{
-    return $this->belongsTo(Kesehatan::class, 'ternak_kesehatan', 'id');
-}
+    {
+    return $this->hasOneThrough(
+        Kesehatan::class,
+        TernakDetail::class,
+        'ternak_tag',  // Foreign key di TernakDetail
+        'id',          // Foreign key di User
+        'tag',         // Local key di TernakHewan
+        'ternak_kesehatan'      // Local key di TernakDetail
+        );
+    }
 
+    public function status()
+    {
+    return $this->hasOneThrough(
+        Status::class,
+        TernakDetail::class,
+        'ternak_tag',  // Foreign key di TernakDetail
+        'id',          // Foreign key di User
+        'tag',         // Local key di TernakHewan
+        'ternak_status'      // Local key di TernakDetail
+        );
+    }
 
     public function program()
     {
-        return $this->belongsTo(Program::class, 'id');
+        return $this->hasOneThrough(
+            Program::class,
+            TernakDetail::class,
+            'ternak_tag',  // Foreign key di TernakDetail
+            'id',          // Foreign key di User
+            'tag',         // Local key di TernakHewan
+            'ternak_program'      // Local key di TernakDetail
+        );
     }
 
     public function kandang()
     {
-        return $this->belongsTo(TernakKandang::class, 'id');
+        return $this->hasOneThrough(
+            TernakKandang::class,
+            TernakDetail::class,
+            'ternak_tag',  // Foreign key di TernakDetail
+            'id',          // Foreign key di User
+            'tag',         // Local key di TernakHewan
+            'ternak_kandang'      // Local key di TernakDetail
+        );
     }
 
     public function pemilik()

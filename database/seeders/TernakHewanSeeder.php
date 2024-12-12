@@ -43,7 +43,25 @@ class TernakHewanSeeder extends Seeder
                 'gambar_hewan' => 'hewan3.jpg',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]
+            ],
+            [
+                'tag' => 'HEW-004',
+                'jenis' => 'kambing',
+                'sex' => 'jantan',
+                'ternak_tipe' => 7,
+                'gambar_hewan' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'tag' => 'HEW-005',
+                'jenis' => 'kambing',
+                'sex' => 'betina',
+                'ternak_tipe' => 8,
+                'gambar_hewan' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ];
         DB::table('ternak_hewan')->insert($data);
     }
