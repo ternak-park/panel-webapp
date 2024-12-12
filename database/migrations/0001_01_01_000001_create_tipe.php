@@ -8,7 +8,9 @@ return new class extends Migration {
     {
         Schema::create('tipe', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_tipe');
             $table->string('nama_tipe');
+            $table->string('deskripsi');
             $table->timestamps();
         });
     }

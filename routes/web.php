@@ -57,6 +57,10 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
     // Tipe
     Route::get('admin/ternak-tipe', [App\Http\Controllers\Admin\TipeController::class, 'index'])->name('tipe.index');
+    Route::get('admin/ternak-tipe/{id}/edit', [App\Http\Controllers\Admin\TipeController::class, 'edit'])->name('tipe.edit');
+    Route::put('admin/ternak-tipe/{id}', [App\Http\Controllers\Admin\TipeController::class, 'update'])->name('tipe.update');
+    Route::post('admin/ternak-tipe', [App\Http\Controllers\Admin\TipeController::class, 'store'])->name('tipe.store');
+    Route::get('admin/ternak-tipe/create', [App\Http\Controllers\Admin\TipeController::class, 'create'])->name('tipe.create');
 
     // Program
     Route::get('admin/ternak-program', [App\Http\Controllers\Admin\ProgramController::class, 'index'])->name('program.index');

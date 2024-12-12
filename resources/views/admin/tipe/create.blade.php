@@ -6,7 +6,7 @@
         <div class="container-xl">
             <div class="row row-cards">
                 <div class="col-12">
-                    <form class="card" action="{{ route('status.store') }}" method="POST" id="statusForm">
+                    <form class="card" action="{{ route('tipe.store') }}" method="POST" id="tipeForm">
                         @csrf
                         <div class="card-header">
                             <h4 class="card-title">Tambah Status</h4>
@@ -15,14 +15,14 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Kode Status</label>
+                                        <label class="form-label">Kode Tipe</label>
                                         <input type="text" class="form-control" name="kode_status" id="kode_status"
                                             name="kode_status" value="{{ old('kode_status') }}" readonly disabled />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Nama Status</label>
+                                        <label class="form-label">Nama Tipe</label>
                                         <input type="text" class="form-control" name="nama_status" 
                                             name="nama_status" value="{{ old('nama_status') }}"  />
                                     </div>
@@ -63,9 +63,9 @@
         });
 
         // Hapus readonly dan disabled sebelum submit
-        document.getElementById('statusForm').addEventListener('submit', function() {
-            document.getElementById('kode_status').removeAttribute('readonly');
-            document.getElementById('kode_status').removeAttribute('disabled');
+        document.getElementById('tipeForm').addEventListener('submit', function() {
+            document.getElementById('kode_tipe').removeAttribute('readonly');
+            document.getElementById('kode_tipe').removeAttribute('disabled');
         });
     </script>
     @if ($errors->any())
