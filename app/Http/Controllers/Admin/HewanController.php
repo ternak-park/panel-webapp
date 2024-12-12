@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TernakHewan;
 use Yajra\DataTables\Facades\DataTables;
-
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 class HewanController extends Controller
 {
     public function index(Request $request)
@@ -43,8 +44,8 @@ class HewanController extends Controller
             'kandang',
             'pemilik'
         ])
-        ->where('id', $id)
-        ->firstOrFail();
+            ->where('id', $id)
+            ->firstOrFail();
 
 
         return view('admin.hewan.show', compact('ternakHewan'));
@@ -58,5 +59,85 @@ class HewanController extends Controller
             abort(404, "File not found");
         }
         return response()->download($path, $namafile);
+    }
+
+    public function store(Request $request)
+    {
+        // Validate the form data
+        $validator = Validator::make($request->all(), [
+            'ternak_tag' => 'required|string|max:255',
+            'ternak_induk' => 'nullable|string|max:255',
+            'sex' => 'required|in:Jantan,Betina',   
+            'tanggal_masuk' => 'required|date',    
+            'ternak_status_indeks' => 'nullable|numeric|exists:ternak_hewan,id',  
+            'ternak_tipe_indeks' => 'nullable|numeric|exists:ternak_hewan,id',    
+            'ternak_kesehatan_indeks' => 'nullable|numeric|exists:ternak_hewan,id',
+            'ternak_program_indeks' => 'nullable|numeric|exists:ternak_hewan,id', 
+            'ternak_kandang_indeks' => 'nullable|numeric|exists:ternak_hewan,id', 
+            'pemilik_indeks' => 'nullable|numeric|exists:ternak_hewan,id',         
+        ], [
+            'ternak_tag.required' => 'Tag ternak harus diisi.',
+            'sex.required' => 'Jenis kelamin ternak harus dipilih.',
+            'sex.in' => 'Jenis kelamin harus salah satu dari Jantan atau Betina.',
+            'tanggal_masuk.required' => 'Tanggal masuk harus diisi.',
+            'ternak_status_indeks.exists' => 'Status ternak yang dipilih tidak valid.',
+            'ternak_tipe_indeks.exists' => 'Tipe ternak yang dipilih tidak valid.',
+            'ternak_kesehatan_indeks.exists' => 'Kesehatan ternak yang dipilih tidak valid.',
+            'ternak_program_indeks.exists' => 'Program ternak yang dipilih tidak valid.',
+            'ternak_kandang_indeks.exists' => 'Kandang ternak yang dipilih tidak valid.',
+            'pemilik_indeks.exists' => 'Pemilik ternak yang dipilih tidak valid.',
+        ]);
+
+        if ($validator->fails()) {
+            // Redirect kembali dengan error SweetAlert
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+     
+        DB::transaction(function () use ($request) {
+            if ($request->hasFile('gambar_hewan')) {
+                $gambar = $request->file('gambar_hewan');
+                $gambarName = time() . '.' . $gambar->getClientOriginalExtension();
+                $gambar->storeAs('public/hewan', $gambarName);
+            } else {
+                $gambarName = null; 
+            }
+
+            // Insert ke tabel ternak_hewan
+            $hewanId = DB::table('ternak_hewan')->insertGetId([
+                'tag' => $request->ternak_tag,
+                'jenis' => 'Domba', 
+                'sex' => $request->sex,
+                'ternak_tipe' => $request->ternak_tipe_indeks, 
+                'gambar_hewan' => $gambarName, 
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            // Insert ke tabel ternak_detail menggunakan ID dari ternak_hewan
+            DB::table('ternak_detail')->insert([
+                'ternak_tag' => $request->ternak_tag, 
+                'ternak_induk' => $request->ternak_induk ?? NULL,
+                'sex' => $request->sex,
+                'tanggal_masuk' => $request->tanggal_masuk,
+                'ternak_status' => $request->ternak_status_indeks,
+                'ternak_tipe' => $request->ternak_tipe_indeks,
+                'ternak_kesehatan' => $request->ternak_kesehatan_indeks,
+                'ternak_program' => $request->ternak_program_indeks,
+                'ternak_kandang' => $request->ternak_kandang_indeks,
+                'pemilik' => $request->pemilik_indeks,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        });
+
+        // Redirect ke daftar hewan dengan pesan sukses
+        return redirect()->route('hewan.index')
+            ->with('success', 'Data Hewan berhasil ditambahkan.');
+    }
+    public function create()
+    {
+        return view('admin.hewan.create');
     }
 }

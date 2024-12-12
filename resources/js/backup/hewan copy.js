@@ -4,7 +4,7 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
-    var hewanShowUrl = "/admin/hewan/{id}/show";
+    var hewanShowUrl = "/admin/ternak-hewan/{id}/show";
 
     let table = $("#tableHewan").DataTable({
         processing: true,
@@ -28,7 +28,7 @@ $(document).ready(function () {
             },
             processing: "Loading...", // Custom processing message
         },
-        ajax: "/admin/hewan",
+        ajax: "/admin/ternak-hewan",
         columns: [
             {
                 data: "id",

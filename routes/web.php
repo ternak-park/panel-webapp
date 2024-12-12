@@ -78,6 +78,12 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     // hewan
     Route::get('admin/hewan', [App\Http\Controllers\Admin\HewanController::class, 'index'])->name('hewan.index');
     Route::get('admin/hewan/{id}/show', [App\Http\Controllers\Admin\HewanController::class, 'show'])->name('hewan.show');
+    Route::get('admin/hewan/{id}/edit', [App\Http\Controllers\Admin\StatusController::class, 'edit'])->name('hewan.edit');
+    Route::put('admin/hewan/{id}', [App\Http\Controllers\Admin\HewanController::class, 'update'])->name('hewan.update');
+    Route::post('admin/hewan', [App\Http\Controllers\Admin\HewanController::class, 'store'])->name('hewan.store');
+    Route::get('admin/hewan/create', [App\Http\Controllers\Admin\HewanController::class, 'create'])->name('hewan.create');
+    Route::get('admin/hewan/excel', [App\Http\Controllers\Admin\HewanController::class, 'excel'])->name('hewan.excel');
+
     Route::get('/download-image/{namafile}', [pp\Http\Controllers\Admin\HewanController::class, 'downloadGambar'])->name('download.gambar');
     // User List
     Route::get('admin/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');

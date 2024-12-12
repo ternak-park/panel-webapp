@@ -4,7 +4,7 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
-    var supplierShowUrl = "/admin/hewan/detail/{id}/show";
+    var supplierShowUrl = "/admin/ternak-hewan/detail/{id}/show";
 
     let table = $("#tableHewanDetail").DataTable({
         processing: true,
@@ -28,7 +28,7 @@ $(document).ready(function () {
             },
             processing: "Loading...", // Custom processing message
         },
-        ajax: "/admin/hewan/detail",
+        ajax: "/admin/ternak-hewan/detail",
         columns: [
             { data: "id" },
             { data: "ternak_tag" },
