@@ -12,11 +12,14 @@ class TernakKandang extends Model
     protected $fillable = [
         'kode_kandang',
         'pemilik',
+        
     ];
-    // public function pemilik()
-    // {
-    //     return $this->belongsTo(User::class, 'id');
-    // }
+    public function pemilik()
+    {
+        return $this->belongsTo(User::class, 'pemilik', 'id'); 
+        // 'pemilik' = kolom foreign key di tabel ternak_kandang
+        // 'id' = kolom primary key di tabel users
+    }
 
 
 }

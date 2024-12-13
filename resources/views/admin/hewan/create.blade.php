@@ -70,16 +70,16 @@
                                     <div class="mb-3">
                                         <label class="form-label">Tipe</label>
                                         <select type="text" class="form-select" id="select-labels-tipe"
-                                        name="ternak_tipe_indeks">
-                                        @foreach ($tipeTernak as $tipe)
-                                            <option value="{{ $tipe->id }}"
-                                                data-custom-properties='&lt;span class="badge bg-primary-lt"&gt;{{ $tipe->kode_tipe }}&lt;/span&gt;'>
-                                                {{ $tipe->nama_tipe }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    
-                                        
+                                            name="ternak_tipe_indeks">
+                                            @foreach ($tipeTernak as $tipe)
+                                                <option value="{{ $tipe->id }}"
+                                                    data-custom-properties='&lt;span class="badge bg-primary-lt"&gt;{{ $tipe->kode_tipe }}&lt;/span&gt;'>
+                                                    {{ $tipe->nama_tipe }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+
+
                                     </div>
                                 </div>
                             </div>
@@ -88,12 +88,12 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Kesehatan</label>
-                                        <select class="form-control" id="ternak_kesehatan_indeks"
+                                        <select type="text" class="form-select" id="select-labels-kesehatan"
                                             name="ternak_kesehatan_indeks">
-                                            <option value="">-- Pilih Kesehatan --</option>
                                             @foreach ($kesehatanTernak as $kesehatan)
-                                                <option value="{{ $kesehatan->id }}">{{ $kesehatan->nama_kesehatan }}
-                                                    ({{ $kesehatan->kode }})
+                                                <option value="{{ $kesehatan->id }}"
+                                                    data-custom-properties='&lt;span class="badge bg-primary-lt"&gt;{{ $kesehatan->id }}&lt;/span&gt;'>
+                                                    {{ $kesehatan->nama_kesehatan }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -102,12 +102,12 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Program</label>
-                                        <select class="form-control" id="ternak_program_indeks"
+                                        <select type="text" class="form-select" id="select-labels-program"
                                             name="ternak_program_indeks">
-                                            <option value="">-- Pilih Program --</option>
                                             @foreach ($programTernak as $program)
-                                                <option value="{{ $program->id }}">{{ $program->nama_program }}
-                                                    ({{ $program->kode }})
+                                                <option value="{{ $program->id }}"
+                                                    data-custom-properties='&lt;span class="badge bg-primary-lt"&gt;{{ $program->id }}&lt;/span&gt;'>
+                                                    {{ $program->nama_program }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -117,27 +117,32 @@
 
                             <div class="row">
                                 <div class="col-md-6">
+
                                     <div class="mb-3">
                                         <label class="form-label">Kandang Ternak</label>
-                                        <select class="form-control" id="ternak_kandang_indeks"
+                                        <select type="text" class="form-select" id="select-labels-kandang"
                                             name="ternak_kandang_indeks">
-                                            <option value="">-- Pilih Kandang --</option>
                                             @foreach ($kandangTernak as $kandang)
-                                                <option value="{{ $kandang->id }}">{{ $kandang->nama }}
-                                                    ({{ $kandang->kode_kandang }})
+                                                <option value="{{ $kandang->id }}"
+                                                    data-custom-properties='&lt;span class="badge bg-primary-lt"&gt;{{ $kandang->id }}&lt;/span&gt;'>
+                                                    {{ $kandang->kode_kandang }}
                                                 </option>
                                             @endforeach
                                         </select>
+
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+
                                     <div class="mb-3">
                                         <label class="form-label">Pemilik</label>
-                                        <select class="form-control" id="pemilik_indeks" name="pemilik_indeks">
-                                            <option value="">-- Pilih Pemilik --</option>
-                                            @foreach ($pemilikTernak as $pemilik)
-                                                <option value="{{ $pemilik->id }}">{{ $pemilik->username }}
-                                                    ({{ $pemilik->kode }})
+                                        <select class="form-select" id="select-pemilik" name="pemilik_indeks">
+                                            {{-- <option value="" disabled selected>Pemilik</option> --}}
+                                            @foreach ($pemilikTernak as $user)
+                                                <option value="{{ $user->id }}"
+                                                    data-custom-properties="<span class='avatar avatar-xs' style='background-image: url({{ $user->gambar_profile ? asset('storage/' . $user->gambar_profile) : '' }})'></span>"
+                                                    {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                                    {{ $user->name }}
                                                 </option>
                                             @endforeach
                                         </select>

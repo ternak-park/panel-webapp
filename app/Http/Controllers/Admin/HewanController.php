@@ -145,14 +145,13 @@ class HewanController extends Controller
     public function create()
     {
         // Ambil data yang dibutuhkan dari database
-        $statusTernak = Status::all();  // Mengambil semua data status ternak
-        $tipeTernak = Tipe::all();      // Mengambil semua data tipe ternak
-        $kesehatanTernak = Kesehatan::all();  // Mengambil semua data kesehatan ternak
-        $programTernak = Program::all();  // Mengambil semua data program ternak
-        $kandangTernak = TernakKandang::all();  // Mengambil semua data kandang ternak
-        $pemilikTernak = User::all();  // Mengambil semua data pemilik ternak
+        $statusTernak = Status::all();  
+        $tipeTernak = Tipe::all();   
+        $kesehatanTernak = Kesehatan::all();  
+        $programTernak = Program::all(); 
+        $kandangTernak = TernakKandang::all();  
+        $pemilikTernak = User::all(); 
     
-        // Mengirim data ke view admin.hewan.create
         return view('admin.hewan.create', compact('statusTernak', 'tipeTernak', 'kesehatanTernak', 'programTernak', 'kandangTernak', 'pemilikTernak'));
     }
     
