@@ -157,7 +157,7 @@
                     'programTernak' => $program,
                     'kandangTernak' => $kandang,
                     'pemilikTernak' => $user,
-                ]);
+                ])
                 <script>
                     // Delete handler
                     $(document).on('click', '.delete', function() {

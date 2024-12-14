@@ -22,7 +22,12 @@ class HewanController extends Controller
         $data['main'] = 'Hewan';
         $data['judul'] = 'Manajemen Hewan';
         $data['sub_judul'] = 'Data Hewan';
-    
+        $data['status'] = Status::all();
+        $data['tipe'] = Tipe::all();
+        $data['kesehatan'] = Kesehatan::all();
+        $data['program'] = Program::all();
+        $data['kandang'] = TernakKandang::all();
+        $data['user'] = User::all();
         if ($request->ajax()) {
             $hewan = TernakHewan::with('tipe:id,nama_tipe')
                 ->select('id', 'tag', 'jenis', 'sex', 'ternak_tipe', 'gambar_hewan');
@@ -37,22 +42,22 @@ class HewanController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-    
+
         // Hitung jumlah hewan berdasarkan sex
         $tracker = TernakHewan::select('sex', DB::raw('COUNT(*) as jumlah'))
             ->groupBy('sex')
             ->get();
-    
+
         // Hitung total hewan untuk persentase
         $total = $tracker->sum('jumlah');
-    
+
         // Tambahkan data tracker dan total ke variabel
         $data['tracker'] = $tracker;
         $data['total'] = $total;
-    
+
         return view('admin.hewan.index', $data);
     }
-    
+
 
 
     public function show($id)
@@ -150,6 +155,7 @@ class HewanController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+            // dd($request);
         });
 
         // Redirect ke daftar hewan dengan pesan sukses
