@@ -22,10 +22,11 @@ class HewanController extends Controller
         $data['main'] = 'Hewan';
         $data['judul'] = 'Manajemen Hewan';
         $data['sub_judul'] = 'Data Hewan';
+    
         if ($request->ajax()) {
-            $data = TernakHewan::with('tipe:id,nama_tipe')
+            $hewan = TernakHewan::with('tipe:id,nama_tipe')
                 ->select('id', 'tag', 'jenis', 'sex', 'ternak_tipe', 'gambar_hewan');
-            return Datatables::of($data)
+            return Datatables::of($hewan)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     return view('admin.hewan.action', ['id' => $row->id])->render();
@@ -36,10 +37,23 @@ class HewanController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-
+    
+        // Hitung jumlah hewan berdasarkan sex
+        $tracker = TernakHewan::select('sex', DB::raw('COUNT(*) as jumlah'))
+            ->groupBy('sex')
+            ->get();
+    
+        // Hitung total hewan untuk persentase
+        $total = $tracker->sum('jumlah');
+    
+        // Tambahkan data tracker dan total ke variabel
+        $data['tracker'] = $tracker;
+        $data['total'] = $total;
+    
         return view('admin.hewan.index', $data);
-
     }
+    
+
 
     public function show($id)
     {
@@ -73,14 +87,14 @@ class HewanController extends Controller
         $validator = Validator::make($request->all(), [
             'ternak_tag' => 'required|string|max:255',
             'ternak_induk' => 'nullable|string|max:255',
-            'sex' => 'required|in:Jantan,Betina',   
-            'tanggal_masuk' => 'required|date',    
-            'ternak_status_indeks' => 'nullable|numeric|exists:ternak_hewan,id',  
-            'ternak_tipe_indeks' => 'nullable|numeric|exists:ternak_hewan,id',    
+            'sex' => 'required|in:Jantan,Betina',
+            'tanggal_masuk' => 'required|date',
+            'ternak_status_indeks' => 'nullable|numeric|exists:ternak_hewan,id',
+            'ternak_tipe_indeks' => 'nullable|numeric|exists:ternak_hewan,id',
             'ternak_kesehatan_indeks' => 'nullable|numeric|exists:ternak_hewan,id',
-            'ternak_program_indeks' => 'nullable|numeric|exists:ternak_hewan,id', 
-            'ternak_kandang_indeks' => 'nullable|numeric|exists:ternak_hewan,id', 
-            'pemilik_indeks' => 'nullable|numeric|exists:ternak_hewan,id',         
+            'ternak_program_indeks' => 'nullable|numeric|exists:ternak_hewan,id',
+            'ternak_kandang_indeks' => 'nullable|numeric|exists:ternak_hewan,id',
+            'pemilik_indeks' => 'nullable|numeric|exists:ternak_hewan,id',
         ], [
             'ternak_tag.required' => 'Tag ternak harus diisi.',
             'sex.required' => 'Jenis kelamin ternak harus dipilih.',
@@ -100,30 +114,30 @@ class HewanController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-     
+
         DB::transaction(function () use ($request) {
             if ($request->hasFile('gambar_hewan')) {
                 $gambar = $request->file('gambar_hewan');
                 $gambarName = time() . '.' . $gambar->getClientOriginalExtension();
                 $gambar->storeAs('public/hewan', $gambarName);
             } else {
-                $gambarName = null; 
+                $gambarName = null;
             }
 
             // Insert ke tabel ternak_hewan
             $hewanId = DB::table('ternak_hewan')->insertGetId([
                 'tag' => $request->ternak_tag,
-                'jenis' => 'Domba', 
+                'jenis' => 'Domba',
                 'sex' => $request->sex,
-                'ternak_tipe' => $request->ternak_tipe_indeks, 
-                'gambar_hewan' => $gambarName, 
+                'ternak_tipe' => $request->ternak_tipe_indeks,
+                'gambar_hewan' => $gambarName,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
 
             // Insert ke tabel ternak_detail menggunakan ID dari ternak_hewan
             DB::table('ternak_detail')->insert([
-                'ternak_tag' => $request->ternak_tag, 
+                'ternak_tag' => $request->ternak_tag,
                 'ternak_induk' => $request->ternak_induk ?? NULL,
                 'sex' => $request->sex,
                 'tanggal_masuk' => $request->tanggal_masuk,
@@ -145,14 +159,14 @@ class HewanController extends Controller
     public function create()
     {
         // Ambil data yang dibutuhkan dari database
-        $statusTernak = Status::all();  
-        $tipeTernak = Tipe::all();   
-        $kesehatanTernak = Kesehatan::all();  
-        $programTernak = Program::all(); 
-        $kandangTernak = TernakKandang::all();  
-        $pemilikTernak = User::all(); 
-    
+        $statusTernak = Status::all();
+        $tipeTernak = Tipe::all();
+        $kesehatanTernak = Kesehatan::all();
+        $programTernak = Program::all();
+        $kandangTernak = TernakKandang::all();
+        $pemilikTernak = User::all();
+
         return view('admin.hewan.create', compact('statusTernak', 'tipeTernak', 'kesehatanTernak', 'programTernak', 'kandangTernak', 'pemilikTernak'));
     }
-    
+
 }

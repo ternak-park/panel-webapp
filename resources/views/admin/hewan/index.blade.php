@@ -111,43 +111,39 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="progressbg">
-                                                    <div class="progress progressbg-progress">
-                                                        <div class="progress-bar bg-primary-lt" style="width: 82.54%"
-                                                            role="progressbar" aria-valuenow="82.54" aria-valuemin="0"
-                                                            aria-valuemax="100" aria-label="82.54% Complete">
-                                                            <span class="visually-hidden">82.54% Complete</span>
+                                        @forelse ($tracker as $item)
+                                            <tr>
+                                                <td>
+                                                    <div class="progressbg">
+                                                        <div class="progress progressbg-progress">
+                                                            @php
+                                                                // Hitung persentase sex berdasarkan jumlah total hewan
+                                                                $percentage = ($total > 0) ? ($item->jumlah / $total) * 100 : 0;
+                                                            @endphp
+                                                            <div class="progress-bar bg-primary-lt" style="width: {{ $percentage }}%"
+                                                                role="progressbar" aria-valuenow="{{ $percentage }}" aria-valuemin="0"
+                                                                aria-valuemax="100" aria-label="{{ $percentage }}% Complete">
+                                                                <span class="visually-hidden">{{ $percentage }}% Complete</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="progressbg-text">
+                                                            {{ $item->sex == 'Jantan' ? 'Jantan' : 'Betina' }}
                                                         </div>
                                                     </div>
-                                                    <div class="progressbg-text">Jantan</div>
-                                                </div>
-                                            </td>
-                                            <td class="w-1 fw-bold text-end">4896</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="progressbg">
-                                                    <div class="progress progressbg-progress">
-                                                        <div class="progress-bar bg-primary-lt" style="width: 76.29%"
-                                                            role="progressbar" aria-valuenow="76.29"
-                                                            aria-valuemin="0" aria-valuemax="100"
-                                                            aria-label="76.29% Complete">
-                                                            <span class="visually-hidden">76.29% Complete</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="progressbg-text">Betina</div>
-                                                </div>
-                                            </td>
-                                            <td class="w-1 fw-bold text-end">3652</td>
-                                        </tr>
-
+                                                </td>
+                                                <td class="w-1 fw-bold text-end">{{ $item->jumlah }}</td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="2" class="text-center">Data tracker tidak tersedia</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
+                    
                 </div>
                 <script>
                     // Delete handler

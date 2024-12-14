@@ -77,14 +77,14 @@
             @if (Auth::check())
                 @if (Auth::user()->type === 'admin' || Auth::user()->type === 'petugas')
                     {{-- Tipe admin atau petugas --}}
-                    <x-panel-navbar />
+                    <x-navbar />
                 @elseif (Auth::user()->type === 'user')
                     {{-- Tipe user biasa --}}
-                    <x-client-navbar />
+                    <x-navbar />
                 @endif
             @else
                 {{-- Tampilkan navbar untuk pengguna yang belum login --}}
-                <x-client-navbar />
+                <x-navbar />
             @endif
         @endif
         <main class="py-4">
