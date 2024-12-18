@@ -36,4 +36,12 @@ class KondisiController extends Controller
         return view('admin.kondisi.index', $data);
 
     }
+
+    public function destroy($id)
+    {
+        $kondisi = TernakKondisi::findOrFail($id);
+        $kondisi->delete();
+
+        return response()->json(['success' => 'Data berhasil dihapus']);
+    }
 }

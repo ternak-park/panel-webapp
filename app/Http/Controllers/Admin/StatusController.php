@@ -112,4 +112,13 @@ class StatusController extends Controller
     {
         return Excel::download(new StatusExport, 'status.xlsx');
     }
+
+    public function destroy($id)
+    {
+        $status = Status::findOrFail($id);
+        $status->delete();
+
+        return response()->json(['success' => 'Data berhasil dihapus']);
+    }
+
 }

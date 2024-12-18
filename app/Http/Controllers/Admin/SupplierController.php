@@ -63,7 +63,7 @@ class SupplierController extends Controller
         $supplier = Supplier::findOrFail($id);
         $supplier->delete();
 
-        return response()->json(['success' => 'Supplier deleted successfully']);
+        return response()->json(['success' => 'Data berhasil dihapus']);
     }
 
     public function show($id)

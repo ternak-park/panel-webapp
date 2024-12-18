@@ -29,4 +29,12 @@ class KesehatanController extends Controller
         return view('admin.kesehatan.index', $data);
 
     }
+
+    public function destroy($id)
+    {
+        $kesehatan = Kesehatan::findOrFail($id);
+        $kesehatan->delete();
+
+        return response()->json(['success' => 'Data berhasil dihapus']);
+    }
 }

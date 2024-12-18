@@ -28,4 +28,12 @@ class FisikController extends Controller
         return view('admin.fisik.index', $data);
 
     }
+
+    public function destroy($id)
+    {
+        $fisik = TernakFisik::findOrFail($id);
+        $fisik->delete();
+
+        return response()->json(['success' => 'Data berhasil dihapus']);
+    }
 }

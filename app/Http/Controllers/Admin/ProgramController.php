@@ -27,4 +27,12 @@ class ProgramController extends Controller
         return view('admin.program.index', $data);
 
     }
+
+    public function destroy($id)
+    {
+        $program = Program::findOrFail($id);
+        $program->delete();
+
+        return response()->json(['success' => 'Data berhasil dihapus']);
+    }
 }

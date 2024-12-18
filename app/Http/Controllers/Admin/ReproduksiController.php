@@ -29,4 +29,12 @@ class ReproduksiController extends Controller
         return view('admin.reproduksi.index', $data);
 
     }
+
+    public function destroy($id)
+    {
+        $reproduksi = TernakReproduksi::findOrFail($id);
+        $reproduksi->delete();
+
+        return response()->json(['success' => 'Data berhasil dihapus']);
+    }
 }

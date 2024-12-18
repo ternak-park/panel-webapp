@@ -99,4 +99,12 @@ class TipeController extends Controller
     {
         return view('admin.tipe.create');
     }
+
+    public function destroy($id)
+    {
+        $tipe = Tipe::findOrFail($id);
+        $tipe->delete();
+
+        return response()->json(['success' => 'Data berhasil dihapus']);
+    }
 }

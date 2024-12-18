@@ -175,4 +175,12 @@ class HewanController extends Controller
         return view('admin.hewan.create', compact('statusTernak', 'tipeTernak', 'kesehatanTernak', 'programTernak', 'kandangTernak', 'pemilikTernak'));
     }
 
+    public function destroy($id)
+    {
+        $hewan = TernakHewan::findOrFail($id);
+        $hewan->delete();
+
+        return response()->json(['success' => 'Data berhasil dihapus']);
+    }
+
 }

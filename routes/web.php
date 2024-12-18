@@ -52,12 +52,15 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::post('admin/ternak-status', [App\Http\Controllers\Admin\StatusController::class, 'store'])->name('status.store');
     Route::get('admin/ternak-status/create', [App\Http\Controllers\Admin\StatusController::class, 'create'])->name('status.create');
     Route::get('admin/ternak-status/excel', [App\Http\Controllers\Admin\StatusController::class, 'excel'])->name('status.excel');
+    Route::delete('admin/ternak-status/{id}', [App\Http\Controllers\Admin\StatusController::class, 'destroy'])->name('status.destroy');
 
     // fisik
     Route::get('admin/ternak-fisik', [App\Http\Controllers\Admin\FisikController::class, 'index'])->name('fisik.index');
+    Route::delete('admin/ternak-fisik/{id}', [App\Http\Controllers\Admin\FisikController::class, 'destroy'])->name('fisik.destroy');
 
     // Kondisi
     Route::get('admin/ternak-kondisi', [App\Http\Controllers\Admin\KondisiController::class, 'index'])->name('kondisi.index');
+    Route::delete('admin/ternak-kondisi/{id}', [App\Http\Controllers\Admin\KondisiController::class, 'destroy'])->name('kondisi.destroy');
 
     // Tipe
     Route::get('admin/ternak-tipe', [App\Http\Controllers\Admin\TipeController::class, 'index'])->name('tipe.index');
@@ -65,18 +68,23 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::put('admin/ternak-tipe/{id}', [App\Http\Controllers\Admin\TipeController::class, 'update'])->name('tipe.update');
     Route::post('admin/ternak-tipe', [App\Http\Controllers\Admin\TipeController::class, 'store'])->name('tipe.store');
     Route::get('admin/ternak-tipe/create', [App\Http\Controllers\Admin\TipeController::class, 'create'])->name('tipe.create');
+    Route::delete('admin/ternak-tipe/{id}', [App\Http\Controllers\Admin\TipeController::class, 'destroy'])->name('tipe.destroy');
 
     // Program
     Route::get('admin/ternak-program', [App\Http\Controllers\Admin\ProgramController::class, 'index'])->name('program.index');
+    Route::delete('admin/ternak-program/{id}', [App\Http\Controllers\Admin\ProgramController::class, 'destroy'])->name('program.destroy');
 
     // kandang
     Route::get('admin/kandang', [App\Http\Controllers\Admin\KandangController::class, 'index'])->name('kandang.index');
+    Route::delete('admin/kandang/{id}', [App\Http\Controllers\Admin\KandangController::class, 'destroy'])->name('kandang.destroy');
 
-    // kandang
+    // reproduksi
     Route::get('admin/ternak-reproduksi', [App\Http\Controllers\Admin\ReproduksiController::class, 'index'])->name('reproduksi.index');
+    Route::delete('admin/ternak-reproduksi/{id}', [App\Http\Controllers\Admin\ReproduksiController::class, 'destroy'])->name('reproduksi.destroy');
 
     // kesehatan
     Route::get('admin/ternak-kesehatan', [App\Http\Controllers\Admin\KesehatanController::class, 'index'])->name('kesehatan.index');
+    Route::delete('admin/ternak-kesehatan/{id}', [App\Http\Controllers\Admin\KesehatanController::class, 'destroy'])->name('kesehatan.destroy');
 
     // hewan
     Route::get('admin/hewan', [App\Http\Controllers\Admin\HewanController::class, 'index'])->name('hewan.index');
@@ -86,6 +94,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::post('admin/hewan', [App\Http\Controllers\Admin\HewanController::class, 'store'])->name('hewan.store');
     Route::get('admin/hewan/create', [App\Http\Controllers\Admin\HewanController::class, 'create'])->name('hewan.create');
     Route::get('admin/hewan/excel', [App\Http\Controllers\Admin\HewanController::class, 'excel'])->name('hewan.excel');
+    Route::delete('admin/hewan/{id}', [App\Http\Controllers\Admin\HewanController::class, 'destroy'])->name('hewan.destroy');
 
     Route::get('/download-image/{namafile}', [pp\Http\Controllers\Admin\HewanController::class, 'downloadGambar'])->name('download.gambar');
     // User List

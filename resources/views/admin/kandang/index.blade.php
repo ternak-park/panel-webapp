@@ -104,7 +104,6 @@
         </div>
     </div>
     <script>
-        // Delete handler
         $(document).on('click', '.delete', function() {
             const id = $(this).data('id');
             Swal.fire({
@@ -118,20 +117,25 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "/suppliers/" + id,
+                        url: "/admin/kandang/" + id,
                         type: 'DELETE',
-                        success: function(result) {
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
                             Swal.fire(
                                 'Dihapus!',
-                                'Data telah dihapus.',
+                                response.success || 'Data telah dihapus.',
                                 'success'
-                            );
-                            table.ajax.reload();
+                            ).then(() => {
+                                // Auto-refresh halaman setelah data dihapus
+                                location.reload();
+                            });
                         },
                         error: function(err) {
                             Swal.fire(
                                 'Error!',
-                                'There was an error deleting the supplier.',
+                                'Terjadi kesalahan saat menghapus data.',
                                 'error'
                             );
                         }

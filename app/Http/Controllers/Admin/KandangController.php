@@ -37,4 +37,12 @@ class KandangController extends Controller
 
         return view('admin.kandang.index', $data);
     }
+
+    public function destroy($id)
+    {
+        $kandang = TernakKandang::findOrFail($id);
+        $kandang->delete();
+
+        return response()->json(['success' => 'Data berhasil dihapus']);
+    }
 }
