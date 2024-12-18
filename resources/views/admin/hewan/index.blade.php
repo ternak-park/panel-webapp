@@ -150,6 +150,14 @@
                     </div>
 
                 </div>
+                @include('admin.hewan.modal.edit', [
+                    'statusTernak' => $status,
+                    'tipeTernak' => $tipe,
+                    'kesehatanTernak' => $kesehatan,
+                    'programTernak' => $program,
+                    'kandangTernak' => $kandang,
+                    'pemilikTernak' => $user,
+                ]);
                 @include('admin.hewan.modal.create', [
                     'statusTernak' => $status,
                     'tipeTernak' => $tipe,
@@ -205,4 +213,36 @@
                         });
                     });
                 </script>
+                <script>
+                    document.querySelectorAll('.btn-edit').forEach(button => {
+                        button.addEventListener('click', function () {
+                            const id = this.getAttribute('data-id');
+                
+                            // Lakukan fetch untuk mendapatkan data dari server
+                            fetch(`/admin/hewan/${id}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    // Isi form di modal dengan data yang diambil
+                                    document.getElementById('editHewanForm').setAttribute('action', `/admin/hewan/${id}`);
+                                    document.getElementById('edit-ternak-tag').value = data.ternak_tag;
+                                    document.getElementById('edit-ternak-induk').value = data.ternak_induk;
+                                    document.getElementById('edit-sex').value = data.sex;
+                                    document.getElementById('edit-tanggal-masuk').value = data.tanggal_masuk;
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching data:', error);
+                                    alert('Terjadi kesalahan saat mengambil data.');
+                                });
+                        });
+                    });
+                </script>
+                
+                <script>
+                    // Enable or Disable Fields Before Submission
+                    document.getElementById('hewanForm').addEventListener('submit', function() {
+                        document.getElementById('ternak_tag').removeAttribute('readonly');
+                        document.getElementById('ternak_tag').removeAttribute('disabled');
+                    });
+                </script>
+
 </x-app>

@@ -33,10 +33,7 @@ $(document).ready(function () {
             {
                 data: "id",
                 render: function (data, type, row, meta) {
-                    // Get the page start index and the current row index
-                    var page = meta.settings._iDisplayStart / meta.settings._iDisplayLength;
-                    // Calculate the correct row number by adding the page offset
-                    return (page * meta.settings._iDisplayLength) + meta.row + 1;
+                    return meta.row + 1;
                 },
                 orderable: false,
                 searchable: false,
@@ -78,8 +75,8 @@ $(document).ready(function () {
         ],
         drawCallback: sihubDrawCallback, // Gawe Nyelok Callback
     });
-
     
+
     // Gawe Page Length
     $("#pageLength").on("change", function () {
         table.page.len($(this).val()).draw();
@@ -96,5 +93,63 @@ $(document).ready(function () {
         if (!$(this).closest("li").hasClass("disabled")) {
             table.page($(this).data("page")).draw("page");
         }
+    });
+});
+
+$(document).ready(function() {
+    // Edit Modal Handler
+    $(document).on('click', '.btn-edit', function() {
+        const id = $(this).data('id');
+        
+        // Fetch animal data
+        $.ajax({
+            url: `/admin/hewan/${id}`,
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                // Populate Modal Fields
+                $('#edit-ternak-tag').val(data.tag);
+                $('#edit-sex').val(data.sex.toLowerCase());
+                
+                // Fetch additional details from ternak_detail
+                $.ajax({
+                    url: `/admin/hewan/detail/${id}`,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(detailData) {
+                        $('#edit-ternak-induk').val(detailData.ternak_induk || '');
+                        $('#edit-tanggal-masuk').val(detailData.tanggal_masuk);
+                        
+                        // Select dropdowns
+                        $('select[name="status_id"]').val(detailData.ternak_status);
+                        $('select[name="tipe_id"]').val(detailData.ternak_tipe);
+                        $('select[name="kesehatan_id"]').val(detailData.ternak_kesehatan);
+                        $('select[name="program_id"]').val(detailData.ternak_program);
+                        $('select[name="kandang_id"]').val(detailData.ternak_kandang);
+                        $('select[name="user_id"]').val(detailData.pemilik);
+                        
+                        // Set form action dynamically
+                        $('#editHewanForm').attr('action', `/admin/hewan/${id}`);
+                        
+                        // Show modal
+                        $('#modal-edit').modal('show');
+                    },
+                    error: function(xhr) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Kesalahan',
+                            text: 'Terjadi kesalahan saat mengambil detail hewan.'
+                        });
+                    }
+                });
+            },
+            error: function(xhr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Kesalahan',
+                    text: 'Terjadi kesalahan saat mengambil data hewan.'
+                });
+            }
+        });
     });
 });

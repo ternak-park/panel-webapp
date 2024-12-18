@@ -1,34 +1,29 @@
 $(document).ready(function () {
+    // Setup CSRF token for Ajax requests
     $.ajaxSetup({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
-    var hewanShowUrl = "/admin/ternak-hewan/{id}/show";
 
-    let table = $("#tableHewan").DataTable({
+    // Initialize DataTable
+    const table = $("#tableHewan").DataTable({
         processing: true,
         serverSide: true,
         autoWidth: false,
-        // scrollX: true,
         responsive: true,
         pageLength: 10,
-        dom: "t", // Remove default search and pagination
+        dom: "t",
         language: {
-            lengthMenu: "",
-            info: "",
-            infoFiltered: "(disaring dari total _MAX_ data)",
             emptyTable: "Tidak ada data",
-            infoEmpty: "Menampilkan 0 data",
             zeroRecords: "Data tidak ditemukan",
-            pagingType: "simple",
+            processing: "Loading...",
             paginate: {
-                previous: "", // Menghilangkan teks "Previous"
-                next: "", // Menghilangkan teks "Next"
+                previous: "<",
+                next: ">",
             },
-            processing: "Loading...", // Custom processing message
         },
-        ajax: "/admin/ternak-hewan",
+        ajax: "/admin/hewan",
         columns: [
             {
                 data: "id",
@@ -38,67 +33,68 @@ $(document).ready(function () {
                 orderable: false,
                 searchable: false,
             },
-            // {
-            //     data: "id",
-            //     render: function (data, type, row) {
-            //         // Mengganti {id} dengan ID yang sesuai
-            //         var showUrl = hewanShowUrl.replace("{id}", data);
-            //         return `<a href="${showUrl}" class="view btn btn-primary btn-sm" style="width: 30px; font-size: 12px; padding: 5px;"><i class="fa-solid fa-eye"></i></a>`;
-            //     },
-            //     orderable: false,
-            //     searchable: false,
-            // },
-            { data: "tag", visible: false },
-            // gambar produk
+            { data: "tag" },
+            { data: "jenis" },
+            { data: "sex" },
+            { data: "ternak_tipe" },
             {
-                data: null,
-                render: function(data, type, row) {
-                    // Menggabungkan gambar_hewan dan kode_produk dalam satu kolom
-                    return '<td data-label="Name"><div class="d-flex py-1 align-items-center"><span class="avatar me-2" style="background-image: url(/storage/hewan/' + data.gambar_hewan + ')"></span><div class="flex-fill"><div class="font-weight-medium">' + data.jenis + '</div><div class="text-muted"><a href="#" class="text-reset">' + data.tag + '</a></div></div></div></td>';
-                }
-            },
-            {
-                data: "jenis", visible: false,
+                data: "id",
                 render: function (data, type, row) {
-                    return data ? data : "Tidak tersedia"; // Menampilkan nama tipe
+                    return `
+                        <button class="btn btn-sm btn-warning btn-edit" 
+                            data-id="${data}" 
+                            data-tag="${row.tag}" 
+                            data-jenis="${row.jenis}" 
+                            data-sex="${row.sex}" 
+                            data-tipe="${row.ternak_tipe}">
+                            Edit
+                        </button>
+                    `;
                 },
+                orderable: false,
+                searchable: false,
             },
-            {
-                data: "sex",
-                render: function (data, type, row) {
-                    // Kapital awal huruf
-                    return data
-                        ? data.charAt(0).toUpperCase() + data.slice(1)
-                        : data;
-                },
-            },
-            {
-                data: "ternak_tipe",
-                render: function (data, type, row) {
-                    return data ? data : "Tidak tersedia"; // Menampilkan nama tipe
-                },
-            },
-
-            { data: "action", orderable: false, searchable: false },
         ],
-        drawCallback: sihubDrawCallback, // Gawe Nyelok Callback
     });
 
-    // Gawe Page Length
-    $("#pageLength").on("change", function () {
-        table.page.len($(this).val()).draw();
+    // Handle Edit Button
+    $(document).on("click", ".btn-edit", function () {
+        const id = $(this).data("id");
+        const tag = $(this).data("tag");
+        const jenis = $(this).data("jenis");
+        const sex = $(this).data("sex");
+        const tipe = $(this).data("tipe");
+
+        // Isi data ke modal
+        $("#editTag").val(tag);
+        $("#editJenis").val(jenis);
+        $("#editSex").val(sex);
+        $("#editTipeTernak").val(tipe);
+
+        // Set form action
+        $("#formEditHewan").attr("action", `/admin/hewan/${id}/update`);
+
+        // Tampilkan modal
+        $("#modal-edit-hewan").modal("show");
     });
 
-    // Custom search
-    $("#searchInput").on("keyup", function () {
-        table.search($(this).val()).draw();
-    });
-
-    // Custom pagination
-    $(document).on("click", "#tablePagination .page-link", function (e) {
+    // Handle Form Submit
+    $("#formEditHewan").on("submit", function (e) {
         e.preventDefault();
-        if (!$(this).closest("li").hasClass("disabled")) {
-            table.page($(this).data("page")).draw("page");
-        }
+        const actionUrl = $(this).attr("action");
+        const formData = $(this).serialize();
+
+        // Kirim data dengan Ajax
+        $.post(actionUrl, formData, function (response) {
+            if (response.success) {
+                $("#modal-edit-hewan").modal("hide");
+                table.ajax.reload();
+                alert("Data berhasil diperbarui!");
+            } else {
+                alert("Gagal memperbarui data!");
+            }
+        }).fail(function () {
+            alert("Terjadi kesalahan!");
+        });
     });
 });

@@ -94,3 +94,127 @@ $(document).ready(function () {
         }
     });
 });
+
+$(document).ready(function () {
+    // Edit Modal Handler
+    $(document).on("click", ".btn-edit", function () {
+        const id = $(this).data("id");
+
+        // Fetch animal data
+        $.ajax({
+            url: `/admin/hewan/${id}/edit`,
+            method: "GET",
+            dataType: "json",
+            success: function (data) {
+                // Populate form fields
+                $("#edit-ternak-tag").val(data.tag);
+                $("#edit-ternak-induk").val(
+                    data.detail ? data.detail.ternak_induk : ""
+                );
+                $("#edit-sex").val(
+                    data.sex.charAt(0).toUpperCase() +
+                        data.sex.slice(1).toLowerCase()
+                );
+                $("#edit-tanggal-masuk").val(
+                    data.detail ? data.detail.tanggal_masuk : ""
+                );
+
+                // Set dropdown values
+                $('select[name="ternak_status_indeks"]').val(
+                    data.detail ? data.detail.ternak_status : ""
+                );
+                $('select[name="ternak_tipe_indeks"]').val(
+                    data.detail ? data.detail.ternak_tipe : ""
+                );
+                $('select[name="ternak_kesehatan_indeks"]').val(
+                    data.detail ? data.detail.ternak_kesehatan : ""
+                );
+                $('select[name="ternak_program_indeks"]').val(
+                    data.detail ? data.detail.ternak_program : ""
+                );
+                $('select[name="ternak_kandang_indeks"]').val(
+                    data.detail ? data.detail.ternak_kandang : ""
+                );
+                $('select[name="pemilik_indeks"]').val(
+                    data.detail ? data.detail.pemilik : ""
+                );
+
+                // Set form action
+                $("#editHewanForm").attr("action", `/admin/hewan/${id}`);
+
+                // Show modal
+                $("#modal-edit").modal("show");
+            },
+            error: function (xhr) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Kesalahan",
+                    text: "Terjadi kesalahan saat mengambil data hewan.",
+                });
+            },
+        });
+    });
+
+    // Form submission handler
+    $("#editHewanForm").on("submit", function (e) {
+        e.preventDefault();
+
+        const form = $(this);
+        const url = form.attr("action");
+        const formData = form.serialize();
+
+        $.ajax({
+            url: url,
+            method: "POST",
+            data: formData,
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Berhasil",
+                        text: response.message,
+                    }).then(() => {
+                        // Refresh DataTable
+                        location.reload(); 
+                        $("#tableHewan").DataTable().ajax.reload();
+
+                        // Close modal
+                        $("#modal-edit").modal("hide");
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Kesalahan",
+                        text: response.message,
+                    });
+                }
+            },
+            error: function (xhr) {
+                if (xhr.status === 422) {
+                    // Validation errors
+                    const errors = xhr.responseJSON.errors;
+                    let errorMessage = "";
+
+                    if (errors) {
+                        Object.values(errors).forEach((error) => {
+                            errorMessage += error[0] + "\n";
+                        });
+                    }
+
+                    Swal.fire({
+                        icon: "error",
+                        title: "Validasi Kesalahan",
+                        text: errorMessage,
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Kesalahan",
+                        text: "Terjadi kesalahan saat memperbarui data.",
+                    });
+                }
+            },
+        });
+    });
+});
