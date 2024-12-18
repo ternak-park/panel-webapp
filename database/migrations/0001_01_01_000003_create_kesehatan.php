@@ -9,7 +9,9 @@ return new class extends Migration {
     {
         Schema::create('kesehatan', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_kesehatan');
             $table->string('nama_kesehatan');
+            $table->string('deskripsi');
             $table->timestamps();
         });
     }

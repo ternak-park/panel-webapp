@@ -9,7 +9,9 @@ return new class extends Migration {
     {
         Schema::create('program', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_program');
             $table->string('nama_program');
+            $table->string('deskripsi');
             $table->timestamps();
         });
     }

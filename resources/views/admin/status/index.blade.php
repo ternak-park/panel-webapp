@@ -61,8 +61,9 @@
                                     <div class="mx-2 d-inline-block">
                                         <select id="pageLength" class="form-control form-control-sm" style="width:70px">
                                             <option value="10">10</option>
-                                            <option value="25">25</option>
-                                            <option value="50">50</option>
+                                            <option value="20">20</option>
+                                            <option value="20">20</option>
+                                            <option value="50">30</option>
                                             <option value="100">100</option>
                                         </select>
                                     </div>
@@ -83,6 +84,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Status</th>
+                                        <th>Kode Status</th>
                                         <th>Dibuat</th>
                                         <th>Aksi</th>
                                     </tr>

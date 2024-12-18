@@ -10,5 +10,5 @@ class Program extends Model
     use HasFactory;
 
     protected $table = 'program';
-    protected $fillable = ['id', 'nama_program'];
+    protected $fillable = ['id', 'kode_program', 'nama_program', 'deskripsi', 'created_at', 'updated_at'];
 }

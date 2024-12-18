@@ -2,14 +2,14 @@
 
 namespace App\Exports;
 
-use App\Models\Status;
+use App\Models\Tipe;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class StatusExport implements FromView, WithStyles, ShouldAutoSize
+class TipeExport implements FromView, WithStyles, ShouldAutoSize
 {
     public function styles(Worksheet $sheet)
     {
@@ -20,11 +20,11 @@ class StatusExport implements FromView, WithStyles, ShouldAutoSize
 
     public function view(): View
     {
-        return view('admin.status.export.excel', [
-            'status' => Status::all()
+        return view('admin.tipe.export.excel', [
+            'tipe' => Tipe::all()
         ]);
 
-        // return Excel::download(new StatusExport, 'status_' . Carbon::now()->format('Y-m-d_H-i-s') . '.xlsx');
+        // return Excel::download(new TipeExport, 'tipe_' . Carbon::now()->format('Y-m-d_H-i-s') . '.xlsx');
 
     }
 

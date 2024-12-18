@@ -69,10 +69,12 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::post('admin/ternak-tipe', [App\Http\Controllers\Admin\TipeController::class, 'store'])->name('tipe.store');
     Route::get('admin/ternak-tipe/create', [App\Http\Controllers\Admin\TipeController::class, 'create'])->name('tipe.create');
     Route::delete('admin/ternak-tipe/{id}', [App\Http\Controllers\Admin\TipeController::class, 'destroy'])->name('tipe.destroy');
+    Route::get('admin/ternak-tipe/excel', [App\Http\Controllers\Admin\TipeController::class, 'excel'])->name('tipe.excel');
 
     // Program
     Route::get('admin/ternak-program', [App\Http\Controllers\Admin\ProgramController::class, 'index'])->name('program.index');
     Route::delete('admin/ternak-program/{id}', [App\Http\Controllers\Admin\ProgramController::class, 'destroy'])->name('program.destroy');
+    Route::get('admin/ternak-program/excel', [App\Http\Controllers\Admin\ProgramController::class, 'excel'])->name('program.excel');
 
     // kandang
     Route::get('admin/kandang', [App\Http\Controllers\Admin\KandangController::class, 'index'])->name('kandang.index');
@@ -85,6 +87,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     // kesehatan
     Route::get('admin/ternak-kesehatan', [App\Http\Controllers\Admin\KesehatanController::class, 'index'])->name('kesehatan.index');
     Route::delete('admin/ternak-kesehatan/{id}', [App\Http\Controllers\Admin\KesehatanController::class, 'destroy'])->name('kesehatan.destroy');
+    Route::get('admin/ternak-kesehatan/excel', [App\Http\Controllers\Admin\KesehatanController::class, 'excel'])->name('kesehatan.excel');
 
     // hewan
     Route::get('admin/hewan', [App\Http\Controllers\Admin\HewanController::class, 'index'])->name('hewan.index');

@@ -9,7 +9,7 @@
                     <form class="card" action="{{ route('tipe.store') }}" method="POST" id="tipeForm">
                         @csrf
                         <div class="card-header">
-                            <h4 class="card-title">Tambah Status</h4>
+                            <h4 class="card-title">Tambah Tipe</h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -23,7 +23,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Nama Tipe</label>
-                                        <input type="text" class="form-control" name="nama_status" 
+                                        <input type="text" class="form-control" name="nama_status"
                                             name="nama_status" value="{{ old('nama_status') }}"  />
                                     </div>
                                 </div>
@@ -49,9 +49,9 @@
             </div>
         </div>
     </div>
-    
+
     <script>
-        
+
         // Gawe Count Text
         const textarea = document.getElementById('deskripsi');
         const ketikan_sakkarepmu = document.getElementById('ketikan_sakkarepmu');

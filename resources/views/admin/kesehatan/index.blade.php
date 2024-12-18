@@ -18,7 +18,7 @@
                         <div class="col-12 col-md-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <span class="d-none d-sm-inline">
-                                    <a href="sad" class="btn">
+                                    <a href="{{ route('kesehatan.excel') }}" class="btn">
                                         Cetak
                                     </a>
                                 </span>
@@ -64,8 +64,9 @@
                                     <div class="mx-2 d-inline-block">
                                         <select id="pageLength" class="form-control form-control-sm" style="width:70px">
                                             <option value="10">10</option>
-                                            <option value="25">25</option>
-                                            <option value="50">50</option>
+                                            <option value="20">20</option>
+                                            <option value="20">20</option>
+                                            <option value="50">30</option>
                                             <option value="100">100</option>
                                         </select>
                                     </div>
@@ -86,6 +87,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Kesehatan</th>
+                                        <th>Kode Kesehatan</th>
                                         <th>Dibuat</th>
                                         <th>Aksi</th>
                                     </tr>

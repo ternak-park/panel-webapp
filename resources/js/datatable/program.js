@@ -40,6 +40,7 @@ $(document).ready(function () {
                         : data;
                 },
             },
+            { data: "kode_program" },
             {
                 data: "created_at",
                 render: function(data, type, row) {

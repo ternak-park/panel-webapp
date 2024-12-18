@@ -12,13 +12,19 @@ class ProgramSeeder extends Seeder
     {
         $programs = [
             [
+                'kode_program' => 'FTN',
                 'nama_program' => 'Fattening',
+                'deskripsi' => 'Program penggemukan bertujuan untuk meningkatkan bobot ternak dalam waktu tertentu dengan manajemen pakan dan perawatan intensif.',
             ],
             [
+                'kode_program' => 'BRD',
                 'nama_program' => 'Breeding',
+                'deskripsi' => 'Program pembiakan fokus pada pengelolaan reproduksi ternak untuk menghasilkan anakan berkualitas.'
             ],
             [
+                'kode_program' => 'ANK',
                 'nama_program' => 'Anakan',
+                'deskripsi' => 'Program ini dirancang untuk memantau dan mengelola pertumbuhan anak ternak sejak lahir hingga usia tertentu.'
             ],
         ];
 

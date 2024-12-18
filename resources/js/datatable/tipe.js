@@ -40,6 +40,7 @@ $(document).ready(function () {
                         : data;
                 },
             },
+            { data: "kode_tipe" },
             {
                 data: "created_at",
                 render: function(data, type, row) {

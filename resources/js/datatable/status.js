@@ -23,31 +23,32 @@ $(document).ready(function () {
             zeroRecords: "Data tidak ditemukan",
             pagingType: "simple",
             paginate: {
-                previous: "", 
-                next: "", 
+                previous: "",
+                next: "",
             },
-            processing: "Loading...", 
+            processing: "Loading...",
         },
         ajax: "/admin/ternak-status",
         columns: [
             { data: "id" },
             { data: "nama_status" },
+            { data: "kode_status" },
             {
                 data: "created_at",
                 render: function(data, type, row) {
                     if (!data) return data;
-                    
+
                     // Months in Indonesian
                     const months = [
-                        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
+                        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
                         'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
                     ];
-                    
+
                     const date = new Date(data);
                     const day = date.getDate().toString().padStart(2, '0');
                     const month = months[date.getMonth()];
                     const year = date.getFullYear();
-                    
+
                     return `${day} ${month} ${year}`;
                 }
             },

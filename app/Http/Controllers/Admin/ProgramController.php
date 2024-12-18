@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\admin;
 use App\Models\Program;
+use App\Exports\ProgramExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
 class ProgramController extends Controller
 {
@@ -15,7 +16,7 @@ class ProgramController extends Controller
         $data['judul'] = 'Manajemen Program';
         $data['sub_judul'] = 'Data Program Hewan';
         if ($request->ajax()) {
-            $data = Program::select('id', 'nama_program', 'created_at', 'updated_at');
+            $data = Program::select('id', 'kode_program', 'nama_program', 'deskripsi', 'created_at', 'updated_at');
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -26,6 +27,12 @@ class ProgramController extends Controller
         }
         return view('admin.program.index', $data);
 
+    }
+
+    // gawe export excel
+    public function excel()
+    {
+        return Excel::download(new ProgramExport, 'program.xlsx');
     }
 
     public function destroy($id)

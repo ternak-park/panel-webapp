@@ -2,14 +2,14 @@
 
 namespace App\Exports;
 
-use App\Models\Status;
+use App\Models\Kesehatan;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class StatusExport implements FromView, WithStyles, ShouldAutoSize
+class KesehatanExport implements FromView, WithStyles, ShouldAutoSize
 {
     public function styles(Worksheet $sheet)
     {
@@ -20,11 +20,11 @@ class StatusExport implements FromView, WithStyles, ShouldAutoSize
 
     public function view(): View
     {
-        return view('admin.status.export.excel', [
-            'status' => Status::all()
+        return view('admin.kesehatan.export.excel', [
+            'kesehatan' => Kesehatan::all()
         ]);
 
-        // return Excel::download(new StatusExport, 'status_' . Carbon::now()->format('Y-m-d_H-i-s') . '.xlsx');
+        // return Excel::download(new KesehatanExport, 'kesehatan_' . Carbon::now()->format('Y-m-d_H-i-s') . '.xlsx');
 
     }
 

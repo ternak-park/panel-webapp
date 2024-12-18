@@ -9,5 +9,5 @@ class Tipe extends Model
     use HasFactory;
 
     protected $table = 'tipe';
-    protected $fillable = ['id', 'nama_tipe'];
+    protected $fillable = ['id', 'kode_tipe', 'nama_tipe', 'deskripsi', 'created_at', 'updated_at'];
 }

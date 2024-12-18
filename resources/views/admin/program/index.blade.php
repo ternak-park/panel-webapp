@@ -18,7 +18,7 @@
                         <div class="col-12 col-md-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <span class="d-none d-sm-inline">
-                                    <a href="sad" class="btn">
+                                    <a href="{{ route('program.excel') }}" class="btn">
                                         Cetak
                                     </a>
                                 </span>
@@ -31,7 +31,7 @@
                                         <path d="M12 5l0 14" />
                                         <path d="M5 12l14 0" />
                                     </svg>
-                                    Tambah Supplier
+                                    Tambah {{ $main }}
                                 </a>
                                 <a href="" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
                                     data-bs-target="#modal-tambahData" aria-label="Tambah Produk">
@@ -64,8 +64,9 @@
                                     <div class="mx-2 d-inline-block">
                                         <select id="pageLength" class="form-control form-control-sm" style="width:70px">
                                             <option value="10">10</option>
-                                            <option value="25">25</option>
-                                            <option value="50">50</option>
+                                            <option value="20">20</option>
+                                            <option value="20">20</option>
+                                            <option value="50">30</option>
                                             <option value="100">100</option>
                                         </select>
                                     </div>
@@ -86,6 +87,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Program</th>
+                                        <th>Kode Program</th>
                                         <th>Dibuat</th>
                                         <th>Aksi</th>
                                     </tr>

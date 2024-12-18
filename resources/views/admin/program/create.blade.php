@@ -9,13 +9,13 @@
                     <form class="card" action="{{ route('status.store') }}" method="POST" id="statusForm">
                         @csrf
                         <div class="card-header">
-                            <h4 class="card-title">Tambah Status</h4>
+                            <h4 class="card-title">Tambah Program</h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Kode Status</label>
+                                        <label class="form-label">Kode Program</label>
                                         <input type="text" class="form-control" name="kode_status" id="kode_status"
                                             name="kode_status" value="{{ old('kode_status') }}" readonly disabled />
                                     </div>

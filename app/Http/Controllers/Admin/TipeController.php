@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\admin;
 use App\Models\Tipe;
+use App\Exports\TipeExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-
 use Illuminate\Http\Request;
+
 class TipeController extends Controller
 {
     public function index(Request $request)
@@ -16,7 +18,7 @@ class TipeController extends Controller
         $data['judul'] = 'Manajemen Tipe';
         $data['sub_judul'] = 'Data Tipe Hewan';
         if ($request->ajax()) {
-            $data = Tipe::select('id', 'nama_tipe', 'created_at', 'updated_at');
+            $data = Tipe::select('id', 'kode_tipe', 'nama_tipe', 'created_at', 'updated_at');
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -99,6 +101,13 @@ class TipeController extends Controller
     {
         return view('admin.tipe.create');
     }
+
+    // gawe export excel
+    public function excel()
+    {
+        return Excel::download(new TipeExport, 'tipe.xlsx');
+    }
+
 
     public function destroy($id)
     {

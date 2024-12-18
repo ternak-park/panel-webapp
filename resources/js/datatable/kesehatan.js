@@ -32,6 +32,7 @@ $(document).ready(function () {
         columns: [
             { data: "id" },
             { data: "nama_kesehatan" },
+            { data: "kode_kesehatan" },
             {
                 data: "created_at",
                 render: function(data, type, row) {
