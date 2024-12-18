@@ -19,7 +19,7 @@
                         <div class="col-12 col-md-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <span class="d-none d-sm-inline">
-                                    <a href="sad" class="btn">
+                                    <a href="{{ route('hewan.excel') }}" class="btn">
                                         Cetak
                                     </a>
                                 </span>
@@ -157,7 +157,7 @@
                     'programTernak' => $program,
                     'kandangTernak' => $kandang,
                     'pemilikTernak' => $user,
-                ]);
+                ])
                 @include('admin.hewan.modal.create', [
                     'statusTernak' => $status,
                     'tipeTernak' => $tipe,
@@ -165,65 +165,67 @@
                     'programTernak' => $program,
                     'kandangTernak' => $kandang,
                     'pemilikTernak' => $user,
-                ]);
+                ])
                 <script>
-                    $(document).on('click', '.delete', function() {
-                        const id = $(this).data('id');
-                        Swal.fire({
-                            title: 'Anda yakin?',
-                            text: 'Data akan dihapus secara permanen!',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonText: 'Ya, hapus!',
-                            cancelButtonText: 'Tidak, batal!',
-                            reverseButtons: true
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({
-                                    url: "/admin/hewan/" + id,
-                                    type: 'DELETE',
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    success: function(response) {
-                                        Swal.fire(
-                                            'Dihapus!',
-                                            response.success || 'Data telah dihapus.',
-                                            'success'
-                                        ).then(() => {
-                                            // Auto-refresh halaman setelah data dihapus
-                                            location.reload();
-                                        });
-                                    },
-                                    error: function(err) {
-                                        Swal.fire(
-                                            'Error!',
-                                            'Terjadi kesalahan saat menghapus data.',
-                                            'error'
-                                        );
-                                    }
-                                });
-                            } else {
-                                Swal.fire(
-                                    'Cancelled',
-                                    'Data tidak dihapus.',
-                                    'info'
-                                );
-                            }
+                    $(document).ready(function() {
+                        $(document).on('click', '.delete', function() {
+                            const id = $(this).data('id');
+                            Swal.fire({
+                                title: 'Anda yakin?',
+                                text: 'Data akan dihapus secara permanen!',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'Ya, hapus!',
+                                cancelButtonText: 'Tidak, batal!',
+                                reverseButtons: true
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $.ajax({
+                                        url: "/admin/hewan/" + id,
+                                        type: 'DELETE',
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        success: function(response) {
+                                            Swal.fire(
+                                                'Dihapus!',
+                                                response.success || 'Data telah dihapus.',
+                                                'success'
+                                            ).then(() => {
+                                                location.reload();
+                                            });
+                                        },
+                                        error: function(err) {
+                                            Swal.fire(
+                                                'Error!',
+                                                'Terjadi kesalahan saat menghapus data.',
+                                                'error'
+                                            );
+                                        }
+                                    });
+                                } else {
+                                    Swal.fire(
+                                        'Cancelled',
+                                        'Data tidak dihapus.',
+                                        'info'
+                                    );
+                                }
+                            });
                         });
                     });
                 </script>
                 <script>
                     document.querySelectorAll('.btn-edit').forEach(button => {
-                        button.addEventListener('click', function () {
+                        button.addEventListener('click', function() {
                             const id = this.getAttribute('data-id');
-                
+
                             // Lakukan fetch untuk mendapatkan data dari server
                             fetch(`/admin/hewan/${id}`)
                                 .then(response => response.json())
                                 .then(data => {
                                     // Isi form di modal dengan data yang diambil
-                                    document.getElementById('editHewanForm').setAttribute('action', `/admin/hewan/${id}`);
+                                    document.getElementById('editHewanForm').setAttribute('action',
+                                        `/admin/hewan/${id}`);
                                     document.getElementById('edit-ternak-tag').value = data.ternak_tag;
                                     document.getElementById('edit-ternak-induk').value = data.ternak_induk;
                                     document.getElementById('edit-sex').value = data.sex;
@@ -236,7 +238,7 @@
                         });
                     });
                 </script>
-                
+
                 <script>
                     // Enable or Disable Fields Before Submission
                     document.getElementById('hewanForm').addEventListener('submit', function() {

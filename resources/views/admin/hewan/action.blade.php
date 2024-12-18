@@ -9,9 +9,10 @@
     <i class="fas fa-edit"></i>
 </button>
 
-<button class="btn btn-danger btn-sm" data-id="{{ $id }}" class="delete"  title="Edit Hewan">
+<button class="btn btn-danger btn-sm delete" data-id="{{ $id }}" title="Edit Hewan">
     <i class="fas fa-trash"></i>
 </button>
+
 
 
 {{-- <button data-id="{{ $id }}" class="delete btn btn-danger btn-sm">Delete</button> --}}

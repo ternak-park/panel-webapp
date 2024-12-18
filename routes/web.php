@@ -102,7 +102,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/hewan/detail/{id}', [App\Http\Controllers\Admin\HewanController::class, 'getDetailData']);
     Route::get('/admin/hewan/{id}/edit', [App\Http\Controllers\Admin\HewanController::class, 'edit'])->name('hewan.edit');
     Route::put('/admin/hewan/{id}', [App\Http\Controllers\Admin\HewanController::class, 'update'])->name('hewan.update');
-    
+    Route::get('admin/hewan/excel', [App\Http\Controllers\Admin\HewanController::class, 'excel'])->name('hewan.excel');
     Route::get('/download-image/{namafile}', [pp\Http\Controllers\Admin\HewanController::class, 'downloadGambar'])->name('download.gambar');
     // User List
     Route::get('admin/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');

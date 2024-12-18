@@ -11,9 +11,12 @@ use App\Models\Tipe;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\TernakHewan;
+use App\Exports\HewanExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+
 class HewanController extends Controller
 {
     public function index(Request $request)
@@ -30,7 +33,7 @@ class HewanController extends Controller
         $data['kandang'] = TernakKandang::all();
         $data['user'] = User::all();
 
-        
+
         if ($request->ajax()) {
             $hewan = TernakHewan::with('tipe:id,nama_tipe')
                 ->select('id', 'tag', 'jenis', 'sex', 'ternak_tipe', 'gambar_hewan');
@@ -190,10 +193,10 @@ class HewanController extends Controller
             'kandang',
             'pemilik'
         ])->findOrFail($id);
-    
+
         return response()->json($hewan);
     }
-    
+
 
     public function update(Request $request, $id)
     {
@@ -231,12 +234,12 @@ class HewanController extends Controller
                     'errors' => $validator->errors()
                 ], 422);
             }
-    
+
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
         }
-    
+
         try {
             DB::transaction(function () use ($request, $id) {
                 // Update logic remains the same
@@ -247,7 +250,7 @@ class HewanController extends Controller
                     'ternak_tipe' => $request->ternak_tipe_indeks,
                     'updated_at' => now(),
                 ]);
-    
+
                 DB::table('ternak_detail')->where('ternak_tag', $request->ternak_tag)->update([
                     'ternak_induk' => $request->ternak_induk ?? NULL,
                     'sex' => $request->sex,
@@ -261,7 +264,7 @@ class HewanController extends Controller
                     'updated_at' => now(),
                 ]);
             });
-    
+
             // Different response for AJAX and non-AJAX requests
             if ($isAjax) {
                 return response()->json([
@@ -269,10 +272,9 @@ class HewanController extends Controller
                     'message' => 'Data Hewan berhasil diperbarui.'
                 ]);
             }
-    
+
             return redirect()->route('hewan.index')
                 ->with('success', 'Data Hewan berhasil diperbarui.');
-    
         } catch (\Exception $e) {
             if ($isAjax) {
                 return response()->json([
@@ -280,7 +282,7 @@ class HewanController extends Controller
                     'message' => 'Terjadi kesalahan saat memperbarui data: ' . $e->getMessage()
                 ], 500);
             }
-    
+
             return redirect()->back()
                 ->with('error', 'Terjadi kesalahan saat memperbarui data.');
         }
@@ -292,20 +294,32 @@ class HewanController extends Controller
         $hewan = TernakHewan::findOrFail($id);
         return response()->json($hewan);
     }
-    
+
     public function getDetailData($id)
     {
         // Fetch detailed animal data from ternak_detail
         $hewanDetail = DB::table('ternak_detail')
-            ->where('ternak_tag', function($query) use ($id) {
+            ->where('ternak_tag', function ($query) use ($id) {
                 $query->select('tag')
-                      ->from('ternak_hewan')
-                      ->where('id', $id);
+                    ->from('ternak_hewan')
+                    ->where('id', $id);
             })
             ->first();
-        
+
         return response()->json($hewanDetail);
     }
-    
 
+    public function destroy($id)
+    {
+        $hewan = TernakHewan::findOrFail($id);
+        $hewan->delete();
+
+        return response()->json(['success' => 'Data telah dihapus.']);
+    }
+
+    // gawe export excel
+    public function excel()
+    {
+        return Excel::download(new HewanExport, 'hewan.xlsx');
+    }
 }
