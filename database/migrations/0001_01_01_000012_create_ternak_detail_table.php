@@ -21,6 +21,7 @@ class CreateTernakDetailTable extends Migration
             $table->unsignedBigInteger('ternak_kandang')->nullable();
             $table->unsignedBigInteger('pemilik')->nullable();
 
+            
             $table->foreign('ternak_tag')
                   ->references('tag')
                   ->on('ternak_hewan')

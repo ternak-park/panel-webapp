@@ -24,7 +24,15 @@
                         <div class="col-lg-6">
                             <div class="mb-3">
                                 <label class="form-label">Ternak Induk</label>
-                                <input type="text" class="form-control" id="edit-ternak-induk" name="ternak_induk">
+                                {{-- <input type="text" class="form-control" id="edit-ternak-induk" name="ternak_induk"> --}}
+                                <select type="text" class="form-select" id="select-labels-modal-induk"
+                                    name="ternak_induk">
+                                    @foreach ($hewanInduk as $item)
+                                        <option value="{{ $item->tag }}"
+                                            data-custom-properties='&lt;span class="badge bg-primary-lt"&gt;{{ $item->tag }}&lt;/span&gt;'>
+                                            {{ $item->jenis }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 

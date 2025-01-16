@@ -16,8 +16,8 @@
                             <div class="mb-3">
                                 <label class="form-label">Tag Hewan</label>
                                 <input type="text" class="form-control" name="ternak_tag" id="ternak_tag"
-                                    name="ternak_tag" value="{{ old('ternak_tag') }}"disabled readonly >
-                                    @error('ternak_tag')
+                                    name="ternak_tag" value="{{ old('ternak_tag') }}"disabled readonly>
+                                @error('ternak_tag')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -25,9 +25,16 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Ternak Induk</label>
-                                <input type="text" class="form-control" name="ternak_induk"
-                                    name="ternak_induk" value="{{ old('ternak_induk') }}" />
-                                    @error('ternak_induk')
+                                <select type="text" class="form-select" id="select-labels-induk" name="ternak_induk">
+                                    @foreach ($hewanInduk as $induk)
+                                        <option value="{{ $induk->id }}"
+                                            data-custom-properties='&lt;span class="badge bg-primary-lt"&gt;{{ $induk->tag }}&lt;/span&gt;'>
+                                            {{ $induk->jenis }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
+                                @error('ternak_induk')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -49,8 +56,8 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="tanggal_masuk">Tanggal Masuk</label>
-                                <input type="date" class="form-control" id="tanggal_masuk"
-                                    name="tanggal_masuk" value="{{ old('tanggal_masuk') }}" required>
+                                <input type="date" class="form-control" id="tanggal_masuk" name="tanggal_masuk"
+                                    value="{{ old('tanggal_masuk') }}" required>
                             </div>
                         </div>
 
@@ -97,7 +104,7 @@
                                     name="ternak_kesehatan_indeks">
                                     @foreach ($kesehatanTernak as $kesehatan)
                                         <option value="{{ $kesehatan->id }}"
-                                            data-custom-properties='&lt;span class="badge bg-primary-lt"&gt;{{ $kesehatan->id }}&lt;/span&gt;'>
+                                            data-custom-properties='&lt;span class="badge bg-primary-lt"&gt;{{ $kesehatan->kode_kesehatan }}&lt;/span&gt;'>
                                             {{ $kesehatan->nama_kesehatan }}
                                         </option>
                                     @endforeach
@@ -111,7 +118,7 @@
                                     name="ternak_program_indeks">
                                     @foreach ($programTernak as $program)
                                         <option value="{{ $program->id }}"
-                                            data-custom-properties='&lt;span class="badge bg-primary-lt"&gt;{{ $program->id }}&lt;/span&gt;'>
+                                            data-custom-properties='&lt;span class="badge bg-primary-lt"&gt;{{ $program->kode_program }}&lt;/span&gt;'>
                                             {{ $program->nama_program }}
                                         </option>
                                     @endforeach
@@ -129,7 +136,7 @@
                                     name="ternak_kandang_indeks">
                                     @foreach ($kandangTernak as $kandang)
                                         <option value="{{ $kandang->id }}"
-                                            data-custom-properties='&lt;span class="badge bg-primary-lt"&gt;{{ $kandang->id }}&lt;/span&gt;'>
+                                            data-custom-properties='&lt;span class="badge bg-primary-lt"&gt;{{ $kandang->kode_kandang }}&lt;/span&gt;'>
                                             {{ $kandang->kode_kandang }}
                                         </option>
                                     @endforeach
@@ -155,8 +162,7 @@
                         </div>
                         <div class="form-group">
                             <label for="gambar_hewan">Gambar Hewan</label>
-                            <input type="file" class="form-control" id="gambar_hewan"
-                                name="gambar_hewan">
+                            <input type="file" class="form-control" id="gambar_hewan" name="gambar_hewan">
                         </div>
                     </div>
                 </div>
@@ -181,7 +187,6 @@
 </form>
 
 <script>
-    
     // Gawe Count Text
     const textarea = document.getElementById('deskripsi');
     const ketikan_sakkarepmu = document.getElementById('ketikan_sakkarepmu');

@@ -31,6 +31,9 @@ class HewanController extends Controller
         $data['kesehatan'] = Kesehatan::all();
         $data['program'] = Program::all();
         $data['kandang'] = TernakKandang::all();
+        $data['induk'] = TernakHewan::where('sex', 'Betina') // assuming that the breeding stock are female
+        ->get();
+
         $data['user'] = User::all();
 
 
@@ -183,9 +186,8 @@ class HewanController extends Controller
 
     public function edit($id)
     {
-        // Fetch the animal data with all related details
         $hewan = TernakHewan::with([
-            'detail',  // Assuming you have a relationship defined
+            'detail', 
             'status',
             'tipe',
             'kesehatan',
@@ -252,7 +254,7 @@ class HewanController extends Controller
                 ]);
 
                 DB::table('ternak_detail')->where('ternak_tag', $request->ternak_tag)->update([
-                    'ternak_induk' => $request->ternak_induk ?? NULL,
+                    'ternak_induk' => $request->ternak_induk,
                     'sex' => $request->sex,
                     'tanggal_masuk' => $request->tanggal_masuk,
                     'ternak_status' => $request->ternak_status_indeks,
