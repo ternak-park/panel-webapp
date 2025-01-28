@@ -62,9 +62,9 @@ class LoginController extends Controller
             if (auth()->user()->type == 'admin') {
                 Session::flash('success', 'Login berhasil!');
                 return redirect()->route('admin.home');
-            } else if (auth()->user()->type == 'petugas') {
+            } else if (auth()->user()->type == 'executive') {
                 Session::flash('success', 'Login berhasil!');
-                return redirect()->route('petugas.home');
+                return redirect()->route('executive.home');
             } else {
                 Session::flash('success', 'Login berhasil!');
                 return redirect()->route('home');

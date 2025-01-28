@@ -117,7 +117,7 @@ class UserController extends Controller
             'username' => 'required|string|unique:users,username|max:255',
             'email' => 'required|email|unique:users,email|max:255',
             'password' => 'required|string|min:8|confirmed',
-            'type' => 'required|in:0,1,2' // Corresponds to user, admin, petugas
+            'type' => 'required|in:0,1,2' // Corresponds to user, admin, executive
         ]);
 
         $user = User::create([

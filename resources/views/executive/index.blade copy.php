@@ -12,7 +12,7 @@
                         </div>
                     @endif
 
-                    <h2>You are a petugas User.</h2>
+                    <h2>You are a executive User.</h2>
                 </div>
             </div>
         </div>

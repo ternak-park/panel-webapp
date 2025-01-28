@@ -61,7 +61,7 @@
                                                     ? 'bg-green-lt'
                                                     : ($user->type === 'admin'
                                                         ? 'bg-purple-lt'
-                                                        : ($user->type === 'petugas'
+                                                        : ($user->type === 'executive'
                                                             ? 'bg-blue-lt'
                                                             : 'bg-gray-lt')) }}">
                                                 {{ ucfirst($user->type) }}

@@ -75,8 +75,8 @@
         {{-- gawe nyeluk component navbar --}}
         @if (!in_array(Route::currentRouteName(), ['login', 'register', 'not-found']) && Route::has(Route::currentRouteName()))
             @if (Auth::check())
-                @if (Auth::user()->type === 'admin' || Auth::user()->type === 'petugas')
-                    {{-- Tipe admin atau petugas --}}
+                @if (Auth::user()->type === 'admin' || Auth::user()->type === 'executive')
+                    {{-- Tipe admin atau executive --}}
                     <x-navbar />
                 @elseif (Auth::user()->type === 'user')
                     {{-- Tipe user biasa --}}
@@ -93,7 +93,7 @@
     </div>
 </body>
 <!-- Libs JS -->
-<script src="{{ asset('assets/libs/apexchart/apexcharts.min.js?1667333929') }}"></script>
+<script src="{{ asset('assets/libs/apexcharts/dist/apexcharts.min.js?1684106062') }}"></script>
 <script src="{{ asset('assets/libs/jsvectormap/dist/js/jsvectormap.min.js?1667333929') }}"></script>
 <script src="{{ asset('assets/libs/jsvectormap/dist/maps/world.js?1667333929') }}"></script>
 <script src="{{ asset('assets/libs/jsvectormap/dist/maps/world-merc.js?1667333929') }}"></script>

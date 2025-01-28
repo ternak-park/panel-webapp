@@ -29,7 +29,7 @@ return new class extends Migration {
             $table->string('username');
             $table->string('email')->unique();
             $table->tinyInteger('type')->default(0);
-            /* Users: 0=>User, 1=>Admin, 2=>petugas */
+            /* Users: 0=>User, 1=>Admin, 2=>executive */
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('gambar_profile')->nullable();

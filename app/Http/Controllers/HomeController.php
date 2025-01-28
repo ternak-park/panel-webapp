@@ -64,9 +64,22 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function petugasHome(): View
+    public function executiveHome(): View
     {
-        return view('petugas.index');
+        // Ambil 5 user terbaru
+        $userAnyar = \DB::table('users')
+            ->where('type', 0) // Filter hanya user dengan type = 0
+            ->orderBy('id', 'desc') // Urutkan berdasarkan ID dari yang terbaru
+            ->limit(5) // Batasi hasil maksimal 5 user
+            ->get();
+
+        $data = [
+            'main' => 'Executive',
+            'judul' => 'Dashboard',
+            'userAnyar' => $userAnyar, 
+        ];
+
+        return view('executive.index', $data);
     }
 
     public function redirectToHome()
@@ -78,8 +91,8 @@ class HomeController extends Controller
                 return redirect()->route('admin.home');
             case 'user':
                 return redirect()->route('home');
-            case 'petugas':
-                return redirect()->route('petugas.home');
+            case 'executive':
+                return redirect()->route('executive.home');
             default:
                 return redirect()->route('not-found');
         }

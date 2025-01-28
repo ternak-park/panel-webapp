@@ -62,7 +62,7 @@ class User extends Authenticatable
     protected function type(): Attribute
     {
         return new Attribute(
-            get: fn($value) => ["user", "admin", "petugas"][$value],
+            get: fn($value) => ["user", "admin", "executive"][$value],
         );
     }
     public function getGambarProfileMasAttribute()
