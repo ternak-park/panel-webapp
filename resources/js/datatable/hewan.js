@@ -50,12 +50,6 @@ $(document).ready(function () {
             // },
             { data: "tag" },
             {
-                data: "jenis",
-                render: function (data, type, row) {
-                    return data ? data : "Tidak tersedia"; // Menampilkan nama tipe
-                },
-            },
-            {
                 data: "sex",
                 render: function (data, type, row) {
                     // Kapital awal huruf
@@ -64,6 +58,22 @@ $(document).ready(function () {
                         : data;
                 },
             },
+            {
+                data: "ternak_program",
+                render: function (data, type, row) {
+                    // Kapital awal huruf
+                    return data
+                        ? data.charAt(0).toUpperCase() + data.slice(1)
+                        : data;
+                },
+            },
+            {
+                data: "jenis",
+                render: function (data, type, row) {
+                    return data ? data : "Tidak tersedia"; // Menampilkan nama tipe
+                },
+            },
+           
             {
                 data: "ternak_tipe",
                 render: function (data, type, row) {

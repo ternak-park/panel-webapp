@@ -25,6 +25,11 @@
                                 </span>
                                 <a href="{{ route('hewan.create') }}" class="btn btn-primary d-none d-sm-inline-block"
                                     data-bs-toggle="modal" data-bs-target="#modal-tambah-hewan">
+                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /></svg>
+                                   Import .csv
+                                </a>
+                                <a href="{{ route('hewan.create') }}" class="btn btn-primary d-none d-sm-inline-block"
+                                    data-bs-toggle="modal" data-bs-target="#modal-tambah-hewan">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -51,7 +56,7 @@
             </div>
             <div class="page-body">
                 <div class="row row-cards">
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body border-bottom py-3">
                                 <div class="d-flex">
@@ -83,8 +88,9 @@
                                         <tr>
                                             <th style="width: 5%;">No</th>
                                             <th style="width: 15%;">Tag</th>
-                                            <th style="width: 15%;">Jenis</th>
                                             <th style="width: 15%;">Sex</th>
+                                            <th style="width: 15%;">Program</th>
+                                            <th style="width: 15%;">Jenis</th>
                                             <th style="width: 25%;">Tipe</th>
                                             <th class="w-1" style="width: 30%;">Aksi</th>
                                         </tr>
@@ -99,55 +105,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h3 class="card-title">Tracker</h3>
-                                <table class="table table-sm table-borderless">
-                                    <thead>
-                                        <tr>
-                                            <th>Sex</th>
-                                            <th class="text-end">Jumlah</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse ($tracker as $item)
-                                            <tr>
-                                                <td>
-                                                    <div class="progressbg">
-                                                        <div class="progress progressbg-progress">
-                                                            @php
-                                                                // Hitung persentase sex berdasarkan jumlah total hewan
-                                                                $percentage =
-                                                                    $total > 0 ? ($item->jumlah / $total) * 100 : 0;
-                                                            @endphp
-                                                            <div class="progress-bar bg-primary-lt"
-                                                                style="width: {{ $percentage }}%" role="progressbar"
-                                                                aria-valuenow="{{ $percentage }}" aria-valuemin="0"
-                                                                aria-valuemax="100"
-                                                                aria-label="{{ $percentage }}% Complete">
-                                                                <span class="visually-hidden">{{ $percentage }}%
-                                                                    Complete</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="progressbg-text">
-                                                            {{ $item->sex == 'Jantan' ? 'Jantan' : 'Betina' }}
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="w-1 fw-bold text-end">{{ $item->jumlah }}</td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="2" class="text-center">Data tracker tidak tersedia
-                                                </td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+
 
                 </div>
             </div>

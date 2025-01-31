@@ -38,8 +38,9 @@ class HewanController extends Controller
 
 
         if ($request->ajax()) {
-            $hewan = TernakHewan::with('tipe:id,nama_tipe')
-                ->select('id', 'tag', 'jenis', 'sex', 'ternak_tipe', 'gambar_hewan');
+            $hewan = TernakHewan::with(['tipe:id,nama_tipe', 'detail.program:id,nama_program'])
+                ->select('ternak_hewan.id', 'tag', 'jenis', 'sex', 'ternak_tipe');
+            
             return Datatables::of($hewan)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -47,6 +48,9 @@ class HewanController extends Controller
                 })
                 ->editColumn('ternak_tipe', function ($row) {
                     return $row->tipe->nama_tipe ?? 'Tidak tersedia';
+                })
+                ->addColumn('ternak_program', function ($row) {
+                    return $row->detail->program->nama_program ?? 'Tidak tersedia';
                 })
                 ->rawColumns(['action'])
                 ->make(true);

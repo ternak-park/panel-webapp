@@ -236,7 +236,6 @@
        <div class="collapse navbar-collapse" id="navbar-menu">
            <div class="navbar navbar-light">
                <div class="container-xl">
-
                    <ul class="navbar-nav">
                        @if (!Auth::user())
                        @elseif (Auth::user()->type === 'user')
@@ -256,6 +255,8 @@
                                    <span class="nav-link-title"> Summary </span>
                                </a>
                            </li>
+
+                           {{-- TIM OFFICE --}}
                        @elseif (Auth::user()->type === 'admin')
                            <li class="nav-item {{ Route::is('admin.home') ? 'active' : '' }}">
                                <a class="nav-link" href="{{ route('admin.home') }}">
@@ -274,7 +275,7 @@
                                </a>
                            </li>
 
-                           <li
+                           {{-- <li
                                class="nav-item dropdown {{ Route::is('hewan.index', 'fisik.index', 'kandang.index', 'reproduksi.index') ? 'active' : '' }}">
                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
@@ -331,10 +332,30 @@
                                        </div>
                                    </div>
                                </div>
+                           </li> --}}
+
+                           {{-- TERNAK --}}
+                           <li class="nav-item {{ Route::is('hewan.index') ? 'active' : '' }}">
+                               <a class="nav-link" href="{{ route('hewan.index') }}">
+                                   <span
+                                       class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                           viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                           stroke-linecap="round" stroke-linejoin="round"
+                                           class="icon icon-tabler icons-tabler-outline icon-tabler-building-cottage">
+                                           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                           <path d="M3 21l18 0" />
+                                           <path d="M4 21v-11l2.5 -4.5l5.5 -2.5l5.5 2.5l2.5 4.5v11" />
+                                           <path d="M12 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                           <path d="M9 21v-5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v5" />
+                                       </svg>
+                                   </span>
+                                   <span class="nav-link-title"> Ternak </span>
+                               </a>
                            </li>
 
                            {{-- ATRIBUT --}}
-                           <li
+                           {{-- <li
                                class="nav-item dropdown {{ Route::is('status.index', 'tipe.index', 'program.index', 'kesehatan.index') ? 'active' : '' }}">
                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
@@ -369,24 +390,51 @@
 
                                    </div>
                                </div>
-                           </li>
+                           </li> --}}
 
                            <li class="nav-item {{ Route::is('suppliers.index') ? 'active' : '' }}">
                                <a class="nav-link" href="{{ route('suppliers.index') }}">
                                    <span
                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
-                                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                           height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                           fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                           viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                           stroke-linecap="round" stroke-linejoin="round"
+                                           class="icon icon-tabler icons-tabler-outline icon-tabler-building-bank">
                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                           <polyline points="9 11 12 14 20 6" />
-                                           <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+                                           <path d="M3 21l18 0" />
+                                           <path d="M3 10l18 0" />
+                                           <path d="M5 6l7 -3l7 3" />
+                                           <path d="M4 10l0 11" />
+                                           <path d="M20 10l0 11" />
+                                           <path d="M8 14l0 3" />
+                                           <path d="M12 14l0 3" />
+                                           <path d="M16 14l0 3" />
                                        </svg>
                                    </span>
-                                   <span class="nav-link-title"> Supplier </span>
+                                   <span class="nav-link-title"> Kandang </span>
                                </a>
                            </li>
-
+                           <li class="nav-item {{ Route::is('suppliers.index') ? 'active' : '' }}">
+                               <a class="nav-link" href="{{ route('suppliers.index') }}">
+                                   <span
+                                       class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                           viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                           stroke-linecap="round" stroke-linejoin="round"
+                                           class="icon icon-tabler icons-tabler-outline icon-tabler-meat">
+                                           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                           <path
+                                               d="M13.62 8.382l1.966 -1.967a2 2 0 1 1 3.414 -1.415a2 2 0 1 1 -1.413 3.414l-1.82 1.821" />
+                                           <path
+                                               d="M5.904 18.596c2.733 2.734 5.9 4 7.07 2.829c1.172 -1.172 -.094 -4.338 -2.828 -7.071c-2.733 -2.734 -5.9 -4 -7.07 -2.829c-1.172 1.172 .094 4.338 2.828 7.071z" />
+                                           <path d="M7.5 16l1 1" />
+                                           <path
+                                               d="M12.975 21.425c3.905 -3.906 4.855 -9.288 2.121 -12.021c-2.733 -2.734 -8.115 -1.784 -12.02 2.121" />
+                                       </svg>
+                                   </span>
+                                   <span class="nav-link-title"> Pakan </span>
+                               </a>
+                           </li>
                            <li
                                class="nav-item dropdown {{ Route::is('users.index', 'users.adalahAdmin') ? 'active' : '' }}">
                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
@@ -403,8 +451,9 @@
                                            <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
                                        </svg>
                                    </span>
-                                   <span class="nav-link-title"> Pengguna </span>
+                                   <span class="nav-link-title"> Investor </span>
                                </a>
+
                                <div class="dropdown-menu">
                                    <div class="dropdown-menu-columns ">
                                        <div class="dropdown-menu-column">
@@ -446,27 +495,35 @@
                                    <span class="nav-link-title"> Summary </span>
                                </a>
                            </li>
-                           
-                           <li class="nav-item {{ Route::is('suppliers.index') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('suppliers.index') }}">
-                                <span
-                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
-                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-horse"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 10l-.85 8.507a1.357 1.357 0 0 0 1.35 1.493h.146a2 2 0 0 0 1.857 -1.257l.994 -2.486a2 2 0 0 1 1.857 -1.257h1.292a2 2 0 0 1 1.857 1.257l.994 2.486a2 2 0 0 0 1.857 1.257h.146a1.37 1.37 0 0 0 1.364 -1.494l-.864 -9.506h-8c0 -3 -3 -5 -6 -5l-3 6l2 2l3 -2z" /><path d="M22 14v-2a3 3 0 0 0 -3 -3" /></svg>
-                                </span>
-                                <span class="nav-link-title"> Ternak </span>
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="dropdown-menu-columns">
-                                    <div class="dropdown-menu-column">
-                                        <a class="dropdown-item" href="./empty.html"> Overview </a>
-                                        <a class="dropdown-item {{ Route::is('kandang.index') ? 'active' : '' }}"
-                                            href="{{ route('kandang.index') }}"> Fatenning </a>
-                                        <a class="dropdown-item {{ Route::is('kandang.index') ? 'active' : '' }}"
-                                            href="{{ route('kandang.index') }}"> Breeding </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+
+                           <li class="nav-item {{ Route::is('executive.hewan.index') ? 'active' : '' }}">
+                               <a class="nav-link" href="{{ route('executive.hewan.index') }}">
+                                   <span
+                                       class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                           viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                           stroke-linecap="round" stroke-linejoin="round"
+                                           class="icon icon-tabler icons-tabler-outline icon-tabler-horse">
+                                           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                           <path
+                                               d="M7 10l-.85 8.507a1.357 1.357 0 0 0 1.35 1.493h.146a2 2 0 0 0 1.857 -1.257l.994 -2.486a2 2 0 0 1 1.857 -1.257h1.292a2 2 0 0 1 1.857 1.257l.994 2.486a2 2 0 0 0 1.857 1.257h.146a1.37 1.37 0 0 0 1.364 -1.494l-.864 -9.506h-8c0 -3 -3 -5 -6 -5l-3 6l2 2l3 -2z" />
+                                           <path d="M22 14v-2a3 3 0 0 0 -3 -3" />
+                                       </svg>
+                                   </span>
+                                   <span class="nav-link-title"> Ternak </span>
+                               </a>
+                               <div class="dropdown-menu">
+                                   <div class="dropdown-menu-columns">
+                                       <div class="dropdown-menu-column">
+                                           <a class="dropdown-item" href="./empty.html"> Overview </a>
+                                           <a class="dropdown-item {{ Route::is('kandang.index') ? 'active' : '' }}"
+                                               href="{{ route('kandang.index') }}"> Fatenning </a>
+                                           <a class="dropdown-item {{ Route::is('kandang.index') ? 'active' : '' }}"
+                                               href="{{ route('kandang.index') }}"> Breeding </a>
+                                       </div>
+                                   </div>
+                               </div>
+                           </li>
                            <li
                                class="nav-item dropdown {{ Route::is('hewan.index', 'fisik.index', 'kandang.index', 'reproduksi.index') ? 'active' : '' }}">
                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
@@ -486,21 +543,32 @@
                                    </span>
                                    <span class="nav-link-title"> Kandang </span>
                                </a>
-                              
+
                            </li>
 
                            <li
-                           class="nav-item dropdown {{ Route::is('hewan.index', 'fisik.index', 'kandang.index', 'reproduksi.index') ? 'active' : '' }}">
-                           <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
-                               data-bs-auto-close="outside" role="button" aria-expanded="false">
-                               <span
-                                   class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
-                                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-cheese"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4.519 20.008l16.481 -.008v-3.5a2 2 0 1 1 0 -4v-3.5h-16.722" /><path d="M21 9l-9.385 -4.992c-2.512 .12 -4.758 1.42 -6.327 3.425c-1.423 1.82 -2.288 4.221 -2.288 6.854c0 2.117 .56 4.085 1.519 5.721" /><path d="M15 13v.01" /><path d="M8 13v.01" /><path d="M11 16v.01" /></svg>
-                               </span>
-                               <span class="nav-link-title"> Pakan </span>
-                           </a>
-                          
-                       </li>
+                               class="nav-item dropdown {{ Route::is('hewan.index', 'fisik.index', 'kandang.index', 'reproduksi.index') ? 'active' : '' }}">
+                               <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                   data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                   <span
+                                       class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                           viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                           stroke-linecap="round" stroke-linejoin="round"
+                                           class="icon icon-tabler icons-tabler-outline icon-tabler-cheese">
+                                           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                           <path d="M4.519 20.008l16.481 -.008v-3.5a2 2 0 1 1 0 -4v-3.5h-16.722" />
+                                           <path
+                                               d="M21 9l-9.385 -4.992c-2.512 .12 -4.758 1.42 -6.327 3.425c-1.423 1.82 -2.288 4.221 -2.288 6.854c0 2.117 .56 4.085 1.519 5.721" />
+                                           <path d="M15 13v.01" />
+                                           <path d="M8 13v.01" />
+                                           <path d="M11 16v.01" />
+                                       </svg>
+                                   </span>
+                                   <span class="nav-link-title"> Pakan </span>
+                               </a>
+
+                           </li>
 
                            {{-- ATRIBUT --}}
                            {{-- <li

@@ -41,7 +41,7 @@ class HomeController extends Controller
      */
     public function adminHome(): View
     {
-        // Ambil 5 user terbaru
+    
         $userAnyar = \DB::table('users')
             ->where('type', 0) // Filter hanya user dengan type = 0
             ->orderBy('id', 'desc') // Urutkan berdasarkan ID dari yang terbaru
@@ -51,6 +51,7 @@ class HomeController extends Controller
         // Siapkan data yang akan diteruskan ke tampilan
         $data = [
             'judul' => 'Dashboard',
+            'main' => 'Ternak',
             'userAnyar' => $userAnyar, // Masukkan data userAnyar ke dalam array data
         ];
 

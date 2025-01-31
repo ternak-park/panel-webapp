@@ -139,4 +139,9 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['user-access:executive'])->group(function () {
         Route::get('/executive/home', [HomeController::class, 'executiveHome'])->name('executive.home');
     });
+
+       /* Hewan */
+       Route::prefix('executive/hewan')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\HewanController::class, 'index'])->name('executive.hewan.index');
+    });
 });
