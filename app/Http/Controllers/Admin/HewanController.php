@@ -40,7 +40,7 @@ class HewanController extends Controller
         if ($request->ajax()) {
             $hewan = TernakHewan::with(['tipe:id,nama_tipe', 'detail.program:id,nama_program'])
                 ->select('ternak_hewan.id', 'tag', 'jenis', 'sex', 'ternak_tipe');
-            
+
             return Datatables::of($hewan)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -191,7 +191,7 @@ class HewanController extends Controller
     public function edit($id)
     {
         $hewan = TernakHewan::with([
-            'detail', 
+            'detail',
             'status',
             'tipe',
             'kesehatan',
@@ -328,4 +328,20 @@ class HewanController extends Controller
     {
         return Excel::download(new HewanExport, 'hewan.xlsx');
     }
+
+    public function deleteMultiple(Request $request)
+{
+    try {
+        if (empty($request->ids)) {
+            return response()->json(['success' => false, 'message' => 'Tidak ada data yang dipilih!']);
+        }
+
+        Hewan::whereIn('id', $request->ids)->delete();
+
+        return response()->json(['success' => true, 'message' => 'Data berhasil dihapus!']);
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'message' => 'Terjadi kesalahan saat menghapus data.']);
+    }
+}
+
 }
