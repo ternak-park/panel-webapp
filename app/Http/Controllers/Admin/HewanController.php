@@ -31,7 +31,7 @@ class HewanController extends Controller
         $data['kesehatan'] = Kesehatan::all();
         $data['program'] = Program::all();
         $data['kandang'] = TernakKandang::all();
-        $data['induk'] = TernakHewan::where('sex', 'Betina') 
+        $data['induk'] = TernakHewan::where('sex', 'Betina') // assuming that the breeding stock are female
             ->get();
 
         $data['user'] = User::all();

@@ -17,7 +17,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
-class HewanController extends Controller
+class KandangController extends Controller
 {
     public function index(Request $request)
     {
@@ -68,6 +68,6 @@ class HewanController extends Controller
         $data['tracker'] = $tracker;
         $data['total'] = $total;
 
-        return view('executive.ternak.index', $data);
+        return view('executive.kandang.index', $data);
     }
 }

@@ -143,6 +143,11 @@ Route::middleware(['auth'])->group(function () {
 
        /* Hewan */
        Route::prefix('executive/hewan')->group(function () {
-        Route::get('/', [App\Http\Controllers\Admin\HewanController::class, 'index'])->name('executive.hewan.index');
+        Route::get('/', [App\Http\Controllers\Executive\HewanController::class, 'index'])->name('executive.hewan.index');
+    });
+
+      /* Hewan */
+      Route::prefix('executive/kandang')->group(function () {
+        Route::get('/', [App\Http\Controllers\Executive\KandangController::class, 'index'])->name('executive.kandang.index');
     });
 });
