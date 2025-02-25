@@ -124,7 +124,7 @@ Route::middleware(['auth'])->group(function () {
         /* Download Gambar */
         Route::get('/download-image/{namafile}', [App\Http\Controllers\Admin\HewanController::class, 'downloadGambar'])->name('download.gambar');
 
-          /* Users */
+        /* Users */
         Route::prefix('admin/users')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
             Route::get('/users-admin', [App\Http\Controllers\Admin\UserController::class, 'adalahAdmin'])->name('users.adalahAdmin');
@@ -141,13 +141,18 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/executive/home', [HomeController::class, 'executiveHome'])->name('executive.home');
     });
 
-       /* Hewan */
-       Route::prefix('executive/hewan')->group(function () {
+    /* Hewan */
+    Route::prefix('executive/hewan')->group(function () {
         Route::get('/', [App\Http\Controllers\Executive\HewanController::class, 'index'])->name('executive.hewan.index');
     });
 
-      /* Kandang */
-      Route::prefix('executive/kandang')->group(function () {
+    /* Kandang */
+    Route::prefix('executive/kandang')->group(function () {
         Route::get('/', [App\Http\Controllers\Executive\KandangController::class, 'index'])->name('executive.kandang.index');
+    });
+
+    /* Fattening */
+    Route::prefix('executive/fattening')->group(function () {
+        Route::get('/', [App\Http\Controllers\Executive\FatteningController::class, 'index'])->name('executive.fattening.index');
     });
 });

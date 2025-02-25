@@ -275,7 +275,7 @@
                                </a>
                            </li>
 
-                           {{-- <li
+                           <li
                                class="nav-item dropdown {{ Route::is('hewan.index', 'fisik.index', 'kandang.index', 'reproduksi.index') ? 'active' : '' }}">
                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
@@ -332,7 +332,7 @@
                                        </div>
                                    </div>
                                </div>
-                           </li> --}}
+                           </li>
 
                            {{-- TERNAK --}}
                            <li class="nav-item {{ Route::is('hewan.index') ? 'active' : '' }}">
@@ -355,7 +355,7 @@
                            </li>
 
                            {{-- ATRIBUT --}}
-                           {{-- <li
+                           <li
                                class="nav-item dropdown {{ Route::is('status.index', 'tipe.index', 'program.index', 'kesehatan.index') ? 'active' : '' }}">
                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
@@ -390,7 +390,7 @@
 
                                    </div>
                                </div>
-                           </li> --}}
+                           </li>
 
                            <li class="nav-item {{ Route::is('kandang.index') ? 'active' : '' }}">
                                <a class="nav-link" href="{{ route('kandang.index') }}">
@@ -496,7 +496,42 @@
                                </a>
                            </li>
 
-                           <li class="nav-item {{ Route::is('executive.hewan.index') ? 'active' : '' }}">
+
+                           <li
+                               class="nav-item dropdown {{ Route::is('executive.hewan.index', 'executive.fattening.index') ? 'active' : '' }}">
+                               <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                   data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                   <span
+                                       class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                           viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                           stroke-linecap="round" stroke-linejoin="round"
+                                           class="icon icon-tabler icons-tabler-outline icon-tabler-horse">
+                                           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                           <path
+                                               d="M7 10l-.85 8.507a1.357 1.357 0 0 0 1.35 1.493h.146a2 2 0 0 0 1.857 -1.257l.994 -2.486a2 2 0 0 1 1.857 -1.257h1.292a2 2 0 0 1 1.857 1.257l.994 2.486a2 2 0 0 0 1.857 1.257h.146a1.37 1.37 0 0 0 1.364 -1.494l-.864 -9.506h-8c0 -3 -3 -5 -6 -5l-3 6l2 2l3 -2z" />
+                                           <path d="M22 14v-2a3 3 0 0 0 -3 -3" />
+                                       </svg>
+                                   </span>
+                                   <span class="nav-link-title"> Ternak </span>
+                               </a>
+                               <div class="dropdown-menu">
+                                   <div class="dropdown-menu-columns">
+                                       <div class="dropdown-menu-column">
+
+                                           <a class="dropdown-item {{ Route::is('executive.hewan.index') ? 'active' : '' }}"
+                                               href="{{ route('executive.hewan.index') }}"> Overview </a>
+                                           <a class="dropdown-item {{ Route::is('executive.fattening.index') ? 'active' : '' }}"
+                                               href="{{ route('executive.fattening.index') }}"> Fattening </a>
+                                           <a class="dropdown-item {{ Route::is('program.index') ? 'active' : '' }}"
+                                               href="{{ route('program.index') }}"> Breeding </a>
+                                       </div>
+
+                                   </div>
+                               </div>
+                           </li>
+
+                           {{-- <li class="nav-item {{ Route::is('executive.hewan.index') ? 'active' : '' }}">
                                <a class="nav-link" href="{{ route('executive.hewan.index') }}">
                                    <span
                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
@@ -516,14 +551,15 @@
                                    <div class="dropdown-menu-columns">
                                        <div class="dropdown-menu-column">
                                            <a class="dropdown-item" href="./empty.html"> Overview </a>
-                                           <a class="dropdown-item {{ Route::is('kandang.index') ? 'active' : '' }}"
+                                           <a class="dropdown-item {{ Route::is('e.index') ? 'active' : '' }}"
                                                href="{{ route('kandang.index') }}"> Fatenning </a>
                                            <a class="dropdown-item {{ Route::is('kandang.index') ? 'active' : '' }}"
                                                href="{{ route('kandang.index') }}"> Breeding </a>
                                        </div>
                                    </div>
                                </div>
-                           </li>
+                           </li> --}}
+
                            <li
                                class="nav-item dropdown {{ Route::is('hewan.index', 'fisik.index', 'kandang.index', 'reproduksi.index') ? 'active' : '' }}">
                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
