@@ -118,9 +118,6 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/{id}', [App\Http\Controllers\Admin\HewanController::class, 'destroy'])->name('hewan.destroy');
             Route::get('/detail/{id}', [App\Http\Controllers\Admin\HewanController::class, 'getDetailData']);
             Route::get('/excel', [App\Http\Controllers\Admin\HewanController::class, 'excel'])->name('hewan.excel');
-            Route::post('/admin/hewan/delete-multiple', [App\Http\Controllers\Admin\HewanController::class, 'deleteMultiple']);
-
-
         });
 
         /* Download Gambar */
@@ -146,8 +143,5 @@ Route::middleware(['auth'])->group(function () {
        /* Hewan */
        Route::prefix('executive/hewan')->group(function () {
         Route::get('/', [App\Http\Controllers\Admin\HewanController::class, 'index'])->name('executive.hewan.index');
-
     });
-
-
 });

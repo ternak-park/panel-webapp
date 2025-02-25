@@ -93,16 +93,6 @@
                                             <th style="width: 15%;">Jenis</th>
                                             <th style="width: 25%;">Tipe</th>
                                             <th class="w-1" style="width: 30%;">Aksi</th>
-                                            <th class="text-center">
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <input class="form-check-input-lg" type="checkbox" id="checkAll">
-                                                    <button id="deleteSelected" class="btn btn-danger btn-sm ms-2">
-                                                        <i class="fa-solid fa-trash"></i>
-                                                    </button>
-                                                </div>
-                                            </th>
-
-
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -140,7 +130,6 @@
         'hewanInduk' => $induk,
     ])
     <script>
-
         $(document).ready(function() {
             $(document).on('click', '.delete', function() {
                 const id = $(this).data('id');
@@ -189,11 +178,6 @@
         });
     </script>
     <script>
-        $(document).on("change", "#checkAll", function () {
-    $(".row-checklist").prop("checked", this.checked);
-});
-</script>
-    <script>
         document.querySelectorAll('.btn-edit').forEach(button => {
             button.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
@@ -225,6 +209,5 @@
             document.getElementById('ternak_tag').removeAttribute('disabled');
         });
     </script>
-
 
 </x-app>
