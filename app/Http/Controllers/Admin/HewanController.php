@@ -31,8 +31,8 @@ class HewanController extends Controller
         $data['kesehatan'] = Kesehatan::all();
         $data['program'] = Program::all();
         $data['kandang'] = TernakKandang::all();
-        $data['induk'] = TernakHewan::where('sex', 'Betina') // assuming that the breeding stock are female
-        ->get();
+        $data['induk'] = TernakHewan::where('sex', 'Betina') 
+            ->get();
 
         $data['user'] = User::all();
 
@@ -40,7 +40,7 @@ class HewanController extends Controller
         if ($request->ajax()) {
             $hewan = TernakHewan::with(['tipe:id,nama_tipe', 'detail.program:id,nama_program'])
                 ->select('ternak_hewan.id', 'tag', 'jenis', 'sex', 'ternak_tipe');
-            
+
             return Datatables::of($hewan)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -107,12 +107,12 @@ class HewanController extends Controller
             'ternak_induk' => 'nullable|string|max:255',
             'sex' => 'required|in:Jantan,Betina',
             'tanggal_masuk' => 'required|date',
-            'ternak_status_indeks' => 'nullable|numeric|exists:ternak_hewan,id',
-            'ternak_tipe_indeks' => 'nullable|numeric|exists:ternak_hewan,id',
-            'ternak_kesehatan_indeks' => 'nullable|numeric|exists:ternak_hewan,id',
-            'ternak_program_indeks' => 'nullable|numeric|exists:ternak_hewan,id',
-            'ternak_kandang_indeks' => 'nullable|numeric|exists:ternak_hewan,id',
-            'pemilik_indeks' => 'nullable|numeric|exists:ternak_hewan,id',
+            'ternak_status_indeks' => 'nullable|numeric|exists:status,id',
+            'ternak_tipe_indeks' => 'nullable|numeric|exists:tipe,id',
+            'ternak_kesehatan_indeks' => 'nullable|numeric|exists:kesehatan,id',
+            'ternak_program_indeks' => 'nullable|numeric|exists:program,id',
+            'ternak_kandang_indeks' => 'nullable|numeric|exists:ternak_kandang,id',
+            'pemilik_indeks' => 'nullable|numeric|exists:users,id',
         ], [
             'ternak_tag.required' => 'Tag ternak harus diisi.',
             'sex.required' => 'Jenis kelamin ternak harus dipilih.',
@@ -191,7 +191,7 @@ class HewanController extends Controller
     public function edit($id)
     {
         $hewan = TernakHewan::with([
-            'detail', 
+            'detail',
             'status',
             'tipe',
             'kesehatan',
@@ -212,12 +212,12 @@ class HewanController extends Controller
             'ternak_induk' => 'nullable|string|max:255',
             'sex' => 'required|in:Jantan,Betina',
             'tanggal_masuk' => 'required|date',
-            'ternak_status_indeks' => 'nullable|numeric|exists:ternak_hewan,id',
-            'ternak_tipe_indeks' => 'nullable|numeric|exists:ternak_hewan,id',
-            'ternak_kesehatan_indeks' => 'nullable|numeric|exists:ternak_hewan,id',
-            'ternak_program_indeks' => 'nullable|numeric|exists:ternak_hewan,id',
-            'ternak_kandang_indeks' => 'nullable|numeric|exists:ternak_hewan,id',
-            'pemilik_indeks' => 'nullable|numeric|exists:ternak_hewan,id',
+            'ternak_status_indeks' => 'nullable|numeric|exists:status,id',
+            'ternak_tipe_indeks' => 'nullable|numeric|exists:tipe,id',
+            'ternak_kesehatan_indeks' => 'nullable|numeric|exists:kesehatan,id',
+            'ternak_program_indeks' => 'nullable|numeric|exists:program,id',
+            'ternak_kandang_indeks' => 'nullable|numeric|exists:ternak_kandang,id',
+            'pemilik_indeks' => 'nullable|numeric|exists:users,id',
         ], [
             'ternak_tag.required' => 'Tag ternak harus diisi.',
             'sex.required' => 'Jenis kelamin ternak harus dipilih.',
@@ -328,4 +328,23 @@ class HewanController extends Controller
     {
         return Excel::download(new HewanExport, 'hewan.xlsx');
     }
+
+    public function batchDelete(Request $request)
+    {
+        try {
+            $ids = $request->ids;
+
+            // Delete the records
+            TernakHewan::whereIn('id', $ids)->delete();
+
+            return response()->json([
+                'success' => 'Data berhasil dihapus.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
 }

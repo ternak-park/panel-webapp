@@ -175,17 +175,45 @@ function updateButtonStates(tableId) {
         $(`#${tableId} .action-view, #${tableId} .action-edit`).removeAttr('onclick');
         $(`#${tableId} .action-delete`).prop('disabled', false);
         
-        // Disable batch delete button
+        // Disable batch 
         $(`#deleteSelected_${tableId}`).prop('disabled', true);
         $(`#deleteSelected_${tableId}`).addClass('disabled');
     }
 }
 
-// panggil ketika
+
+// Global utility function for checkbox handling - can be used by any page
+window.initCheckboxHandlers = function(tableId) {
+    if (!tableId) return;
+    
+    // Remove old handlers first to prevent duplicates
+    $(`#${tableId} thead input[type="checkbox"]`).off('change');
+    $(document).off('change', `#${tableId} tbody input[type="checkbox"]`);
+    
+    // Handle "select all" checkbox
+    $(`#${tableId} thead input[type="checkbox"]`).on('change', function() {
+        const isChecked = $(this).prop('checked');
+        $(`#${tableId} tbody input[type="checkbox"]`).prop('checked', isChecked);
+        
+        // Trigger event that specific pages can listen for
+        $(document).trigger('sihub:checkboxesChanged', [tableId, isChecked]);
+    });
+    
+    // Handle individual checkboxes
+    $(document).on('change', `#${tableId} tbody input[type="checkbox"]`, function() {
+        $(document).trigger('sihub:checkboxesChanged', [tableId]);
+    });
+};
+
 $(document).ready(function() {
-    // ngambil semua tabel dan apply ke semua tabel
     $('table.dataTable').each(function() {
         const tableId = $(this).attr('id');
         applyCheckboxLogic(tableId);
+    });
+    $('.dataTable').each(function() {
+        const tableId = $(this).attr('id');
+        if (window.initCheckboxHandlers) {
+            window.initCheckboxHandlers(tableId);
+        }
     });
 });
