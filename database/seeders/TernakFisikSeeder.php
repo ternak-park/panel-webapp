@@ -16,7 +16,7 @@ class TernakFisikSeeder extends Seeder
     {
         $data = [
             [
-                'ternak_tag' => 'HEW-001',
+                'ternak_tag' => 'A01',
                 'berat_masuk' => 25.50,
                 'berat_terakhir' => 30.75,
                 'kenaikan_berat' => 5.25,
@@ -24,7 +24,7 @@ class TernakFisikSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'ternak_tag' => 'HEW-002',
+                'ternak_tag' => 'A02',
                 'berat_masuk' => 20.00,
                 'berat_terakhir' => 25.00,
                 'kenaikan_berat' => 5.00,
@@ -32,7 +32,7 @@ class TernakFisikSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'ternak_tag' => 'HEW-003',
+                'ternak_tag' => 'C01',
                 'berat_masuk' => 30.00,
                 'berat_terakhir' => 33.50,
                 'kenaikan_berat' => 3.50,

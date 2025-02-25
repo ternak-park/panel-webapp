@@ -16,7 +16,7 @@ class TernakReproduksiSeeder extends Seeder
     {
         $data = [
             [
-                'ternak_tag' => 'HEW-001',
+                'ternak_tag' => 'A01',
                 'tanggal_birahi' => '2024-01-10',
                 'tanggal_kawin' => '2024-01-15',
                 'tanggal_ib' => '2024-01-20',
@@ -26,7 +26,7 @@ class TernakReproduksiSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'ternak_tag' => 'HEW-002',
+                'ternak_tag' => 'A02',
                 'tanggal_birahi' => '2024-02-05',
                 'tanggal_kawin' => '2024-02-10',
                 'tanggal_ib' => null,
@@ -36,7 +36,7 @@ class TernakReproduksiSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'ternak_tag' => 'HEW-003',
+                'ternak_tag' => 'C01',
                 'tanggal_birahi' => null,
                 'tanggal_kawin' => null,
                 'tanggal_ib' => '2024-03-01',

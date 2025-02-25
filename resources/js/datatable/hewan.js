@@ -10,10 +10,9 @@ $(document).ready(function () {
         processing: true,
         serverSide: true,
         autoWidth: false,
-        // scrollX: true,
         responsive: true,
         pageLength: 10,
-        dom: "t", // Remove default search and pagination
+        dom: "t", // 
         language: {
             lengthMenu: "",
             info: "",
@@ -23,13 +22,22 @@ $(document).ready(function () {
             zeroRecords: "Data tidak ditemukan",
             pagingType: "simple",
             paginate: {
-                previous: "", // Menghilangkan teks "Previous"
-                next: "", // Menghilangkan teks "Next"
+                previous: "",
+                next: "",
             },
-            processing: "Loading...", // Custom processing message
+            processing: "Loading...",
         },
         ajax: "/admin/hewan",
         columns: [
+            {
+                // gawe checklist e
+                data: null,
+                orderable: false,
+                searchable: false,
+                render: function (data, type, row) {
+                    return '<input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select item" />';
+                }
+            },
             {
                 data: "id",
                 render: function (data, type, row, meta) {
@@ -38,21 +46,10 @@ $(document).ready(function () {
                 orderable: false,
                 searchable: false,
             },
-            // {
-            //     data: "id",
-            //     render: function (data, type, row) {
-            //         // Mengganti {id} dengan ID yang sesuai
-            //         var showUrl = hewanShowUrl.replace("{id}", data);
-            //         return `<a href="${showUrl}" class="view btn btn-primary btn-sm" style="width: 30px; font-size: 12px; padding: 5px;"><i class="fa-solid fa-eye"></i></a>`;
-            //     },
-            //     orderable: false,
-            //     searchable: false,
-            // },
             { data: "tag" },
             {
                 data: "sex",
                 render: function (data, type, row) {
-                    // Kapital awal huruf
                     return data
                         ? data.charAt(0).toUpperCase() + data.slice(1)
                         : data;
@@ -61,7 +58,6 @@ $(document).ready(function () {
             {
                 data: "ternak_program",
                 render: function (data, type, row) {
-                    // Kapital awal huruf
                     return data
                         ? data.charAt(0).toUpperCase() + data.slice(1)
                         : data;
@@ -70,23 +66,27 @@ $(document).ready(function () {
             {
                 data: "jenis",
                 render: function (data, type, row) {
-                    return data ? data : "Tidak tersedia"; // Menampilkan nama tipe
+                    return data ? data : "Tidak tersedia";
                 },
             },
-           
             {
                 data: "ternak_tipe",
                 render: function (data, type, row) {
-                    return data ? data : "Tidak tersedia"; // Menampilkan nama tipe
+                    return data ? data : "Tidak tersedia";
                 },
             },
-
             { data: "action", orderable: false, searchable: false },
         ],
-        drawCallback: sihubDrawCallback, // Gawe Nyelok Callback
+        drawCallback: sihubDrawCallback, // Make sure this function exists
     });
 
-    // Gawe Page Length
+    // Select all checkbox
+    $('thead input[type="checkbox"]').on('change', function() {
+        var isChecked = this.checked;
+        table.rows().nodes().to$().find('input[type="checkbox"]').prop('checked', isChecked);
+    });
+
+    // Page Length handler
     $("#pageLength").on("change", function () {
         table.page.len($(this).val()).draw();
     });
@@ -95,7 +95,6 @@ $(document).ready(function () {
     $("#searchInput").on("keyup", function () {
         table.search($(this).val()).draw();
     });
-
     // Custom pagination
     $(document).on("click", "#tablePagination .page-link", function (e) {
         e.preventDefault();

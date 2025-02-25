@@ -18,7 +18,7 @@ class TernakHewanSeeder extends Seeder
         // Example data for seeding
         $data = [
             [
-                'tag' => 'HEW-001',
+                'tag' => 'A01',
                 'jenis' => 'domba',
                 'sex' => 'jantan',
                 'ternak_tipe' => 4,
@@ -27,7 +27,7 @@ class TernakHewanSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'tag' => 'HEW-002',
+                'tag' => 'A02',
                 'jenis' => 'kambing',
                 'sex' => 'betina',
                 'ternak_tipe' => 3,
@@ -36,7 +36,7 @@ class TernakHewanSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'tag' => 'HEW-003',
+                'tag' => 'B01',
                 'jenis' => 'domba',
                 'sex' => 'jantan',
                 'ternak_tipe' => 2,
@@ -45,7 +45,7 @@ class TernakHewanSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'tag' => 'HEW-004',
+                'tag' => 'C01',
                 'jenis' => 'kambing',
                 'sex' => 'jantan',
                 'ternak_tipe' => 7,
@@ -54,7 +54,7 @@ class TernakHewanSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'tag' => 'HEW-005',
+                'tag' => 'C02',
                 'jenis' => 'kambing',
                 'sex' => 'betina',
                 'ternak_tipe' => 8,

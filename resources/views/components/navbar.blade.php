@@ -392,8 +392,8 @@
                                </div>
                            </li> --}}
 
-                           <li class="nav-item {{ Route::is('suppliers.index') ? 'active' : '' }}">
-                               <a class="nav-link" href="{{ route('suppliers.index') }}">
+                           <li class="nav-item {{ Route::is('kandang.index') ? 'active' : '' }}">
+                               <a class="nav-link" href="{{ route('kandang.index') }}">
                                    <span
                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

@@ -26,6 +26,9 @@ class DatabaseSeeder extends Seeder
             TernakEkonomiSeeder::class,
             TernakKondisiSeeder::class,
             TernakDetailSeeder::class,
+            PetugasSeeder::class,
+            KandangSeeder::class,
+            DetailTernakKandangSeeder::class,
         ]);
     }
 }
