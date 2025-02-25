@@ -73,7 +73,7 @@ $(document).ready(function () {
                     return data ? data : "Tidak tersedia"; // Menampilkan nama tipe
                 },
             },
-           
+
             {
                 data: "ternak_tipe",
                 render: function (data, type, row) {
@@ -82,6 +82,22 @@ $(document).ready(function () {
             },
 
             { data: "action", orderable: false, searchable: false },
+
+            {
+                data: "id",
+                orderable: false,
+                searchable: false,
+                render: function (data, type, row) {
+                    return `
+                        <div class="text-center">
+                            <input type="checkbox" class="form-check-input-lg row-checklist" value="${data}" data-id="${data}">
+                        </div>
+                    `;
+                },
+            },
+
+
+
         ],
         drawCallback: sihubDrawCallback, // Gawe Nyelok Callback
     });
@@ -165,6 +181,69 @@ $(document).ready(function () {
         });
     });
 
+    $(document).ready(function () {
+        // Pilih semua checkbox
+        $(document).on("change", "#checkAll", function () {
+            $(".row-checklist").prop("checked", this.checked);
+        });
+
+        // Hapus data yang dipilih
+        $(document).on("click", "#deleteSelected", function () {
+            let selectedIds = [];
+            $(".row-checklist:checked").each(function () {
+                selectedIds.push($(this).val());
+            });
+
+            if (selectedIds.length === 0) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Tidak ada yang dipilih",
+                    text: "Silakan pilih setidaknya satu item untuk dihapus.",
+                });
+                return;
+            }
+
+            Swal.fire({
+                title: "Apakah kamu yakin?",
+                text: "Data yang dihapus tidak bisa dikembalikan!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Ya, hapus!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/admin/hewan/delete-multiple",
+                        method: "POST",
+                        data: { ids: selectedIds },
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                        },
+                        success: function (response) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Berhasil",
+                                text: "Data berhasil dihapus!",
+                            }).then(() => {
+                                location.reload();
+                                $("#tableHewan").DataTable().ajax.reload();
+                            });
+                        },
+                        error: function () {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Kesalahan",
+                                text: "Terjadi kesalahan saat menghapus data.",
+                            });
+                        },
+                    });
+                }
+            });
+        });
+    });
+
+
     // Form submission handler
     $("#editHewanForm").on("submit", function (e) {
         e.preventDefault();
@@ -186,7 +265,7 @@ $(document).ready(function () {
                         text: response.message,
                     }).then(() => {
                         // Refresh DataTable
-                        location.reload(); 
+                        location.reload();
                         $("#tableHewan").DataTable().ajax.reload();
 
                         // Close modal
