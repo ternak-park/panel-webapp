@@ -25,9 +25,9 @@
                             <!-- Left side panel with animal details -->
                             <div class="col-12 col-md-4 col-lg-3">
                                 <div class="card">
-                                    <div class="card-header">
+                                    {{-- <div class="card-header">
                                         <h3 class="card-title">Pilih Nomor Tag</h3>
-                                    </div>
+                                    </div> --}}
                                     <div class="card-body p-0">
                                         <div class="px-3 py-2">
                                             <div class="input-icon mb-3">
