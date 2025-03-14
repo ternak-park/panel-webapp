@@ -452,7 +452,7 @@
                                                 enabled: false
                                             }
                                         };
-
+                            
                                         const chart = new ApexCharts(document.querySelector("#upweightChart"), options);
                                         chart.render();
                                     });
