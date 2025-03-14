@@ -146,9 +146,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [App\Http\Controllers\Executive\HewanController::class, 'index'])->name('executive.hewan.index');
     });
 
-    /* Kandang */
-    Route::prefix('executive/kandang')->group(function () {
+     /* Kandang */
+     Route::prefix('executive/kandang')->group(function () {
         Route::get('/', [App\Http\Controllers\Executive\KandangController::class, 'index'])->name('executive.kandang.index');
+    });
+
+      /* Pakan */
+    Route::prefix('executive/pakan')->group(function () {
+        Route::get('/', [App\Http\Controllers\Executive\PakanController::class, 'index'])->name('executive.pakan.index');
     });
 
     /* Fattening */
