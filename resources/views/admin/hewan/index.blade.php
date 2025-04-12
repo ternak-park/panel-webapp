@@ -121,8 +121,8 @@
                                             <th style="width: 15%;">Sex</th>
                                             <th style="width: 15%;">Program</th>
                                             <th style="width: 15%;">Jenis</th>
-                                            <th style="width: 25%;">Tipe</th>
-                                            <th class="w-1" style="width: 30%;">Aksi</th>
+                                            <th style="width: 15%;">Status</th>
+                                            <th class="w-1" style="width: 20%;">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
