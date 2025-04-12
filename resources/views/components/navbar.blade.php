@@ -522,8 +522,8 @@
                                                href="{{ route('executive.hewan.index') }}"> Overview </a>
                                            <a class="dropdown-item {{ Route::is('executive.fattening.index') ? 'active' : '' }}"
                                                href="{{ route('executive.fattening.index') }}"> Fattening </a>
-                                           <a class="dropdown-item {{ Route::is('program.index') ? 'active' : '' }}"
-                                               href="{{ route('program.index') }}"> Breeding </a>
+                                           <a class="dropdown-item {{ Route::is('executive.breeding.index') ? 'active' : '' }}"
+                                               href="{{ route('executive.breeding.index') }}"> Breeding </a>
                                        </div>
 
                                    </div>
