@@ -57,6 +57,7 @@ function sihubDrawCallback(settings) {
     var pagination = table.closest('.card').find('.card-footer');
     var tableInfo = this.api().page.info();
     
+    
     // Update table info
     pagination.find('#tableInfo').html(
         `Data ke ${tableInfo.start + 1} ke ${tableInfo.end} dari ${tableInfo.recordsTotal} data`

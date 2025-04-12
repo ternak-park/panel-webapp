@@ -109,7 +109,7 @@
                             </div>
 
                             <div class="table-responsive">
-                                <table class="table card-table table-vcenter text-nowrap datatable" id="tableHewan">
+                                <table class="table table-vcenter table-striped card-table datatable" id="tableHewan">
                                     <thead>
                                         <tr>
                                             <th class="w-1">

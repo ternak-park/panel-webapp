@@ -27,28 +27,20 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M4 7l16 0" />
-                                        <path d="M10 11l0 6" />
-                                        <path d="M14 11l0 6" />
-                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M4 7l16 0"/>
+                                        <path d="M10 11l0 6"/>
+                                        <path d="M14 11l0 6"/>
+                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/>
+                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>
                                     </svg>
                                     Hapus Terpilih
                                 </button>
-
+                                
                                 <a href="{{ route('hewan.create') }}" class="btn btn-primary d-none d-sm-inline-block"
                                     data-bs-toggle="modal" data-bs-target="#modal-tambah-hewan">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round"
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-file">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                                        <path
-                                            d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
-                                    </svg>
-                                    Import .csv
+                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /></svg>
+                                   Import .csv
                                 </a>
                                 <a href="{{ route('hewan.create') }}" class="btn btn-primary d-none d-sm-inline-block"
                                     data-bs-toggle="modal" data-bs-target="#modal-tambah-hewan">
@@ -77,64 +69,90 @@
                 </div>
             </div>
             <div class="page-body">
-                <div class="row row-cards">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Hewan</h3>
+                <div class="container-xl">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Hewan</h3>
+                            <div class="card-actions">
+                                <a href="#" class="btn btn-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M12 5l0 14"></path>
+                                        <path d="M5 12l14 0"></path>
+                                    </svg>
+                                    Tambah Hewan
+                                </a>
                             </div>
-                            <div class="card-body border-bottom py-3">
-                                <div class="d-flex">
-                                    <div class="text-muted">
-                                        Menampilkan
-                                        <div class="mx-2 d-inline-block">
-                                            <select id="pageLength" class="form-control form-control-sm"
-                                                style="width:70px">
-                                                <option value="10">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>
-                                        </div>
-                                        hasil
+                        </div>
+                        
+                        <div class="card-body border-bottom py-3">
+                            <div class="d-flex">
+                                <div class="text-secondary">
+                                    Menampilkan
+                                    <div class="mx-2 d-inline-block">
+                                        <select id="pageLength" class="form-select form-select-sm">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
                                     </div>
-                                    <div class="ms-auto text-muted">
-                                        Search:
-                                        <div class="ms-2 d-inline-block">
-                                            <input type="text" id="searchInput" class="form-control form-control-sm"
-                                                placeholder="Cari Hewan" aria-label="Search supplier">
-                                        </div>
+                                    hasil
+                                </div>
+                                <div class="ms-auto d-flex">
+                                    <button id="deleteSelected_tableKandang" class="btn btn-sm btn-danger me-3 disabled" disabled>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M4 7l16 0"></path>
+                                            <path d="M10 11l0 6"></path>
+                                            <path d="M14 11l0 6"></path>
+                                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                                        </svg>
+                                        Hapus Terpilih
+                                    </button>
+                                    <div class="input-icon">
+                                        <span class="input-icon-addon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                                                <path d="M21 21l-6 -6"></path>
+                                            </svg>
+                                        </span>
+                                        <input type="text" id="searchInput" class="form-control" placeholder="Cari Hewan">
                                     </div>
                                 </div>
                             </div>
-                            <div class="table-responsive">
-                                <table class="table table-vcenter table-striped card-table datatable"
-                                    id="tableKandang">
-                                    <thead>
-                                        <tr>
-                                            <th class="w-1">
-                                                <input class="form-check-input m-0 align-middle" type="checkbox"
-                                                    aria-label="Pilih semua item" />
-                                            </th>
-                                            <th class="w-1">No</th>
-                                            <th>Kandang Tag</th>
-                                            <th>Hewan Tag</th>
-                                            <th>Tipe</th>
-                                            <th>Berat</th>
-                                            <th>Kondisi</th>
-                                            <th>Petugas</th>
-                                            <th class="w-1 text-end">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- Table content will be dynamically loaded -->
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="card-footer d-flex align-items-center">
-                                <p id="tableInfo" class="m-0 text-muted"></p>
-                                <ul id="tablePagination" class="pagination m-0 ms-auto"></ul>
-                            </div>
+                        </div>
+            
+                        <div class="table-responsive">
+                            <table class="table table-vcenter table-striped card-table datatable" id="tableKandang">
+                                <thead>
+                                    <tr>
+                                        <th class="w-1">
+                                            <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Pilih semua item" />
+                                        </th>
+                                        <th class="w-1">No</th>
+                                        <th>Kandang Tag</th>
+                                        <th>Hewan Tag</th>
+                                        <th>Tipe</th>
+                                        <th>Berat</th>
+                                        <th>Kondisi</th>
+                                        <th>Petugas</th>
+                                        <th class="w-1 text-end">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Table content will be dynamically loaded -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="card-footer d-flex align-items-center">
+                            <p id="tableInfo" class="m-0 text-secondary">Data ke 1 ke 10 dari 100 data</p>
+                            <ul id="tablePagination" class="pagination m-0 ms-auto">
+                                <!-- Pagination will be dynamically generated -->
+                            </ul>
                         </div>
                     </div>
                 </div>
