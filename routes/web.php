@@ -160,4 +160,8 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('executive/fattening')->group(function () {
         Route::get('/', [App\Http\Controllers\Executive\FatteningController::class, 'index'])->name('executive.fattening.index');
     });
+
+    Route::prefix('executive/breeding')->group(function () {
+        Route::get('/', [App\Http\Controllers\Executive\BreedingController::class, 'index'])->name('executive.breeding.index');
+    });
 });
