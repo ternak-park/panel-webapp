@@ -276,7 +276,7 @@
                            </li>
                             {{-- Ternak --}}
                            <li
-                               class="nav-item dropdown {{ Route::is('hewan.index', 'fisik.index', 'kandang.index', 'reproduksi.index') ? 'active' : '' }}">
+                               class="nav-item dropdown {{ Route::is('hewan.index', 'fisik.index','reproduksi.index') ? 'active' : '' }}">
                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
                                    <span

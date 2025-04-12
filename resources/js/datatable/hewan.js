@@ -12,7 +12,11 @@ $(document).ready(function () {
         autoWidth: false,
         responsive: true,
         pageLength: 10,
-        dom: "t", //
+        dom: "t", // Only show the table
+        classes: {
+            sTable: "table table-vcenter table-striped card-table",
+            sWrapper: "table-responsive",
+        },
         language: {
             lengthMenu: "",
             info: "",
@@ -22,15 +26,25 @@ $(document).ready(function () {
             zeroRecords: "Data tidak ditemukan",
             pagingType: "simple",
             paginate: {
-                previous: "",
-                next: "",
+                previous:
+                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg> prev',
+                next: 'next <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 6l6 6l-6 6" /></svg>',
             },
             processing: "Loading...",
         },
         ajax: "/admin/hewan",
+        orderCellsTop: true,
+        columnDefs: [
+            { orderable: false, targets: [0, 1, 7] },
+            {
+                orderable: true,
+                targets: [2, 3, 4, 5, 6],
+                // Add a className to mark orderable columns
+                className: "sortable-column",
+            },
+        ],
         columns: [
             {
-                // gawe checklist e
                 data: null,
                 orderable: false,
                 searchable: false,
@@ -44,9 +58,10 @@ $(document).ready(function () {
                 orderable: false,
                 searchable: false,
             },
-            { data: "tag" },
+            { data: "tag", orderable: true },
             {
                 data: "sex",
+                orderable: true,
                 render: function (data, type, row) {
                     return data
                         ? data.charAt(0).toUpperCase() + data.slice(1)
@@ -55,6 +70,7 @@ $(document).ready(function () {
             },
             {
                 data: "ternak_program",
+                orderable: true,
                 render: function (data, type, row) {
                     return data
                         ? data.charAt(0).toUpperCase() + data.slice(1)
@@ -63,19 +79,72 @@ $(document).ready(function () {
             },
             {
                 data: "jenis",
+                orderable: true,
                 render: function (data, type, row) {
                     return data ? data : "Tidak tersedia";
                 },
             },
             {
                 data: "ternak_tipe",
+                orderable: true,
                 render: function (data, type, row) {
                     return data ? data : "Tidak tersedia";
                 },
             },
             { data: "action", orderable: false, searchable: false },
         ],
-        drawCallback: sihubDrawCallback, // Make sure this function exists
+        drawCallback: sihubDrawCallback,
+        initComplete: function () {
+            // Add sort indicators to the orderable columns
+            this.api()
+                .columns()
+                .every(function (index) {
+                    let column = this;
+                    let columnDef = table.settings().init().columns[index];
+
+                    if (columnDef && columnDef.orderable !== false) {
+                        let header = $(column.header());
+
+                        // Add Tabler.io sort icon - using their SVG format
+                        if (!header.find(".sort-icon").length) {
+                            header.append(
+                                ' <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm text-muted sort-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><polyline points="6 9 12 15 18 9" /></svg>'
+                            );
+                        }
+
+                        // Set the cursor style to pointer
+                        header.css("cursor", "pointer");
+                    }
+                });
+
+            // Add event listener for sort direction change
+            this.api().on("order.dt", function () {
+                const orderInfo = table.order()[0];
+                const columnIndex = orderInfo[0];
+                const direction = orderInfo[1];
+
+                // Reset all icons first
+                $(".sort-icon").each(function () {
+                    $(this).html(
+                        '<path stroke="none" d="M0 0h24v24H0z" fill="none" /><polyline points="6 9 12 15 18 9" /></svg>'
+                    );
+                });
+
+                // Update the icon for the sorted column
+                const sortedHeader = $(table.column(columnIndex).header());
+                const sortIcon = sortedHeader.find(".sort-icon");
+
+                if (direction === "asc") {
+                    sortIcon.html(
+                        '<path stroke="none" d="M0 0h24v24H0z" fill="none" /><polyline points="6 15 12 9 18 15" /></svg>'
+                    );
+                } else {
+                    sortIcon.html(
+                        '<path stroke="none" d="M0 0h24v24H0z" fill="none" /><polyline points="6 9 12 15 18 9" /></svg>'
+                    );
+                }
+            });
+        },
     });
 
     // Select all checkbox
@@ -98,12 +167,75 @@ $(document).ready(function () {
     $("#searchInput").on("keyup", function () {
         table.search($(this).val()).draw();
     });
+
     // Custom pagination
     $(document).on("click", "#tablePagination .page-link", function (e) {
         e.preventDefault();
         if (!$(this).closest("li").hasClass("disabled")) {
             table.page($(this).data("page")).draw("page");
         }
+    });
+
+    // Delete selected button
+    $("#deleteSelected").on("click", function () {
+        var selectedIds = [];
+
+        // Get selected ids
+        table
+            .rows()
+            .nodes()
+            .to$()
+            .find('input[type="checkbox"]:checked')
+            .each(function () {
+                var rowIdx = $(this).closest("tr").index();
+                var rowData = table.row(rowIdx).data();
+                if (rowData && rowData.id) {
+                    selectedIds.push(rowData.id);
+                }
+            });
+
+        if (selectedIds.length === 0) {
+            Swal.fire({
+                title: "Perhatian",
+                text: "Tidak ada data yang dipilih",
+                icon: "warning",
+            });
+            return;
+        }
+
+        Swal.fire({
+            title: "Anda yakin?",
+            text: "Semua data yang dipilih akan dihapus secara permanen!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Tidak, batal!",
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "/admin/hewan/deleteSelected",
+                    type: "POST",
+                    data: { ids: selectedIds },
+                    success: function (response) {
+                        Swal.fire(
+                            "Dihapus!",
+                            response.success || "Data telah dihapus.",
+                            "success"
+                        ).then(() => {
+                            table.ajax.reload();
+                        });
+                    },
+                    error: function (err) {
+                        Swal.fire(
+                            "Error!",
+                            "Terjadi kesalahan saat menghapus data.",
+                            "error"
+                        );
+                    },
+                });
+            }
+        });
     });
 });
 
