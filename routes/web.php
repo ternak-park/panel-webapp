@@ -156,6 +156,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [App\Http\Controllers\Executive\PakanController::class, 'index'])->name('executive.pakan.index');
     });
 
+    /* Investor */
+    Route::prefix('executive/investor')->group(function () {
+        Route::get('/', [App\Http\Controllers\Executive\InvestorController::class, 'index'])->name('executive.investor.index');
+    });
+
     /* Fattening */
     Route::prefix('executive/fattening')->group(function () {
         Route::get('/', [App\Http\Controllers\Executive\FatteningController::class, 'index'])->name('executive.fattening.index');
