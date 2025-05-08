@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\HewanImport;
 use App\Models\Kesehatan;
 use App\Models\Program;
 use App\Models\Status;
@@ -349,27 +350,23 @@ class HewanController extends Controller
     }
 
     /* import csv */
+    // Method untuk import CSV
     public function import(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:csv,xlsx,xls|max:2048',
+        $request->validate([
+            'file' => 'required|file|mimes:csv,txt,xlsx,xls|max:2048',
         ], [
             'file.required' => 'File CSV harus diupload.',
-            'file.mimes' => 'File harus berformat CSV, XLSX, atau XLS.',
+            'file.file' => 'Upload harus berupa file.',
+            'file.mimes' => 'Format file harus CSV, TXT, XLSX, atau XLS.',
             'file.max' => 'Ukuran file maksimal 2MB.',
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-
         try {
-            Excel::import(new \App\Imports\HewanImport, $request->file('file'));
+            Excel::import(new HewanImport, $request->file('file'));
 
             return redirect()->route('hewan.index')
-                ->with('success', 'Data hewan berhasil diimport.');
+                ->with('success', 'Data berhasil diimport.');
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $errors = [];
@@ -378,32 +375,36 @@ class HewanController extends Controller
                 $errors[] = 'Baris ' . $failure->row() . ': ' . implode(', ', $failure->errors());
             }
 
-            return redirect()->back()
-                ->with('error', 'Terjadi kesalahan saat import data: ' . implode('<br>', $errors));
+            return redirect()->route('hewan.index')
+                ->with('error', 'Gagal import data: ' . implode('<br>', $errors));
         } catch (\Exception $e) {
-            return redirect()->back()
-                ->with('error', 'Terjadi kesalahan saat import data: ' . $e->getMessage());
+            return redirect()->route('hewan.index')
+                ->with('error', 'Gagal import data: ' . $e->getMessage());
         }
     }
 
-    // Method untuk download template CSV
-// Method untuk download template CSV
+    // Method gawe download file csv
     public function template()
     {
         // Ambil data untuk dropdown
         $tipeList = Tipe::pluck('nama_tipe')->toArray();
         $statusList = Status::pluck('nama_status')->toArray();
         $kesehatanList = Kesehatan::pluck('nama_kesehatan')->toArray();
-        $programList = Program::pluck('nama_program')->toArray();
+        $programList = Program::pluck(column: 'nama_program')->toArray();
         $kandangList = TernakKandang::pluck('kode_kandang')->toArray();
         $pemilikList = User::pluck('name')->toArray();
+
+        // Ambil juga ID untuk contoh
+        $tipeId = Tipe::first()->id ?? 1;
+        $statusId = Status::first()->id ?? 1;
+        $pemilikId = User::first()->id ?? 1;
 
         $headers = [
             'Content-Type' => 'text/csv',
             'Content-Disposition' => 'attachment; filename="template_import_hewan.csv"',
         ];
 
-        $callback = function () use ($tipeList, $statusList, $kesehatanList, $programList, $kandangList, $pemilikList) {
+        $callback = function () use ($tipeList, $statusList, $kesehatanList, $programList, $kandangList, $pemilikList, $tipeId, $statusId, $pemilikId) {
             $file = fopen('php://output', 'w');
 
             // Header CSV
@@ -422,7 +423,7 @@ class HewanController extends Controller
                 'catatan'
             ]);
 
-            // Contoh data
+            // Contoh data dengan nama
             fputcsv($file, [
                 'TAG001',
                 'Jantan',
@@ -435,23 +436,23 @@ class HewanController extends Controller
                 $programList[0] ?? '',
                 $kandangList[0] ?? '',
                 $pemilikList[0] ?? '',
-                'Format tanggal bisa: YYYY-MM-DD, DD/MM/YYYY, MM/DD/YYYY'
+                'Contoh menggunakan nama'
             ]);
 
-            // Tambahkan baris kosong untuk memudahkan pengguna
+            // Contoh data dengan ID
             fputcsv($file, [
                 'TAG002',
                 'Betina',
                 'Kambing',
                 'TAG001',
                 date('d/m/Y'),
-                $tipeList[0] ?? '',
-                $statusList[0] ?? '',
-                $kesehatanList[0] ?? '',
-                $programList[0] ?? '',
-                $kandangList[0] ?? '',
-                $pemilikList[0] ?? '',
-                'Contoh format tanggal DD/MM/YYYY'
+                $tipeId,
+                $statusId,
+                '1',
+                '1',
+                '1',
+                $pemilikId,
+                'Contoh menggunakan ID'
             ]);
 
             fclose($file);

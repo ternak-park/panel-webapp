@@ -1,6 +1,6 @@
 <!-- File: resources/views/admin/hewan/modal/edit.blade.php -->
 <script src="{{ asset('assets/js/tom-select/modal/hewan.js') }}"></script>
-<div class="modal modal-blur fade" id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">

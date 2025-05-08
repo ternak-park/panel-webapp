@@ -12,65 +12,85 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Validators\Failure;
 
 class HewanImport implements ToCollection, WithHeadingRow, WithValidation
 {
+    // Untuk menyimpan error yang terjadi selama import
+    protected $errors = [];
+    
     public function collection(Collection $rows)
     {
-        foreach ($rows as $row) {
-            DB::transaction(function () use ($row) {
-                // Konversi tanggal ke format yang benar
-                $tanggalMasuk = null;
-                if (!empty($row['tanggal_masuk'])) {
-                    try {
-                        // Coba parse tanggal dengan Carbon - ini akan menangani berbagai format
-                        $tanggalMasuk = $this->parseDate($row['tanggal_masuk']);
-                    } catch (\Exception $e) {
-                        // Jika gagal, gunakan tanggal hari ini
+        foreach ($rows as $index => $row) {
+            try {
+                DB::transaction(function () use ($row, $index) {
+                    // Konversi tanggal ke format yang benar
+                    $tanggalMasuk = null;
+                    if (!empty($row['tanggal_masuk'])) {
+                        try {
+                            // Coba parse tanggal dengan Carbon - ini akan menangani berbagai format
+                            $tanggalMasuk = $this->parseDate($row['tanggal_masuk']);
+                        } catch (\Exception $e) {
+                            // Jika gagal, gunakan tanggal hari ini
+                            $tanggalMasuk = now()->format('Y-m-d');
+                            $this->logError($index, "Format tanggal tidak valid: {$row['tanggal_masuk']}, menggunakan tanggal hari ini");
+                        }
+                    } else {
                         $tanggalMasuk = now()->format('Y-m-d');
                     }
-                } else {
-                    $tanggalMasuk = now()->format('Y-m-d');
-                }
 
-                // Cari ID berdasarkan nama
-                $tipeId = $this->getTipeId($row['tipe'] ?? null);
-                $statusId = $this->getStatusId($row['status'] ?? null);
-                $kesehatanId = $this->getKesehatanId($row['kesehatan'] ?? null);
-                $programId = $this->getProgramId($row['program'] ?? null);
-                $kandangId = $this->getKandangId($row['kandang'] ?? null);
-                $pemilikId = $this->getPemilikId($row['pemilik'] ?? null);
+                    // Cari ID berdasarkan nama atau ID
+                    $tipeId = $this->getFlexibleId('tipe', $row['tipe'] ?? null, $index);
+                    $statusId = $this->getFlexibleId('status', $row['status'] ?? null, $index);
+                    $kesehatanId = $this->getFlexibleId('kesehatan', $row['kesehatan'] ?? null, $index);
+                    $programId = $this->getFlexibleId('program', $row['program'] ?? null, $index);
+                    $kandangId = $this->getFlexibleId('kandang', $row['kandang'] ?? null, $index);
+                    $pemilikId = $this->getFlexibleId('pemilik', $row['pemilik'] ?? null, $index);
 
-                // Insert ke tabel ternak_hewan
-                $hewanId = DB::table('ternak_hewan')->insertGetId([
-                    'tag' => $row['tag'],
-                    'jenis' => $row['jenis'] ?? 'Domba',
-                    'sex' => $row['sex'],
-                    'ternak_tipe' => $tipeId,
-                    'gambar_hewan' => null,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
+                    // Insert ke tabel ternak_hewan
+                    $hewanId = DB::table('ternak_hewan')->insertGetId([
+                        'tag' => $row['tag'],
+                        'jenis' => $row['jenis'] ?? 'Domba',
+                        'sex' => $row['sex'],
+                        'ternak_tipe' => $tipeId,
+                        'gambar_hewan' => null,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
 
-                // Insert ke tabel ternak_detail
-                DB::table('ternak_detail')->insert([
-                    'ternak_tag' => $row['tag'],
-                    'ternak_induk' => $row['ternak_induk'] ?? null,
-                    'sex' => $row['sex'],
-                    'tanggal_masuk' => $tanggalMasuk,
-                    'ternak_status' => $statusId,
-                    'ternak_tipe' => $tipeId,
-                    'ternak_kesehatan' => $kesehatanId,
-                    'ternak_program' => $programId,
-                    'ternak_kandang' => $kandangId,
-                    'pemilik' => $pemilikId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            });
+                    // Insert ke tabel ternak_detail
+                    DB::table('ternak_detail')->insert([
+                        'ternak_tag' => $row['tag'],
+                        'ternak_induk' => $row['ternak_induk'] ?? null,
+                        'sex' => $row['sex'],
+                        'tanggal_masuk' => $tanggalMasuk,
+                        'ternak_status' => $statusId,
+                        'ternak_tipe' => $tipeId,
+                        'ternak_kesehatan' => $kesehatanId,
+                        'ternak_program' => $programId,
+                        'ternak_kandang' => $kandangId,
+                        'pemilik' => $pemilikId,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                    
+                    // Log sukses
+                    Log::info("Berhasil import data hewan: {$row['tag']}");
+                });
+            } catch (\Exception $e) {
+                // Tangkap error dan simpan untuk ditampilkan nanti
+                $this->errors[] = "Baris " . ($index + 2) . ": " . $e->getMessage();
+                Log::error("Error import data hewan baris " . ($index + 2) . ": " . $e->getMessage());
+            }
+        }
+        
+        // Jika ada error, throw exception dengan semua error
+        if (count($this->errors) > 0) {
+            throw new \Exception(implode("<br>", $this->errors));
         }
     }
 
@@ -125,47 +145,91 @@ class HewanImport implements ToCollection, WithHeadingRow, WithValidation
         }
     }
 
-    // Fungsi untuk mendapatkan ID berdasarkan nama
-    private function getTipeId($nama)
+    /**
+     * Mendapatkan ID berdasarkan input fleksibel (bisa ID atau nama)
+     */
+    private function getFlexibleId($type, $value, $rowIndex)
     {
-        if (empty($nama)) return null;
-        $tipe = Tipe::where('nama_tipe', $nama)->first();
-        return $tipe ? $tipe->id : null;
+        if (empty($value)) return null;
+        
+        // Jika input adalah angka, coba cari sebagai ID
+        if (is_numeric($value)) {
+            $id = $this->getIdByNumericValue($type, $value);
+            if ($id !== null) {
+                return $id;
+            }
+        }
+        
+        // Jika bukan angka atau ID tidak ditemukan, cari berdasarkan nama
+        $id = $this->getIdByName($type, $value);
+        
+        // Jika masih tidak ditemukan, log error
+        if ($id === null) {
+            $this->logError($rowIndex, "Data $type '$value' tidak ditemukan di database");
+        }
+        
+        return $id;
     }
-
-    private function getStatusId($nama)
+    
+    /**
+     * Mencari ID berdasarkan nilai numerik
+     */
+    private function getIdByNumericValue($type, $value)
     {
-        if (empty($nama)) return null;
-        $status = Status::where('nama_status', $nama)->first();
-        return $status ? $status->id : null;
+        switch ($type) {
+            case 'tipe':
+                return Tipe::where('id', $value)->exists() ? $value : null;
+            case 'status':
+                return Status::where('id', $value)->exists() ? $value : null;
+            case 'kesehatan':
+                return Kesehatan::where('id', $value)->exists() ? $value : null;
+            case 'program':
+                return Program::where('id', $value)->exists() ? $value : null;
+            case 'kandang':
+                return TernakKandang::where('id', $value)->exists() ? $value : null;
+            case 'pemilik':
+                return User::where('id', $value)->exists() ? $value : null;
+            default:
+                return null;
+        }
     }
-
-    private function getKesehatanId($nama)
+    
+    /**
+     * Mencari ID berdasarkan nama
+     */
+    private function getIdByName($type, $name)
     {
-        if (empty($nama)) return null;
-        $kesehatan = Kesehatan::where('nama_kesehatan', $nama)->first();
-        return $kesehatan ? $kesehatan->id : null;
+        switch ($type) {
+            case 'tipe':
+                $tipe = Tipe::where('nama_tipe', $name)->first();
+                return $tipe ? $tipe->id : null;
+            case 'status':
+                $status = Status::where('nama_status', $name)->first();
+                return $status ? $status->id : null;
+            case 'kesehatan':
+                $kesehatan = Kesehatan::where('nama_kesehatan', $name)->first();
+                return $kesehatan ? $kesehatan->id : null;
+            case 'program':
+                $program = Program::where('nama_program', $name)->first();
+                return $program ? $program->id : null;
+            case 'kandang':
+                $kandang = TernakKandang::where('kode_kandang', $name)->first();
+                return $kandang ? $kandang->id : null;
+            case 'pemilik':
+                $pemilik = User::where('name', $name)->first();
+                return $pemilik ? $pemilik->id : null;
+            default:
+                return null;
+        }
     }
-
-    private function getProgramId($nama)
+    
+    /**
+     * Log error untuk baris tertentu
+     */
+    private function logError($rowIndex, $message)
     {
-        if (empty($nama)) return null;
-        $program = Program::where('nama_program', $nama)->first();
-        return $program ? $program->id : null;
-    }
-
-    private function getKandangId($kode)
-    {
-        if (empty($kode)) return null;
-        $kandang = TernakKandang::where('kode_kandang', $kode)->first();
-        return $kandang ? $kandang->id : null;
-    }
-
-    private function getPemilikId($nama)
-    {
-        if (empty($nama)) return null;
-        $pemilik = User::where('name', $nama)->first();
-        return $pemilik ? $pemilik->id : null;
+        $this->errors[] = "Baris " . ($rowIndex + 2) . ": " . $message;
+        Log::warning("Import warning baris " . ($rowIndex + 2) . ": " . $message);
     }
 
     public function rules(): array

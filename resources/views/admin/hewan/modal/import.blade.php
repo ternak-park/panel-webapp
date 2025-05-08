@@ -1,4 +1,4 @@
-<div class="modal modal-blur fade" id="modal-import-csv" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="modal-import-csv" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -21,23 +21,33 @@
                             <li><strong>jenis</strong>: Jenis hewan (Domba/Kambing)</li>
                             <li><strong>ternak_induk</strong>: Tag induk (opsional)</li>
                             <li><strong>tanggal_masuk</strong>: Format tanggal (YYYY-MM-DD, DD/MM/YYYY, MM/DD/YYYY)</li>
-                            <li><strong>tipe</strong>: Nama tipe ternak</li>
-                            <li><strong>status</strong>: Nama status ternak</li>
-                            <li><strong>kesehatan</strong>: Nama kesehatan ternak</li>
-                            <li><strong>program</strong>: Nama program ternak</li>
-                            <li><strong>kandang</strong>: Kode kandang ternak</li>
-                            <li><strong>pemilik</strong>: Nama pemilik ternak</li>
+                            <li><strong>tipe</strong>: Nama tipe ternak atau ID</li>
+                            <li><strong>status</strong>: Nama status ternak atau ID</li>
+                            <li><strong>kesehatan</strong>: Nama kesehatan ternak atau ID</li>
+                            <li><strong>program</strong>: Nama program ternak atau ID</li>
+                            <li><strong>kandang</strong>: Kode kandang ternak atau ID</li>
+                            <li><strong>pemilik</strong>: Nama pemilik ternak atau ID</li>
                         </ul>
+                        {{-- <div class="alert alert-success">
+                            <strong>Input Fleksibel:</strong> Untuk kolom tipe, status, kesehatan, program, kandang, dan pemilik, Anda dapat menggunakan:
+                            <ul>
+                                <li>Nama (contoh: "Admin" untuk pemilik)</li>
+                                <li>ID (contoh: "1" untuk ID pemilik)</li>
+                            </ul>
+                            <strong>Catatan:</strong> Data yang dimasukkan harus ada di database. Jika tidak ditemukan, kolom akan diisi null.
+                        </div>
                         <div class="alert alert-success">
-                            <strong>Informasi Format Tanggal:</strong> Sistem akan otomatis mengenali berbagai format tanggal seperti:
+                            <strong>Format Tanggal:</strong> Sistem akan otomatis mengenali berbagai format tanggal seperti:
                             <ul>
                                 <li>YYYY-MM-DD (2025-05-08)</li>
                                 <li>DD/MM/YYYY (08/05/2025)</li>
                                 <li>MM/DD/YYYY (05/08/2025)</li>
                                 <li>DD-MM-YYYY (08-05-2025)</li>
                             </ul>
-                        </div>
+                        </div> --}}
+                        <div class="alert alert-success">
                         <p>Anda dapat <a href="{{ route('hewan.template') }}" class="alert-link">download template CSV</a> untuk memudahkan pengisian data.</p>
+                    </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -50,7 +60,7 @@
                             <path d="M12 5l0 14" />
                             <path d="M5 12l14 0" />
                         </svg>
-                        Import Data
+                        Import
                     </button>
                 </div>
             </form>

@@ -168,7 +168,7 @@
                 </div>
                 <div class="modal-footer">
                     <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-                        Cancel
+                        Batal
                     </a>
                     <button type="submit" class="btn btn-primary" id="btnSimpan">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
