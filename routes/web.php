@@ -35,7 +35,8 @@ Route::middleware(['auth'])->group(function () {
     --------------------------------------------*/
     Route::middleware(['user-access:admin'])->group(function () {
         Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
-
+        Route::post('/admin/hewan/import', [App\Http\Controllers\Admin\HewanController::class, 'import'])->name('hewan.import');
+        Route::get('/admin/hewan/template', [App\Http\Controllers\Admin\HewanController::class, 'template'])->name('hewan.template');
         /* Supplier */
         Route::prefix('admin/suppliers')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\SupplierController::class, 'index'])->name('suppliers.index');

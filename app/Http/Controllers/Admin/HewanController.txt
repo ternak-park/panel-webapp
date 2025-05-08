@@ -386,40 +386,27 @@ class HewanController extends Controller
         }
     }
 
-    // Method untuk download template CSV
-// Method untuk download template CSV
     public function template()
     {
-        // Ambil data untuk dropdown
-        $tipeList = Tipe::pluck('nama_tipe')->toArray();
-        $statusList = Status::pluck('nama_status')->toArray();
-        $kesehatanList = Kesehatan::pluck('nama_kesehatan')->toArray();
-        $programList = Program::pluck('nama_program')->toArray();
-        $kandangList = TernakKandang::pluck('kode_kandang')->toArray();
-        $pemilikList = User::pluck('name')->toArray();
-
         $headers = [
             'Content-Type' => 'text/csv',
             'Content-Disposition' => 'attachment; filename="template_import_hewan.csv"',
         ];
 
-        $callback = function () use ($tipeList, $statusList, $kesehatanList, $programList, $kandangList, $pemilikList) {
+        $callback = function () {
             $file = fopen('php://output', 'w');
-
-            // Header CSV
             fputcsv($file, [
                 'tag',
                 'sex',
                 'jenis',
                 'ternak_induk',
                 'tanggal_masuk',
-                'tipe',
-                'status',
-                'kesehatan',
-                'program',
-                'kandang',
-                'pemilik',
-                'catatan'
+                'ternak_tipe_indeks',
+                'ternak_status_indeks',
+                'ternak_kesehatan_indeks',
+                'ternak_program_indeks',
+                'ternak_kandang_indeks',
+                'pemilik_indeks'
             ]);
 
             // Contoh data
@@ -429,29 +416,12 @@ class HewanController extends Controller
                 'Domba',
                 '',
                 date('Y-m-d'),
-                $tipeList[0] ?? '',
-                $statusList[0] ?? '',
-                $kesehatanList[0] ?? '',
-                $programList[0] ?? '',
-                $kandangList[0] ?? '',
-                $pemilikList[0] ?? '',
-                'Format tanggal bisa: YYYY-MM-DD, DD/MM/YYYY, MM/DD/YYYY'
-            ]);
-
-            // Tambahkan baris kosong untuk memudahkan pengguna
-            fputcsv($file, [
-                'TAG002',
-                'Betina',
-                'Kambing',
-                'TAG001',
-                date('d/m/Y'),
-                $tipeList[0] ?? '',
-                $statusList[0] ?? '',
-                $kesehatanList[0] ?? '',
-                $programList[0] ?? '',
-                $kandangList[0] ?? '',
-                $pemilikList[0] ?? '',
-                'Contoh format tanggal DD/MM/YYYY'
+                '1',
+                '1',
+                '1',
+                '1',
+                '1',
+                '1'
             ]);
 
             fclose($file);
