@@ -276,7 +276,7 @@
                            </li>
                             {{-- Ternak --}}
                            <li
-                               class="nav-item dropdown {{ Route::is('hewan.*', 'fisik.*','reproduksi.*') ? 'active' : '' }}">
+                               class="nav-item dropdown {{ Route::is('hewan.*', 'fisik.*','reproduksi.*' , 'kondisi.*') ? 'active' : '' }}">
                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
                                    <span
@@ -304,8 +304,8 @@
                                                 <a href="{{ route('reproduksi.index') }}"
                                                     class="dropdown-item {{ Route::is('reproduksi.*') ? 'active' : '' }}">
                                                     Reproduksi
-                                                    <span
-                                                        class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
+                                                    {{-- <span
+                                                        class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span> --}}
                                                 </a>
                                                 <a href="{{ route('fisik.index') }}"
                                                     class="dropdown-item {{ Route::is('fisik.*') ? 'active' : '' }}">

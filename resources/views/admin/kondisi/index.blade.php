@@ -18,10 +18,39 @@
                         <div class="col-12 col-md-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <span class="d-none d-sm-inline">
-                                    <a href="sad" class="btn">
+                                    <a href="#" class="btn">
                                         Cetak
                                     </a>
                                 </span>
+                                 {{-- gawe hapus all --}}
+                                 <button id="deleteSelected" class="btn btn-danger d-none d-sm-inline-block">
+                                    {{-- <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M4 7l16 0" />
+                                        <path d="M10 11l0 6" />
+                                        <path d="M14 11l0 6" />
+                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                    </svg> --}}
+                                    Hapus
+                                </button>
+                                <a href="#" class="btn btn-primary d-none d-sm-inline-block"
+                                data-bs-toggle="modal" data-bs-target="#modal-import-csv">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-file-upload">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                    <path
+                                        d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                                    <path d="M12 11v6" />
+                                    <path d="M9.5 13.5l2.5 -2.5l2.5 2.5" />
+                                </svg>
+                                Import .csv
+                            </a>
                                 <a href="{{ route('suppliers.create') }}"
                                     class="btn btn-primary d-none d-sm-inline-block">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -60,7 +89,7 @@
                         <div class="card-body border-bottom py-3">
                             <div class="d-flex">
                                 <div class="text-muted">
-                                    {{-- Show --}}
+                                    Menampilkan
                                     <div class="mx-2 d-inline-block">
                                         <select id="pageLength" class="form-control form-control-sm" style="width:70px">
                                             <option value="10">10</option>
@@ -69,18 +98,38 @@
                                             <option value="100">100</option>
                                         </select>
                                     </div>
-                                    {{-- entries --}}
+                                    hasil
                                 </div>
                                 <div class="ms-auto text-muted">
-                                    {{-- Search: --}}
+                                    Search:
                                     <div class="ms-2 d-inline-block">
                                         <input type="text" id="searchInput" class="form-control form-control-sm"
-                                            placeholder="Cari Jenis" aria-label="Search supplier">
+                                            placeholder="Cari Hewan" aria-label="Search supplier">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="table-responsive">
+                            <table class="table table-vcenter table-striped card-table datatable" id="tableKondisi">
+                                <thead>
+                                    <tr>
+                                        <th class="w-1">
+                                            <input class="form-check-input m-0 align-middle" type="checkbox"
+                                                aria-label="Select all items" />
+                                        </th>
+                                        <th class="w-1" style="width: 5%;">No</th>
+                                        <th style="width: 30%;">Tag</th>
+                                        <th style="width: 30%;">Kesehatan</th>
+                                        <th style="width: 15%;">Status</th>
+                                        <th class="w-1" style="width: 20%;">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Your table content will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        {{-- <div class="table-responsive">
                             <table class="table card-table table-vcenter text-nowrap datatable" id="tableKondisi">
                                 <thead>
                                     <tr>
@@ -92,7 +141,7 @@
                                     </tr>
                                 </thead>
                             </table>
-                        </div>
+                        </div> --}}
                         <div class="card-footer d-flex align-items-center">
                             <p id="tableInfo" class="m-0 text-muted"></p>
                             <ul id="tablePagination" class="pagination m-0 ms-auto"></ul>
