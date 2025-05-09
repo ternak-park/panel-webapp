@@ -4,7 +4,7 @@
     @csrf
     <div class="modal modal-blur fade" id="modal-tambah-hewan" tabindex="-1" role="dialog" aria-hidden="true"
         data-bs-backdrop="static">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Tambah Data hewan</h5>
