@@ -486,14 +486,31 @@ class HewanController extends Controller
         return Excel::download(new HewanExport, 'hewan.xlsx');
     }
 
-    public function batchDelete(Request $request)
-    {
+public function batchDelete(Request $request)
+{
+    try {
+        // Debug output to log
+        \Log::info('Batch Delete Request:', ['ids' => $request->ids]);
+        
+        // Validate the request
+        if (!$request->has('ids') || !is_array($request->ids) || empty($request->ids)) {
+            return response()->json(['error' => 'Tidak ada data yang dipilih untuk dihapus.'], 400);
+        }
+        
+        $ids = $request->ids;
+        
+        // Get TernakHewan records
+        $ternakHewans = TernakHewan::whereIn('id', $ids)->get();
+        
+        \Log::info('Found records:', ['count' => $ternakHewans->count()]);
+        
+        if ($ternakHewans->isEmpty()) {
+            return response()->json(['error' => 'Tidak ada data yang ditemukan.'], 404);
+        }
+
+        DB::beginTransaction();
+        
         try {
-            $ids = $request->ids;
-
-            // Get TernakHewan records
-            $ternakHewans = TernakHewan::whereIn('id', $ids)->get();
-
             foreach ($ternakHewans as $hewan) {
                 // Delete related DetailTernakHewan records using the correct ID reference
                 DetailTernakHewan::where('ternak_tag', $hewan->id)->delete();
@@ -502,16 +519,25 @@ class HewanController extends Controller
                 if ($hewan->gambar_hewan) {
                     Storage::delete('public/hewan/' . $hewan->gambar_hewan);
                 }
+                
+                // Delete the animal record itself
+                $hewan->delete();
             }
-
-            // Delete TernakHewan records
-            TernakHewan::whereIn('id', $ids)->delete();
-
+            
+            DB::commit();
+            
             return response()->json(['success' => 'Data berhasil dihapus.']);
+            
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+            DB::rollBack();
+            \Log::error('Error in batch delete transaction: ' . $e->getMessage());
+            return response()->json(['error' => 'Terjadi kesalahan dalam transaksi: ' . $e->getMessage()], 500);
         }
+    } catch (\Exception $e) {
+        \Log::error('Error in batch delete: ' . $e->getMessage());
+        return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
     }
+}
 
     /* import csv */
     // Method untuk import CSV

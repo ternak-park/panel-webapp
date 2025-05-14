@@ -18,15 +18,15 @@
                         <!-- Page title actions -->
                         <div class="col-12 col-md-auto ms-auto d-print-none">
                             <div class="btn-list">
+                                {{-- gawe hapus all --}}
+                                <button id="deleteSelected" class="btn d-none d-sm-inline-block">
+                                    Hapus
+                                </button>
                                 <span class="d-none d-sm-inline">
                                     <a href="{{ route('hewan.excel') }}" class="btn">
                                         Cetak
                                     </a>
                                 </span>
-                                {{-- gawe hapus all --}}
-                                <button id="deleteSelected" class="btn btn-danger d-none d-sm-inline-block">
-                                    Hapus
-                                </button>
                                 <a href="#" class="btn btn-primary d-none d-sm-inline-block"
                                     data-bs-toggle="modal" data-bs-target="#modal-import-csv">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -73,9 +73,9 @@
                     {{--  --}}
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
+                            {{-- <div class="card-header">
                                 <h3 class="card-title">Hewan</h3>
-                            </div>
+                            </div> --}}
                             <div class="card-body border-bottom py-3">
                                 <div class="d-flex">
                                     <div class="text-muted">
