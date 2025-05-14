@@ -1,3 +1,4 @@
+// Enhanced hewan.js - improved edit functionality
 $(document).ready(function () {
     $.ajaxSetup({
         headers: {
@@ -177,25 +178,39 @@ $(document).on("click", ".btn-edit", function () {
         success: function (data) {
             console.log('Edit data:', data); // For debugging
 
+            // Set form action
+            $("#editHewanForm").attr("action", `/admin/hewan/${id}`);
+            
             // Basic Information
             $("#edit-ternak-tag").val(data.tag_hewan || '');
             $("#edit-sex").val(data.sex_hewan || '');
-            $('select[name="ternak_jenis_indeks"]').val(data.ternak_jenis_id || '');
+            
+            // Set values for TomSelect or standard select elements
+            setSelectOrTomSelectValue('edit-select-labels-jenis', data.ternak_jenis_id || '');
 
             // Family Information
             if (data.detail) {
-                $("#edit-ternak-induk-betina").val(data.detail.tag_induk_betina || '');
-                $("#edit-ternak-induk-jantan").val(data.detail.tag_induk_jantan || '');
-                $("#edit-ternak-tag-anak").val(data.detail.tag_anak || '');
+                // Handle family data fields that may use TomSelect
+                setSelectOrTomSelectValue('edit-select-labels-induk-betina', data.detail.tag_induk_betina || '');
+                setSelectOrTomSelectValue('edit-select-labels-induk-jantan', data.detail.tag_induk_jantan || '');
+                
+                // For tag_anak, check if animal is male first
+                if (data.sex_hewan === 'Jantan') {
+                    // For males, clear and disable the field
+                    disableAndClearTagAnak();
+                } else {
+                    // For females, set the value
+                    setSelectOrTomSelectValue('edit-select-labels-anak', data.detail.tag_anak || '');
+                }
 
-                // Kandang dan Ownership
-                $('select[name="ternak_kandang_indeks"]').val(data.detail.ternak_kandang || '');
-                $('select[name="pemilik_indeks"]').val(data.detail.nama_pemilik || '');
+                // Kandang dan Ownership - handle with TomSelect
+                setSelectOrTomSelectValue('edit-select-labels-kandang', data.detail.ternak_kandang || '');
+                setSelectOrTomSelectValue('edit-select-pemilik', data.detail.nama_pemilik || '');
 
-                // Status, Program, etc.
-                $('select[name="ternak_status_indeks"]').val(data.detail.ternak_status || '');
-                $('select[name="ternak_kesehatan_indeks"]').val(data.detail.ternak_kesehatan || '');
-                $('select[name="ternak_program_indeks"]').val(data.detail.ternak_program || '');
+                // Status, Program, etc. - handle with TomSelect
+                setSelectOrTomSelectValue('edit-select-labels-status', data.detail.ternak_status || '');
+                setSelectOrTomSelectValue('edit-select-labels-kesehatan', data.detail.ternak_kesehatan || '');
+                setSelectOrTomSelectValue('edit-select-labels-program', data.detail.ternak_program || '');
 
                 // Date and Time Information
                 $("#edit-tanggal-masuk").val(data.detail.tanggal_masuk || '');
@@ -209,18 +224,15 @@ $(document).on("click", ".btn-edit", function () {
                 $("#edit-tgl-timbang-terbaru").val(data.detail.tgl_timbang_terbaru || '');
             }
 
-            // Set ternak_tipe if available
-            $('select[name="ternak_tipe_indeks"]').val(data.ternak_tipe || '');
-
-            // Set form action
-            $("#editHewanForm").attr("action", `/admin/hewan/${id}`);
-
-            // Refresh Tom Select instances to update the UI
-            if (window.tomSelectInstances) {
-                Object.values(window.tomSelectInstances).forEach(select => {
-                    select.sync();
-                });
-            }
+            // Set up the sex change handler to manage tag_anak state
+            $("#edit-sex").off('change').on('change', function() {
+                const isMale = $(this).val() === 'Jantan';
+                if (isMale) {
+                    disableAndClearTagAnak();
+                } else {
+                    enableTagAnak();
+                }
+            });
 
             // Show modal
             $("#modal-edit").modal("show");
@@ -235,3 +247,57 @@ $(document).on("click", ".btn-edit", function () {
         },
     });
 });
+
+// Helper function to handle both TomSelect and standard selects
+function setSelectOrTomSelectValue(selectId, value) {
+    // Check if TomSelect is being used and if the instance exists
+    if (window.tomSelectInstances && window.tomSelectInstances[selectId]) {
+        const tomSelect = window.tomSelectInstances[selectId];
+        tomSelect.clear();
+        if (value) {
+            try {
+                tomSelect.setValue(value);
+            } catch (e) {
+                console.warn(`Error setting TomSelect value for ${selectId}:`, e);
+            }
+        }
+    } else {
+        // Use standard DOM select
+        const select = document.getElementById(selectId);
+        if (select) {
+            select.value = value || '';
+        }
+    }
+}
+
+// Function to disable and clear the tag_anak field
+function disableAndClearTagAnak() {
+    const tagAnakId = 'edit-select-labels-anak';
+    
+    if (window.tomSelectInstances && window.tomSelectInstances[tagAnakId]) {
+        const tomSelect = window.tomSelectInstances[tagAnakId];
+        tomSelect.clear();
+        tomSelect.disable();
+    } else {
+        const select = document.getElementById(tagAnakId);
+        if (select) {
+            select.value = '';
+            select.disabled = true;
+        }
+    }
+}
+
+// Function to enable the tag_anak field
+function enableTagAnak() {
+    const tagAnakId = 'edit-select-labels-anak';
+    
+    if (window.tomSelectInstances && window.tomSelectInstances[tagAnakId]) {
+        const tomSelect = window.tomSelectInstances[tagAnakId];
+        tomSelect.enable();
+    } else {
+        const select = document.getElementById(tagAnakId);
+        if (select) {
+            select.disabled = false;
+        }
+    }
+}
