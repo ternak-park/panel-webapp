@@ -276,7 +276,7 @@
                            </li>
                             {{-- Ternak --}}
                            <li
-                               class="nav-item dropdown {{ Route::is('hewan.index', 'fisik.index', 'kandang.index', 'reproduksi.index') ? 'active' : '' }}">
+                               class="nav-item dropdown {{ Route::is('hewan.*', 'fisik.*','reproduksi.*' , 'kondisi.*') ? 'active' : '' }}">
                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
                                    <span
@@ -299,20 +299,20 @@
                                         <div class="dropdown-menu-column">
                                             <div class="dropdown">
                                                 <a href="{{ route('hewan.index') }}"
-                                                    class="dropdown-item {{ Route::is('hewan.index') ? 'active' : '' }}">
+                                                    class="dropdown-item {{ Route::is('hewan.*') ? 'active' : '' }}">
                                                     Data </a>
                                                 <a href="{{ route('reproduksi.index') }}"
-                                                    class="dropdown-item {{ Route::is('reproduksi.index') ? 'active' : '' }}">
+                                                    class="dropdown-item {{ Route::is('reproduksi.*') ? 'active' : '' }}">
                                                     Reproduksi
-                                                    <span
-                                                        class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
+                                                    {{-- <span
+                                                        class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span> --}}
                                                 </a>
                                                 <a href="{{ route('fisik.index') }}"
-                                                    class="dropdown-item {{ Route::is('fisik.index') ? 'active' : '' }}">
+                                                    class="dropdown-item {{ Route::is('fisik.*') ? 'active' : '' }}">
                                                     Fisik
                                                 </a>
                                                 <a href="{{ route('kondisi.index') }}"
-                                                    class="dropdown-item {{ Route::is('kondisi.index') ? 'active' : '' }}">
+                                                    class="dropdown-item {{ Route::is('kondisi.*') ? 'active' : '' }}">
                                                     Kondisi
                                                 </a>
                                             </div>

@@ -4,7 +4,7 @@
     @csrf
     <div class="modal modal-blur fade" id="modal-tambah-hewan" tabindex="-1" role="dialog" aria-hidden="true"
         data-bs-backdrop="static">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Tambah Data hewan</h5>
@@ -168,7 +168,7 @@
                 </div>
                 <div class="modal-footer">
                     <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-                        Cancel
+                        Batal
                     </a>
                     <button type="submit" class="btn btn-primary" id="btnSimpan">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
