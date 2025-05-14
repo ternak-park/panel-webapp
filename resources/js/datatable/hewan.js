@@ -106,38 +106,7 @@ $(document).ready(function () {
                 searchable: false
             },
         ],
-        drawCallback: function (settings) {
-            // Implementasi default jika sihubDrawCallback tidak tersedia
-            const api = this.api();
-            const pageInfo = api.page.info();
-
-            // Update pagination info
-            $("#tableInfo").html(
-                "Menampilkan " + (pageInfo.start + 1) + " sampai " + pageInfo.end + " dari " + pageInfo.recordsTotal + " data"
-            );
-
-            // Create pagination
-            let pagination = "";
-
-            // Previous button
-            pagination += '<li class="page-item ' + (pageInfo.page === 0 ? "disabled" : "") + '">';
-            pagination += '<a class="page-link" href="#" data-page="' + (pageInfo.page - 1) + '" aria-label="Previous">';
-            pagination += '<span aria-hidden="true">&laquo;</span></a></li>';
-
-            // Page numbers
-            for (let i = 0; i < pageInfo.pages; i++) {
-                pagination += '<li class="page-item ' + (pageInfo.page === i ? "active" : "") + '">';
-                pagination += '<a class="page-link" href="#" data-page="' + i + '">' + (i + 1) + '</a></li>';
-            }
-
-            // Next button
-            pagination += '<li class="page-item ' + (pageInfo.page === pageInfo.pages - 1 ? "disabled" : "") + '">';
-            pagination += '<a class="page-link" href="#" data-page="' + (pageInfo.page + 1) + '" aria-label="Next">';
-            pagination += '<span aria-hidden="true">&raquo;</span></a></li>';
-
-            $("#tablePagination").html(pagination);
-        },
-
+        drawCallback: sihubDrawCallback,
         initComplete: function () {
             // Add sort indicators to the orderable columns
             this.api().columns().every(function (index) {
