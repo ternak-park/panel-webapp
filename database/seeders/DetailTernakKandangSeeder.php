@@ -4,41 +4,48 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use App\Models\DetailTernakKandang;
+use Carbon\Carbon;
 
 class DetailTernakKandangSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $detailList = [
+        $now = Carbon::now();
+
+        $detailternakkandangs = [
             [
-                'kode_kandang' => 'A01-A',
-                'hewan_tag' => 'A01',
-                'jenis_domba' => 1,
-                'berat_domba' => 1,
-                'kondisi_domba' => 1,
+                'kode_kandang_id' => 1,
+                'total_ternak' => 10,
+                'total_bb' => 250.50,
+                'nama_petugas_id' => 1,
+                'nama_pemilik_id' => 1,
+                'created_at' => $now,
+                'updated_at' => $now
             ],
             [
-                'kode_kandang' => 'A01-B',
-                'hewan_tag' => 'A02',
-                'jenis_domba' => 2,
-                'berat_domba' => 2,
-                'kondisi_domba' => 1,
+                'kode_kandang_id' => 2,
+                'total_ternak' => 8,
+                'total_bb' => 200.75,
+                'nama_petugas_id' => 2,
+                'nama_pemilik_id' => 2,
+                'created_at' => $now,
+                'updated_at' => $now
             ],
             [
-                'kode_kandang' => 'A01-C',
-                'hewan_tag' => 'C01',
-                'jenis_domba' => 1,
-                'berat_domba' => 3,
-                'kondisi_domba' => 2,
+                'kode_kandang_id' => 3,
+                'total_ternak' => 12,
+                'total_bb' => 300.25,
+                'nama_petugas_id' => 3,
+                'nama_pemilik_id' => 3,
+                'created_at' => $now,
+                'updated_at' => $now
             ],
         ];
 
-        foreach ($detailList as $detail) {
-            DetailTernakKandang::create($detail);
+        foreach ($detailternakkandangs as $detailternakkandang) {
+            DetailTernakKandang::create(attributes: $detailternakkandang);
         }
     }
 }

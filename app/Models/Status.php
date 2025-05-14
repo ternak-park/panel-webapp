@@ -8,12 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Status extends Model
 {
     use HasFactory;
+
     protected $table = 'status';
-    protected $fillable = ['id', 'kode_status', 'nama_status', 'deskripsi', 'created_at', 'updated_at'];
 
-    public function ternakDetails()
-{
-    return $this->hasMany(TernakDetail::class, 'ternak_status');
-}
+    protected $fillable = [
+        'kode_status',
+        'nama_status',
+        'deskripsi_status'
+    ];
 
+    public function detailTernakHewans()
+    {
+        return $this->hasMany(DetailTernakHewan::class, 'ternak_status');
+    }
 }

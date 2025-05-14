@@ -2,38 +2,43 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\TernakKandang;
+use Carbon\Carbon;
 
 class TernakKandangSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        $data = [
+        $now = Carbon::now();
+
+        $ternakkandangs = [
             [
                 'kode_kandang' => 'KDG001',
-                'pemilik' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'total_ternak_kandang' => 10,
+                'nama_pemilik_id' => 1,
+                'created_at' => $now,
+                'updated_at' => $now
             ],
             [
                 'kode_kandang' => 'KDG002',
-                'pemilik' => 2,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'total_ternak_kandang' => 8,
+                'nama_pemilik_id' => 2,
+                'created_at' => $now,
+                'updated_at' => $now
             ],
             [
                 'kode_kandang' => 'KDG003',
-                'pemilik' => null, 
-                'created_at' => now(),
-                'updated_at' => now(),
+                'total_ternak_kandang' => 12,
+                'nama_pemilik_id' => 3,
+                'created_at' => $now,
+                'updated_at' => $now
             ],
         ];
-        DB::table('ternak_kandang')->insert($data);
+        foreach ($ternakkandangs as $ternakkandang) {
+            TernakKandang::create(attributes: $ternakkandang);
+        }
     }
 }

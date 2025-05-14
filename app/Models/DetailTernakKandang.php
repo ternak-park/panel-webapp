@@ -9,38 +9,28 @@ class DetailTernakKandang extends Model
 {
     use HasFactory;
 
-    protected $table = 'detail_ternak_kandang';
-    
+    protected $table = 'ternak_detail_kandang';
+
     protected $fillable = [
-        'kode_kandang',
-        'hewan_tag',
-        'jenis_domba',
-        'berat_domba',
-        'kondisi_domba',
+        'kode_kandang_id',
+        'total_ternak',
+        'total_bb',
+        'nama_petugas_id',
+        'nama_pemilik_id'
     ];
 
-    public function kandang()
+    public function ternakKandang()
     {
-        return $this->belongsTo(Kandang::class, 'kode_kandang', 'kode_kandang');
+        return $this->belongsTo(TernakKandang::class, 'kode_kandang_id', 'kode_kandang');
     }
-    
-    public function jenisDomba()
+
+    public function petugas()
     {
-        return $this->belongsTo(Tipe::class, 'jenis_domba', 'id');
+        return $this->belongsTo(Petugas::class, 'nama_petugas_id');
     }
-    
-    public function beratDomba()
+
+    public function pemilik()
     {
-        return $this->belongsTo(TernakFisik::class, 'berat_domba', 'id');
-    }
-    
-    public function kondisiDomba()
-    {
-        return $this->belongsTo(Kesehatan::class, 'kondisi_domba', 'id');
-    }
-    
-    public function hewan()
-    {
-        return $this->belongsTo(TernakHewan::class, 'hewan_tag', 'tag');
+        return $this->belongsTo(Pemilik::class, 'nama_pemilik_id');
     }
 }

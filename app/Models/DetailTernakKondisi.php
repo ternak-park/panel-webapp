@@ -5,19 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TernakKondisi extends Model
+class DetailTernakKondisi extends Model
 {
     use HasFactory;
 
-    protected $table = 'ternak_kondisi';
+    protected $table = 'ternak_detail_kondisi';
 
     protected $fillable = [
+        'ternak_kondisi_id',
         'tgl_kejadian_kondisi',
         'ternak_tag_id',
         'ternak_kandang_id',
         'ternak_jenis_id',
         'sex_hewan_kondisi',
-        'ternak_kesehatan_id'
+        'ternak_kesehatan_id',
+        'keterangan',
+        'penanganan',
+        'tag_baru'
     ];
 
     public function ternakHewan()
@@ -42,6 +46,6 @@ class TernakKondisi extends Model
 
     public function detailTernakKondisi()
     {
-        return $this->hasMany(DetailTernakKondisi::class, 'ternak_kondisi_id');
+        return $this->belongsTo(DetailTernakKondisi::class, 'ternak_kondisi_id');
     }
 }

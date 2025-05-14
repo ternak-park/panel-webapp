@@ -9,17 +9,16 @@ return new class extends Migration {
     {
         Schema::create('ternak_hewan', function (Blueprint $table) {
             $table->id();
-            $table->string('tag')->unique();
-            $table->enum('jenis', ['Domba', 'Kambing']);
-            $table->enum('sex', ['Jantan', 'Betina']);
-            $table->unsignedBigInteger('ternak_tipe')->nullable();
+            $table->string('tag_hewan')->unique();
+            $table->enum('sex_hewan', ['Jantan', 'Betina']);
+            $table->unsignedBigInteger('ternak_jenis_id');
             $table->string('gambar_hewan')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('ternak_tipe')
+            $table->foreign('ternak_jenis_id')
                   ->references('id')
-                  ->on('tipe')
+                  ->on('jenis')
                   ->onDelete('cascade');
         });
     }

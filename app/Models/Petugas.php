@@ -10,17 +10,15 @@ class Petugas extends Model
     use HasFactory;
 
     protected $table = 'petugas';
-    protected $primaryKey = 'kode_petugas';
-    protected $keyType = 'string';
-    public $incrementing = false;
-    
+
     protected $fillable = [
         'kode_petugas',
-        'nama_petugas',
+        'nama_petugas'
     ];
 
-    public function kandang()
+    // A petugas might be associated with kandang through DetailTernakKandang
+    public function detailTernakKandangs()
     {
-        return $this->hasMany(Kandang::class, 'anak_kandang', 'kode_petugas');
+        return $this->hasMany(DetailTernakKandang::class, 'nama_petugas_id');
     }
 }

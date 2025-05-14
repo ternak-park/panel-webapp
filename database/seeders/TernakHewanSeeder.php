@@ -2,67 +2,63 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-// use Illuminate\Support\Str;
+use App\Models\TernakHewan;
+use Carbon\Carbon;
 
 class TernakHewanSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        // Example data for seeding
-        $data = [
+        $now = Carbon::now();
+
+        $ternakhewans = [
             [
-                'tag' => 'A01',
-                'jenis' => 'domba',
-                'sex' => 'jantan',
-                'ternak_tipe' => 4,
-                'gambar_hewan' => 'hewan1.jpg',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'tag_hewan' => 'HW1',
+                'sex_hewan' => 'Jantan',
+                'ternak_jenis_id' => 2,
+                'gambar_hewan' => 'gambar1.png',
+                'created_at' => $now,
+                'updated_at' => $now
             ],
             [
-                'tag' => 'A02',
-                'jenis' => 'kambing',
-                'sex' => 'betina',
-                'ternak_tipe' => 3,
-                'gambar_hewan' => 'hewan2.jpg',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'tag_hewan' => 'HW2',
+                'sex_hewan' => 'Betina',
+                'ternak_jenis_id' => 1,
+                'gambar_hewan' => 'gambar1.png',
+                'created_at' => $now,
+                'updated_at' => $now
             ],
             [
-                'tag' => 'B01',
-                'jenis' => 'domba',
-                'sex' => 'jantan',
-                'ternak_tipe' => 2,
-                'gambar_hewan' => 'hewan3.jpg',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'tag_hewan' => 'HW3',
+                'sex_hewan' => 'Jantan',
+                'ternak_jenis_id' => 4,
+                'gambar_hewan' => 'gambar1.png',
+                'created_at' => $now,
+                'updated_at' => $now
             ],
             [
-                'tag' => 'C01',
-                'jenis' => 'kambing',
-                'sex' => 'jantan',
-                'ternak_tipe' => 7,
-                'gambar_hewan' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'tag_hewan' => 'HW4',
+                'sex_hewan' => 'Jantan',
+                'ternak_jenis_id' => 7,
+                'gambar_hewan' => 'gambar1.png',
+                'created_at' => $now,
+                'updated_at' => $now
             ],
             [
-                'tag' => 'C02',
-                'jenis' => 'kambing',
-                'sex' => 'betina',
-                'ternak_tipe' => 8,
-                'gambar_hewan' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'tag_hewan' => 'HW5',
+                'sex_hewan' => 'Betina',
+                'ternak_jenis_id' => 8,
+                'gambar_hewan' => 'gambar1.png',
+                'created_at' => $now,
+                'updated_at' => $now
             ],
         ];
-        DB::table('ternak_hewan')->insert($data);
+
+        foreach ($ternakhewans as $ternakhewan) {
+            TernakHewan::create(attributes: $ternakhewan);
+        }
     }
 }

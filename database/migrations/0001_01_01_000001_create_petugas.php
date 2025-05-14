@@ -9,7 +9,8 @@ return new class extends Migration {
     {
         // Buat tabel petugas
         Schema::create('petugas', function (Blueprint $table) {
-            $table->string('kode_petugas')->primary();
+            $table->id();
+            $table->string('kode_petugas')->unique();
             $table->string('nama_petugas');
             $table->timestamps();
         });

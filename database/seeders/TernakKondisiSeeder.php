@@ -2,35 +2,52 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\TernakKondisi;
+use Carbon\Carbon;
 
 class TernakKondisiSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        $data = [
+        $now = Carbon::now();
+
+        $ternakkondisis = [
             [
-                'ternak_tag' => 'A01',
-                'ternak_kesehatan' => 1,
-                'ternak_status' => 1,
+                'tgl_kejadian_kondisi' => $now->format('Y-m-d'),
+                'ternak_tag_id' => 1,
+                'ternak_kandang_id' => 1,
+                'ternak_jenis_id' => 1,
+                'sex_hewan_kondisi' => 'Jantan',
+                'ternak_kesehatan_id' => 1,
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
-                'ternak_tag' => 'A02',
-                'ternak_kesehatan' => 2,
-                'ternak_status' => 2,
+                'tgl_kejadian_kondisi' => $now->format('Y-m-d'),
+                'ternak_tag_id' => 2,
+                'ternak_kandang_id' => 2,
+                'ternak_jenis_id' => 2,
+                'sex_hewan_kondisi' => 'Jantan',
+                'ternak_kesehatan_id' => 2,
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
-                'ternak_tag' => 'C01',
-                'ternak_kesehatan' => 3,
-                'ternak_status' => 3,
+                'tgl_kejadian_kondisi' => $now->format('Y-m-d'),
+                'ternak_tag_id' => 3,
+                'ternak_kandang_id' => 3,
+                'ternak_jenis_id' => 3,
+                'sex_hewan_kondisi' => 'Jantan',
+                'ternak_kesehatan_id' => 3,
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
         ];
-        DB::table('ternak_kondisi')->insert($data);
+        foreach ($ternakkondisis as $ternakkondisi) {
+            TernakKondisi::create(attributes: $ternakkondisi);
+        }
     }
 }

@@ -4,94 +4,48 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TernakHewan extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+
     protected $table = 'ternak_hewan';
+
     protected $fillable = [
-        'id',
-        'tag',
-        'jenis',
-        'sex',
-        'ternak_tipe',
-        'gambar_hewan',
-        'created_at',
-        'updated_at',
-        'deleted_at'
+        'tag_hewan',
+        'sex_hewan',
+        'ternak_jenis_id',
+        'gambar_hewan'
     ];
-    public function detail()
+
+    public function jenis()
     {
-        return $this->hasOne(TernakDetail::class, 'ternak_tag', 'tag');
-    }
-    public function ternakDetail()
-    {
-        return $this->hasOne(TernakDetail::class, 'ternak_tag', 'tag');
-    }
-    public function tipe()
-    {
-        return $this->belongsTo(Tipe::class, 'ternak_tipe', 'id');
+        return $this->belongsTo(Jenis::class, 'ternak_jenis_id');
     }
 
-    public function kesehatan()
+    public function ternakFisiks()
     {
-    return $this->hasOneThrough(
-        Kesehatan::class,
-        TernakDetail::class,
-        'ternak_tag',  // Foreign key di TernakDetail
-        'id',          // Foreign key di User
-        'tag',         // Local key di TernakHewan
-        'ternak_kesehatan'      // Local key di TernakDetail
-        );
+        return $this->hasMany(TernakFisik::class, 'ternak_tag_id');
     }
 
-    public function status()
+    public function ternakKondisis()
     {
-    return $this->hasOneThrough(
-        Status::class,
-        TernakDetail::class,
-        'ternak_tag',  // Foreign key di TernakDetail
-        'id',          // Foreign key di User
-        'tag',         // Local key di TernakHewan
-        'ternak_status'      // Local key di TernakDetail
-        );
+        return $this->hasMany(TernakKondisi::class, 'ternak_tag_id');
     }
 
-    public function program()
+    public function detailTernakFisiks()
     {
-        return $this->hasOneThrough(
-            Program::class,
-            TernakDetail::class,
-            'ternak_tag',  // Foreign key di TernakDetail
-            'id',          // Foreign key di User
-            'tag',         // Local key di TernakHewan
-            'ternak_program'      // Local key di TernakDetail
-        );
+        return $this->hasMany(DetailTernakFisik::class, 'ternak_tag_id');
     }
 
-    public function kandang()
+    public function detailTernakKondisis()
     {
-        return $this->hasOneThrough(
-            TernakKandang::class,
-            TernakDetail::class,
-            'ternak_tag',  // Foreign key di TernakDetail
-            'id',          // Foreign key di User
-            'tag',         // Local key di TernakHewan
-            'ternak_kandang'      // Local key di TernakDetail
-        );
+        return $this->hasMany(DetailTernakKondisi::class, 'ternak_tag_id');
     }
 
-    public function pemilik()
+    public function detailTernakHewans()
     {
-        return $this->hasOneThrough(
-            User::class,
-            TernakDetail::class,
-            'ternak_tag',  // Foreign key di TernakDetail
-            'id',          // Foreign key di User
-            'tag',         // Local key di TernakHewan
-            'pemilik'      // Local key di TernakDetail
-        );
+        return $this->hasMany(DetailTernakHewan::class, 'ternak_tag');
     }
-
-
 }

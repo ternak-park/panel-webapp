@@ -7,16 +7,18 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
+        // Membuat tabel kandang sebagai tabel master
         Schema::create('ternak_kandang', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_kandang');
-            $table->unsignedBigInteger('pemilik')->nullable();
-
-            $table->foreign('pemilik')
-                ->references('id')
-                ->on('users');
-
+            $table->string('kode_kandang')->unique();
+            $table->integer('total_ternak_kandang');
+            $table->unsignedBigInteger('nama_pemilik_id');
             $table->timestamps();
+
+              $table->foreign('nama_pemilik_id')
+                  ->references('id')
+                  ->on('pemilik')
+                  ->onDelete('cascade');
         });
     }
 

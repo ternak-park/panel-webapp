@@ -4,32 +4,42 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use App\Models\Program;
+use Carbon\Carbon;
 
 class ProgramSeeder extends Seeder
 {
     public function run()
     {
+        $now = Carbon::now();
+
         $programs = [
             [
-                'kode_program' => 'FTN',
+                'kode_program' => 'PFTN', // Penggemukan
                 'nama_program' => 'Fattening',
-                'deskripsi' => 'Program penggemukan bertujuan untuk meningkatkan bobot ternak dalam waktu tertentu dengan manajemen pakan dan perawatan intensif.',
+                'deskripsi_program' => 'Adalah program untuk penggemukan ternak',
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
-                'kode_program' => 'BRD',
+                'kode_program' => 'PBRD', // Perkawinan
                 'nama_program' => 'Breeding',
-                'deskripsi' => 'Program pembiakan fokus pada pengelolaan reproduksi ternak untuk menghasilkan anakan berkualitas.'
+                'deskripsi_program' => 'Adalah program untuk perkawinan ternak',
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
-                'kode_program' => 'ANK',
+                'kode_program' => 'PANK', // Peranakan
                 'nama_program' => 'Anakan',
-                'deskripsi' => 'Program ini dirancang untuk memantau dan mengelola pertumbuhan anak ternak sejak lahir hingga usia tertentu.'
-            ],
+                'deskripsi_program' => 'Adalah program untuk Peranakan ternak',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]
         ];
 
         foreach ($programs as $program) {
-            Program::create($program);
+            Program::create(attributes: $program);
         }
     }
 }

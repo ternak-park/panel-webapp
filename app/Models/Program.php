@@ -10,5 +10,15 @@ class Program extends Model
     use HasFactory;
 
     protected $table = 'program';
-    protected $fillable = ['id', 'kode_program', 'nama_program', 'deskripsi', 'created_at', 'updated_at'];
+
+    protected $fillable = [
+        'kode_program',
+        'nama_program',
+        'deskripsi_program'
+    ];
+
+    public function detailTernakHewans()
+    {
+        return $this->hasMany(DetailTernakHewan::class, 'ternak_program');
+    }
 }

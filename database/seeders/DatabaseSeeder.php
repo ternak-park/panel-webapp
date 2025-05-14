@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\TernakHewan;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,21 +16,20 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UsersSeeder::class,
-            SupplierSeeder::class,
-            TipeSeeder::class,
+            PemilikSeeder::class,
+            PetugasSeeder::class,
+            JenisSeeder::class,
             KesehatanSeeder::class,
-            StatusSeeder::class,
             ProgramSeeder::class,
+            StatusSeeder::class,
             TernakHewanSeeder::class,
             TernakKandangSeeder::class,
             TernakFisikSeeder::class,
-            TernakReproduksiSeeder::class,
-            TernakEkonomiSeeder::class,
             TernakKondisiSeeder::class,
-            TernakDetailSeeder::class,
-            PetugasSeeder::class,
-            KandangSeeder::class,
             DetailTernakKandangSeeder::class,
+            DetailTernakFisikSeeder::class,
+            DetailTernakKondisiSeeder::class,
+            DetailTernakHewanSeeder::class,
         ]);
     }
 }
