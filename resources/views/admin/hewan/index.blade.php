@@ -25,16 +25,6 @@
                                 </span>
                                 {{-- gawe hapus all --}}
                                 <button id="deleteSelected" class="btn btn-danger d-none d-sm-inline-block">
-                                    {{-- <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M4 7l16 0" />
-                                        <path d="M10 11l0 6" />
-                                        <path d="M14 11l0 6" />
-                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                    </svg> --}}
                                     Hapus
                                 </button>
                                 <a href="#" class="btn btn-primary d-none d-sm-inline-block"
@@ -145,22 +135,26 @@
     </div>
     @include('admin.hewan.modal.import')
     @include('admin.hewan.modal.edit', [
-        'statusTernak' => $status,
-        'tipeTernak' => $tipe,
-        'kesehatanTernak' => $kesehatan,
-        'programTernak' => $program,
-        'kandangTernak' => $kandang,
-        'pemilikTernak' => $user,
-        'hewanInduk' => $induk,
+        'statusTernak' => $status ?? [], 
+        'tipeTernak' => $tipe ?? [],
+        'kesehatanTernak' => $kesehatan ?? [],
+        'programTernak' => $program ?? [],
+        'kandangTernak' => $kandang ?? [],
+        'pemilikTernak' => $user ?? [],
+        'hewanInduk' => $induk ?? [],
+        'jenis' => $jenis ?? [],
+        'jenisTernak' => $jenisTernak ?? []
     ])
     @include('admin.hewan.modal.create', [
-        'statusTernak' => $status,
-        'tipeTernak' => $tipe,
-        'kesehatanTernak' => $kesehatan,
-        'programTernak' => $program,
-        'kandangTernak' => $kandang,
-        'pemilikTernak' => $user,
-        'hewanInduk' => $induk,
+        'statusTernak' => $status ?? [],
+        'tipeTernak' => $tipe ?? [],
+        'kesehatanTernak' => $kesehatan ?? [],
+        'programTernak' => $program ?? [],
+        'kandangTernak' => $kandang ?? [],
+        'pemilikTernak' => $user ?? [],
+        'hewanInduk' => $induk ?? [],
+        'jenis' => $jenis ?? [],
+        'jenisTernak' => $jenisTernak ?? []
     ])
     <script>
         $(document).ready(function() {
@@ -216,16 +210,76 @@
                 const id = this.getAttribute('data-id');
 
                 // Lakukan fetch untuk mendapatkan data dari server
-                fetch(`/admin/hewan/${id}`)
+                fetch(`/admin/hewan/${id}/edit`)
                     .then(response => response.json())
                     .then(data => {
                         // Isi form di modal dengan data yang diambil
                         document.getElementById('editHewanForm').setAttribute('action',
                             `/admin/hewan/${id}`);
-                        document.getElementById('edit-ternak-tag').value = data.ternak_tag;
-                        document.getElementById('edit-ternak-induk').value = data.ternak_induk;
-                        document.getElementById('edit-sex').value = data.sex;
-                        document.getElementById('edit-tanggal-masuk').value = data.tanggal_masuk;
+                        document.getElementById('edit-ternak-tag').value = data.tag_hewan || '';
+                        
+                        // Family Information
+                        if (data.detail) {
+                            document.getElementById('edit-ternak-induk-betina').value = data.detail.tag_induk_betina || '';
+                            document.getElementById('edit-ternak-induk-jantan').value = data.detail.tag_induk_jantan || '';
+                            document.getElementById('edit-ternak-tag-anak').value = data.detail.tag_anak || '';
+
+                            // Set dropdown values
+                            if (document.querySelector('select[name="ternak_jenis_indeks"]')) {
+                                document.querySelector('select[name="ternak_jenis_indeks"]').value = data.detail.ternak_jenis || data.ternak_jenis_id || '';
+                            }
+                            if (document.querySelector('select[name="ternak_kandang_indeks"]')) {
+                                document.querySelector('select[name="ternak_kandang_indeks"]').value = data.detail.ternak_kandang || '';
+                            }
+                            if (document.querySelector('select[name="pemilik_indeks"]')) {
+                                document.querySelector('select[name="pemilik_indeks"]').value = data.detail.nama_pemilik || '';
+                            }
+                            if (document.querySelector('select[name="ternak_status_indeks"]')) {
+                                document.querySelector('select[name="ternak_status_indeks"]').value = data.detail.ternak_status || '';
+                            }
+                            if (document.querySelector('select[name="ternak_kesehatan_indeks"]')) {
+                                document.querySelector('select[name="ternak_kesehatan_indeks"]').value = data.detail.ternak_kesehatan || '';
+                            }
+                            if (document.querySelector('select[name="ternak_program_indeks"]')) {
+                                document.querySelector('select[name="ternak_program_indeks"]').value = data.detail.ternak_program || '';
+                            }
+
+                            // Dates and measurements
+                            document.getElementById('edit-tanggal-masuk').value = data.detail.tanggal_masuk || '';
+                            if (document.getElementById('edit-tgl-terjual-mati')) {
+                                document.getElementById('edit-tgl-terjual-mati').value = data.detail.tgl_terjual_mati || '';
+                            }
+                            if (document.getElementById('edit-ternak-usia')) {
+                                document.getElementById('edit-ternak-usia').value = data.detail.ternak_usia || '';
+                            }
+                            if (document.getElementById('edit-lama-hari-dipeternakan')) {
+                                document.getElementById('edit-lama-hari-dipeternakan').value = data.detail.lama_hari_dipeternakan || '';
+                            }
+                            if (document.getElementById('edit-bb-masuk-lahir')) {
+                                document.getElementById('edit-bb-masuk-lahir').value = data.detail.bb_masuk_lahir || '';
+                            }
+                            if (document.getElementById('edit-bb-terbaru')) {
+                                document.getElementById('edit-bb-terbaru').value = data.detail.bb_terbaru || '';
+                            }
+                            if (document.getElementById('edit-tgl-timbang-terbaru')) {
+                                document.getElementById('edit-tgl-timbang-terbaru').value = data.detail.tgl_timbang_terbaru || '';
+                            }
+                        }
+
+                        // Basic info
+                        document.getElementById('edit-sex').value = data.sex_hewan || '';
+                        if (document.querySelector('select[name="ternak_tipe_indeks"]')) {
+                            document.querySelector('select[name="ternak_tipe_indeks"]').value = data.ternak_tipe || '';
+                        }
+
+                        // Refresh any TomSelect instances if they exist
+                        if (window.tomSelectInstances) {
+                            for (let key in window.tomSelectInstances) {
+                                if (window.tomSelectInstances[key]) {
+                                    window.tomSelectInstances[key].sync();
+                                }
+                            }
+                        }
                     })
                     .catch(error => {
                         console.error('Error fetching data:', error);

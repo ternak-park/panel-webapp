@@ -27,87 +27,81 @@ class HewanController extends Controller
 {
     public function index(Request $request)
     {
+        // Setup data for the view
         $data = [];
         $data['main'] = 'Hewan';
         $data['judul'] = 'Manajemen Hewan';
         $data['sub_judul'] = 'Data Hewan';
         $data['hewan'] = TernakHewan::all();
         $data['status'] = Status::all();
-
-        // Tidak menggunakan Tipe model karena tidak ada
         $data['tipe'] = collect([]);
-
         $data['kesehatan'] = Kesehatan::all();
         $data['program'] = Program::all();
+        
         $data['kandang'] = TernakKandang::all();
-        $data['induk'] = TernakHewan::where('sex_hewan', 'Betina')
-            ->get();
-
+        $data['induk'] = TernakHewan::where('sex_hewan', 'Betina')->get();
         $data['user'] = User::all();
-        $data['jenis'] = Jenis::all();
-        $data['jenisTernak'] = Jenis::all();
 
         if ($request->ajax()) {
-            // Start with TernakHewan and join with DetailTernakHewan using ID
-            $query = TernakHewan::select([
-                'ternak_hewan.id',
-                'ternak_hewan.tag_hewan',
-                'ternak_hewan.sex_hewan',
-                'ternak_hewan.ternak_jenis_id',
-                'ternak_hewan.gambar_hewan'
-            ])
-                ->leftJoin('ternak_detail_hewan', 'ternak_hewan.id', '=', 'ternak_detail_hewan.ternak_tag');
-
-            // Add joins for related tables
-            if (Schema::hasTable('jenis')) {
-                $query->leftJoin('jenis', 'ternak_hewan.ternak_jenis_id', '=', 'jenis.id')
-                    ->addSelect('jenis.nama_jenis');
-            }
-
-            if (Schema::hasTable('program')) {
-                $query->leftJoin('program', 'ternak_detail_hewan.ternak_program', '=', 'program.id')
-                    ->addSelect('program.nama_program');
-            }
-
-            if (Schema::hasTable('status')) {
-                $query->leftJoin('status', 'ternak_detail_hewan.ternak_status', '=', 'status.id')
-                    ->addSelect('status.nama_status');
-            }
-
-            return Datatables::of($query)
+            // Query using Eloquent relationships
+            // Start with TernakHewan as the base model
+            $hewans = TernakHewan::query();
+            
+            // Add any necessary filters here
+            
+            return DataTables::of($hewans)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     return view('admin.hewan.action', ['id' => $row->id])->render();
                 })
+                ->editColumn('tag_hewan', function ($row) {
+                    // Directly use the tag_hewan field from TernakHewan model
+                    return $row->tag_hewan;
+                })
+                ->editColumn('sex_hewan', function ($row) {
+                    return $row->sex_hewan ?? 'Tidak tersedia';
+                })
                 ->addColumn('program', function ($row) {
-                    return $row->nama_program ?? 'Tidak tersedia';
+                    // Use relationship to get program name
+                    $detail = $row->detailTernakHewans->first();
+                    if ($detail && $detail->program) {
+                        return $detail->program->nama_program;
+                    }
+                    return 'Tidak tersedia';
                 })
                 ->addColumn('jenis', function ($row) {
-                    return $row->nama_jenis ?? 'Tidak tersedia';
+                    // First try to get jenis from direct relationship
+                    if ($row->jenis) {
+                        return $row->jenis->nama_jenis;
+                    }
+                    
+                    // Otherwise try from detail
+                    $detail = $row->detailTernakHewans->first();
+                    if ($detail && $detail->jenis) {
+                        return $detail->jenis->nama_jenis;
+                    }
+                    
+                    return 'Tidak tersedia';
                 })
                 ->addColumn('status', function ($row) {
-                    return $row->nama_status ?? 'Tidak tersedia';
+                    // Use relationship to get status name
+                    $detail = $row->detailTernakHewans->first();
+                    if ($detail && $detail->status) {
+                        return $detail->status->nama_status;
+                    }
+                    return 'Tidak tersedia';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
 
-        // Rest of the code remains the same
-        $tracker = TernakHewan::select('sex_hewan', DB::raw('COUNT(*) as jumlah'))
-            ->groupBy('sex_hewan')
-            ->get();
-
-        $total = $tracker->sum('jumlah');
-
-        $data['tracker'] = $tracker;
-        $data['total'] = $total;
-
+        // Return the view with data
         return view('admin.hewan.index', $data);
     }
 
 
 
-    public function show($id)
+  public function show($id)
     {
         // Find TernakHewan by ID and eagerly load all related data
         $ternakHewan = TernakHewan::with([
@@ -124,7 +118,7 @@ class HewanController extends Controller
         // Return view with the data
         return view('admin.hewan.show', compact('ternakHewan'));
     }
-    public function store(Request $request)
+public function store(Request $request)
     {
         // Validate the request
         $validator = Validator::make($request->all(), [
@@ -133,6 +127,7 @@ class HewanController extends Controller
             'tanggal_masuk' => 'required|date',
             'ternak_jenis_indeks' => 'nullable|numeric|exists:jenis,id',
             'ternak_status_indeks' => 'nullable|numeric|exists:status,id',
+            'ternak_tipe_indeks' => 'nullable|numeric',
             'ternak_kesehatan_indeks' => 'nullable|numeric|exists:kesehatan,id',
             'ternak_program_indeks' => 'nullable|numeric|exists:program,id',
             'ternak_kandang_indeks' => 'nullable|numeric|exists:ternak_kandang,id',
@@ -166,17 +161,18 @@ class HewanController extends Controller
                     $gambarName = null;
                 }
 
-                // First, create TernakHewan record
+                // Create TernakHewan record
                 $ternakHewan = new TernakHewan();
                 $ternakHewan->tag_hewan = $request->ternak_tag;
                 $ternakHewan->sex_hewan = $request->sex_hewan;
                 $ternakHewan->ternak_jenis_id = $request->ternak_jenis_indeks;
+                $ternakHewan->ternak_tipe = $request->ternak_tipe_indeks;
                 $ternakHewan->gambar_hewan = $gambarName;
                 $ternakHewan->save();
 
-                // Now use the ID of the newly created TernakHewan record for ternak_tag in DetailTernakHewan
+                // Create DetailTernakHewan record
                 $detail = new DetailTernakHewan();
-                $detail->ternak_tag = $ternakHewan->id; // Use ID instead of tag_hewan
+                $detail->ternak_tag = $request->ternak_tag;
                 $detail->tag_induk_betina = $request->tag_induk_betina;
                 $detail->tag_induk_jantan = $request->tag_induk_jantan;
                 $detail->tag_anak = $request->tag_anak;
@@ -188,13 +184,12 @@ class HewanController extends Controller
                 $detail->ternak_kesehatan = $request->ternak_kesehatan_indeks;
                 $detail->ternak_program = $request->ternak_program_indeks;
                 $detail->ternak_status = $request->ternak_status_indeks;
-                $detail->ternak_usia = $request->ternak_usia ?? '0';
-                $detail->lama_hari_dipeternakan = $request->lama_hari_dipeternakan ?? 0;
+                $detail->ternak_usia = $request->ternak_usia;
+                $detail->lama_hari_dipeternakan = $request->lama_hari_dipeternakan;
                 $detail->tgl_terjual_mati = $request->tgl_terjual_mati;
-                $detail->ternak_fisik = $request->ternak_fisik ?? 1; // This is required by your schema, so set a default
-                $detail->bb_masuk_lahir = $request->bb_masuk_lahir ?? 0;
-                $detail->bb_terbaru = $request->bb_terbaru ?? 0;
-                $detail->tgl_timbang_terbaru = $request->tgl_timbang_terbaru ?? now();
+                $detail->bb_masuk_lahir = $request->bb_masuk_lahir;
+                $detail->bb_terbaru = $request->bb_terbaru;
+                $detail->tgl_timbang_terbaru = $request->tgl_timbang_terbaru;
                 $detail->save();
             });
 
@@ -215,6 +210,7 @@ class HewanController extends Controller
             'tanggal_masuk' => 'required|date',
             'ternak_jenis_indeks' => 'nullable|numeric|exists:jenis,id',
             'ternak_status_indeks' => 'nullable|numeric|exists:status,id',
+            'ternak_tipe_indeks' => 'nullable|numeric',
             'ternak_kesehatan_indeks' => 'nullable|numeric|exists:kesehatan,id',
             'ternak_program_indeks' => 'nullable|numeric|exists:program,id',
             'ternak_kandang_indeks' => 'nullable|numeric|exists:ternak_kandang,id',
@@ -250,31 +246,31 @@ class HewanController extends Controller
             DB::transaction(function () use ($request, $id) {
                 // Find the TernakHewan record
                 $ternakHewan = TernakHewan::findOrFail($id);
-                $oldTagHewan = $ternakHewan->tag_hewan;
-
+                
                 // Handle image upload if provided
                 if ($request->hasFile('gambar_hewan')) {
                     // Delete old image if it exists
                     if ($ternakHewan->gambar_hewan) {
                         Storage::delete('public/hewan/' . $ternakHewan->gambar_hewan);
                     }
-
+                    
                     // Upload new image
                     $gambar = $request->file('gambar_hewan');
                     $gambarName = time() . '.' . $gambar->getClientOriginalExtension();
                     $gambar->storeAs('public/hewan', $gambarName);
                     $ternakHewan->gambar_hewan = $gambarName;
                 }
-
+                
                 // Update TernakHewan record
                 $ternakHewan->tag_hewan = $request->ternak_tag;
                 $ternakHewan->sex_hewan = $request->sex_hewan;
                 $ternakHewan->ternak_jenis_id = $request->ternak_jenis_indeks;
+                $ternakHewan->ternak_tipe = $request->ternak_tipe_indeks;
                 $ternakHewan->save();
 
-                // Find or create DetailTernakHewan record using the TernakHewan ID
-                $detail = DetailTernakHewan::firstOrNew(['ternak_tag' => $ternakHewan->id]);
-
+                // Find or create DetailTernakHewan record
+                $detail = DetailTernakHewan::firstOrNew(['ternak_tag' => $request->ternak_tag]);
+                
                 // Update DetailTernakHewan record
                 $detail->tag_induk_betina = $request->tag_induk_betina;
                 $detail->tag_induk_jantan = $request->tag_induk_jantan;
@@ -287,37 +283,32 @@ class HewanController extends Controller
                 $detail->ternak_kesehatan = $request->ternak_kesehatan_indeks;
                 $detail->ternak_program = $request->ternak_program_indeks;
                 $detail->ternak_status = $request->ternak_status_indeks;
-
-                // Update the rest of the fields if they are provided
+                
+                // Only update optional fields if provided
                 if ($request->filled('ternak_usia')) {
                     $detail->ternak_usia = $request->ternak_usia;
                 }
-
+                
                 if ($request->filled('lama_hari_dipeternakan')) {
                     $detail->lama_hari_dipeternakan = $request->lama_hari_dipeternakan;
                 }
-
+                
                 if ($request->filled('tgl_terjual_mati')) {
                     $detail->tgl_terjual_mati = $request->tgl_terjual_mati;
                 }
-
+                
                 if ($request->filled('bb_masuk_lahir')) {
                     $detail->bb_masuk_lahir = $request->bb_masuk_lahir;
                 }
-
+                
                 if ($request->filled('bb_terbaru')) {
                     $detail->bb_terbaru = $request->bb_terbaru;
                 }
-
+                
                 if ($request->filled('tgl_timbang_terbaru')) {
                     $detail->tgl_timbang_terbaru = $request->tgl_timbang_terbaru;
                 }
-
-                // Set ternak_fisik if it's required
-                if (!$detail->ternak_fisik) {
-                    $detail->ternak_fisik = 1; // Default value
-                }
-
+                
                 $detail->save();
             });
 
@@ -347,16 +338,17 @@ class HewanController extends Controller
     {
         // Find TernakHewan by ID
         $ternakHewan = TernakHewan::with('detailTernakHewans')->findOrFail($id);
-
-        // Prepare response data - without ternak_tipe since it doesn't exist
+        
+        // Prepare response data
         $response = [
             'id' => $ternakHewan->id,
             'tag_hewan' => $ternakHewan->tag_hewan,
             'sex_hewan' => $ternakHewan->sex_hewan,
             'ternak_jenis_id' => $ternakHewan->ternak_jenis_id,
+            'ternak_tipe' => $ternakHewan->ternak_tipe,
             'gambar_hewan' => $ternakHewan->gambar_hewan
         ];
-
+        
         // Add detail data if available
         $detail = $ternakHewan->detailTernakHewans->first();
         if ($detail) {
@@ -381,38 +373,34 @@ class HewanController extends Controller
                 'bb_terbaru' => $detail->bb_terbaru,
                 'tgl_timbang_terbaru' => $detail->tgl_timbang_terbaru
             ];
-
-            // Add ternak_tipe only if the column exists in the DetailTernakHewan table
-            if (Schema::hasColumn('ternak_detail_hewan', 'ternak_tipe')) {
-                $response['detail']['ternak_tipe'] = $detail->ternak_tipe;
-            }
         }
-
+        
         return response()->json($response);
     }
+
     public function destroy($id)
     {
         try {
             // Find the TernakHewan record
             $ternakHewan = TernakHewan::findOrFail($id);
-
-            // Delete related DetailTernakHewan records using the correct ID reference
-            DetailTernakHewan::where('ternak_tag', $ternakHewan->id)->delete();
-
+            $tag_hewan = $ternakHewan->tag_hewan;
+            
+            // Delete related DetailTernakHewan records
+            DetailTernakHewan::where('ternak_tag', $tag_hewan)->delete();
+            
             // Delete image if exists
             if ($ternakHewan->gambar_hewan) {
                 Storage::delete('public/hewan/' . $ternakHewan->gambar_hewan);
             }
-
+            
             // Delete TernakHewan record
             $ternakHewan->delete();
-
+            
             return response()->json(['success' => 'Data telah dihapus.']);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
     }
-
     public function create()
     {
         // Ambil data yang dibutuhkan dari database
@@ -484,27 +472,26 @@ class HewanController extends Controller
         return Excel::download(new HewanExport, 'hewan.xlsx');
     }
 
-    public function batchDelete(Request $request)
+     public function batchDelete(Request $request)
     {
         try {
             $ids = $request->ids;
-
-            // Get TernakHewan records
-            $ternakHewans = TernakHewan::whereIn('id', $ids)->get();
-
-            foreach ($ternakHewans as $hewan) {
-                // Delete related DetailTernakHewan records using the correct ID reference
-                DetailTernakHewan::where('ternak_tag', $hewan->id)->delete();
-
-                // Delete image if exists
-                if ($hewan->gambar_hewan) {
-                    Storage::delete('public/hewan/' . $hewan->gambar_hewan);
-                }
+            
+            // Get tag_hewan values for related records
+            $tags = TernakHewan::whereIn('id', $ids)->pluck('tag_hewan')->toArray();
+            
+            // Delete related DetailTernakHewan records
+            DetailTernakHewan::whereIn('ternak_tag', $tags)->delete();
+            
+            // Delete images
+            $gambarHewans = TernakHewan::whereIn('id', $ids)->whereNotNull('gambar_hewan')->pluck('gambar_hewan')->toArray();
+            foreach ($gambarHewans as $gambar) {
+                Storage::delete('public/hewan/' . $gambar);
             }
-
+            
             // Delete TernakHewan records
             TernakHewan::whereIn('id', $ids)->delete();
-
+            
             return response()->json(['success' => 'Data berhasil dihapus.']);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
@@ -548,20 +535,15 @@ class HewanController extends Controller
     // Method gawe download file csv
     public function template()
     {
-        // Fetch data for dropdown lists
+        // Ambil data untuk dropdown
         $statusList = Status::pluck('nama_status')->toArray();
         $kesehatanList = Kesehatan::pluck('nama_kesehatan')->toArray();
         $programList = Program::pluck('nama_program')->toArray();
         $kandangList = TernakKandang::pluck('kode_kandang')->toArray();
-        $jenisList = Jenis::pluck('nama_jenis')->toArray();
         $pemilikList = User::pluck('name')->toArray();
 
-        // Get sample IDs for examples
+        // Ambil juga ID untuk contoh
         $statusId = Status::first()->id ?? 1;
-        $kesehatanId = Kesehatan::first()->id ?? 1;
-        $programId = Program::first()->id ?? 1;
-        $kandangId = TernakKandang::first()->id ?? 1;
-        $jenisId = Jenis::first()->id ?? 1;
         $pemilikId = User::first()->id ?? 1;
 
         $headers = [
@@ -569,73 +551,55 @@ class HewanController extends Controller
             'Content-Disposition' => 'attachment; filename="template_import_hewan.csv"',
         ];
 
-        $callback = function () use ($statusList, $kesehatanList, $programList, $kandangList, $jenisList, $pemilikList, $statusId, $kesehatanId, $programId, $kandangId, $jenisId, $pemilikId) {
+        $callback = function () use ($statusList, $kesehatanList, $programList, $kandangList, $pemilikList, $statusId, $pemilikId) {
             $file = fopen('php://output', 'w');
 
-            // CSV headers matching the field names expected by HewanImport
+            // Header CSV
             fputcsv($file, [
                 'tag',
                 'sex_hewan',
                 'jenis',
-                'ternak_induk_betina',
-                'ternak_induk_jantan',
-                'tag_anak',
-                'kandang',
-                'pemilik',
+                'ternak_induk',
                 'tanggal_masuk',
+                'tipe',
                 'status',
                 'kesehatan',
                 'program',
-                'ternak_usia',
-                'lama_hari_dipeternakan',
-                'tgl_terjual_mati',
-                'bb_masuk_lahir',
-                'bb_terbaru',
-                'tgl_timbang_terbaru'
+                'kandang',
+                'pemilik',
+                'catatan'
             ]);
 
-            // Example row using names
+            // Contoh data dengan nama
             fputcsv($file, [
                 'TAG001',
                 'Jantan',
-                $jenisList[0] ?? 'Domba',
-                '', // ternak induk betina
-                '', // ternak induk jantan
-                '', // tag anak
-                $kandangList[0] ?? '',
-                $pemilikList[0] ?? 'Admin',
+                'Domba',
+                '',
                 date('Y-m-d'),
+                '1', // Tipe ID default
                 $statusList[0] ?? '',
                 $kesehatanList[0] ?? '',
                 $programList[0] ?? '',
-                '3', // Usia dalam bulan
-                '0', // Lama hari
-                '', // tanggal terjual/mati (kosong)
-                '10.5', // BB masuk
-                '15.2', // BB terbaru
-                date('Y-m-d') // Tanggal timbang
+                $kandangList[0] ?? '',
+                $pemilikList[0] ?? '',
+                'Contoh menggunakan nama'
             ]);
 
-            // Example row using IDs
+            // Contoh data dengan ID
             fputcsv($file, [
                 'TAG002',
                 'Betina',
-                $jenisId,
-                'TAG001', // ternak induk betina
-                '', // ternak induk jantan
-                '', // tag anak
-                $kandangId,
-                $pemilikId,
+                'Kambing',
+                'TAG001',
                 date('d/m/Y'),
+                '2', // Tipe ID default
                 $statusId,
-                $kesehatanId,
-                $programId,
-                '5', // Usia
-                '30', // Lama hari
-                '', // tanggal terjual/mati (kosong)
-                '12.3', // BB masuk
-                '18.7', // BB terbaru
-                date('Y-m-d') // Tanggal timbang
+                '1',
+                '1',
+                '1',
+                $pemilikId,
+                'Contoh menggunakan ID'
             ]);
 
             fclose($file);
@@ -643,4 +607,5 @@ class HewanController extends Controller
 
         return response()->stream($callback, 200, $headers);
     }
+
 }
