@@ -13,8 +13,8 @@ $(document).ready(function () {
         serverSide: true,
         autoWidth: false,
         responsive: true,
-        pageLength: 10,
-        dom: "t", // Only show the table
+        pageLength: 10, // Default page length
+        dom: "t", // Only show the table (we'll handle pagination manually)
         classes: {
             sTable: "table table-vcenter table-striped card-table",
             sWrapper: "table-responsive",
@@ -22,7 +22,7 @@ $(document).ready(function () {
         language: {
             lengthMenu: "",
             info: "",
-            infoFiltered: "(disaring dari total _MAX_ data)",
+            infoFiltered: "",
             emptyTable: "Tidak ada data",
             infoEmpty: "Menampilkan 0 data",
             zeroRecords: "Data tidak ditemukan",
@@ -35,9 +35,12 @@ $(document).ready(function () {
         },
         ajax: {
             url: "/admin/hewan",
+            data: function (d) {
+                // Add custom parameters here if needed
+                return d;
+            },
             error: function (xhr, error, thrown) {
-                console.error('DataTables error:', error, thrown);
-                // Display a user-friendly error message
+                console.error('DataTables error:', xhr.responseText);
                 $('#tableHewan tbody').html('<tr><td colspan="8" class="text-center">Error loading data. Please refresh the page or contact administrator.</td></tr>');
             }
         },
@@ -69,33 +72,33 @@ $(document).ready(function () {
                 searchable: false,
             },
             {
-                // Tag column - now using tag_hewan field from controller
+                // Tag column
                 data: "tag_hewan",
                 name: "tag_hewan",
                 orderable: true
             },
             {
-                // Sex column - using ternak_sex from DetailTernakHewan
+                // Sex column
                 data: "sex_hewan",
-                name: "ternak_sex",
+                name: "sex_hewan", // Changed from ternak_sex to match database column
                 orderable: true
             },
             {
-                // Program column - using relationship data
+                // Program column
                 data: "program",
-                name: "program",
+                name: "program.nama_program", // Fixed to use relationship properly
                 orderable: true
             },
             {
-                // Jenis column - using relationship data
+                // Jenis column
                 data: "jenis",
-                name: "jenis",
+                name: "jenis.nama_jenis", // Fixed to use relationship properly
                 orderable: true
             },
             {
-                // Status column - using relationship data
+                // Status column
                 data: "status",
-                name: "status",
+                name: "status.nama_status", // Fixed to use relationship properly
                 orderable: true
             },
             {
@@ -166,6 +169,29 @@ $(document).ready(function () {
         table.page.len($(this).val()).draw();
     });
 
+    $("#customPageLength").on("change", function () {
+        let value = parseInt($(this).val(), 10);
+
+        // Set constraints
+        if (isNaN(value) || value < 1) {
+            value = 10; // Default to 10 if invalid
+            $(this).val(value);
+        } else if (value > 1000) {
+            value = 1000; // Cap at 1000 for performance
+            $(this).val(value);
+        }
+
+        // Change page length
+        table.page.len(value).draw();
+    });
+
+    // Allow Enter key to trigger page length change
+    $("#customPageLength").on("keypress", function (e) {
+        if (e.which === 13) { // Enter key
+            e.preventDefault();
+            $(this).trigger("change");
+        }
+    });
     // Custom search
     $("#searchInput").on("keyup", function () {
         table.search($(this).val()).draw();

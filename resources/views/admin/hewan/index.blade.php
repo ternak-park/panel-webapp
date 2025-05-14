@@ -81,13 +81,9 @@
                                     <div class="text-muted">
                                         Menampilkan
                                         <div class="mx-2 d-inline-block">
-                                            <select id="pageLength" class="form-control form-control-sm"
-                                                style="width:70px">
-                                                <option value="10">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>
+                                            <input type="text" id="customPageLength"
+                                                class="form-control form-control-sm" style="width:70px" value="10"
+                                                min="1" max="1000">
                                         </div>
                                         hasil
                                     </div>
@@ -95,7 +91,7 @@
                                         Search:
                                         <div class="ms-2 d-inline-block">
                                             <input type="text" id="searchInput" class="form-control form-control-sm"
-                                                placeholder="Cari Hewan" aria-label="Search supplier">
+                                                placeholder="Cari Hewan" aria-label="Search hewan">
                                         </div>
                                     </div>
                                 </div>
@@ -135,7 +131,7 @@
     </div>
     @include('admin.hewan.modal.import')
     @include('admin.hewan.modal.edit', [
-        'statusTernak' => $status ?? [], 
+        'statusTernak' => $status ?? [],
         'tipeTernak' => $tipe ?? [],
         'kesehatanTernak' => $kesehatan ?? [],
         'programTernak' => $program ?? [],
@@ -143,7 +139,7 @@
         'pemilikTernak' => $user ?? [],
         'hewanInduk' => $induk ?? [],
         'jenis' => $jenis ?? [],
-        'jenisTernak' => $jenisTernak ?? []
+        'jenisTernak' => $jenisTernak ?? [],
     ])
     @include('admin.hewan.modal.create', [
         'statusTernak' => $status ?? [],
@@ -154,7 +150,7 @@
         'pemilikTernak' => $user ?? [],
         'hewanInduk' => $induk ?? [],
         'jenis' => $jenis ?? [],
-        'jenisTernak' => $jenisTernak ?? []
+        'jenisTernak' => $jenisTernak ?? [],
     ])
     <script>
         $(document).ready(function() {
@@ -217,59 +213,76 @@
                         document.getElementById('editHewanForm').setAttribute('action',
                             `/admin/hewan/${id}`);
                         document.getElementById('edit-ternak-tag').value = data.tag_hewan || '';
-                        
+
                         // Family Information
                         if (data.detail) {
-                            document.getElementById('edit-ternak-induk-betina').value = data.detail.tag_induk_betina || '';
-                            document.getElementById('edit-ternak-induk-jantan').value = data.detail.tag_induk_jantan || '';
-                            document.getElementById('edit-ternak-tag-anak').value = data.detail.tag_anak || '';
+                            document.getElementById('edit-ternak-induk-betina').value = data.detail
+                                .tag_induk_betina || '';
+                            document.getElementById('edit-ternak-induk-jantan').value = data.detail
+                                .tag_induk_jantan || '';
+                            document.getElementById('edit-ternak-tag-anak').value = data.detail
+                                .tag_anak || '';
 
                             // Set dropdown values
                             if (document.querySelector('select[name="ternak_jenis_indeks"]')) {
-                                document.querySelector('select[name="ternak_jenis_indeks"]').value = data.detail.ternak_jenis || data.ternak_jenis_id || '';
+                                document.querySelector('select[name="ternak_jenis_indeks"]').value =
+                                    data.detail.ternak_jenis || data.ternak_jenis_id || '';
                             }
                             if (document.querySelector('select[name="ternak_kandang_indeks"]')) {
-                                document.querySelector('select[name="ternak_kandang_indeks"]').value = data.detail.ternak_kandang || '';
+                                document.querySelector('select[name="ternak_kandang_indeks"]').value =
+                                    data.detail.ternak_kandang || '';
                             }
                             if (document.querySelector('select[name="pemilik_indeks"]')) {
-                                document.querySelector('select[name="pemilik_indeks"]').value = data.detail.nama_pemilik || '';
+                                document.querySelector('select[name="pemilik_indeks"]').value = data
+                                    .detail.nama_pemilik || '';
                             }
                             if (document.querySelector('select[name="ternak_status_indeks"]')) {
-                                document.querySelector('select[name="ternak_status_indeks"]').value = data.detail.ternak_status || '';
+                                document.querySelector('select[name="ternak_status_indeks"]').value =
+                                    data.detail.ternak_status || '';
                             }
                             if (document.querySelector('select[name="ternak_kesehatan_indeks"]')) {
-                                document.querySelector('select[name="ternak_kesehatan_indeks"]').value = data.detail.ternak_kesehatan || '';
+                                document.querySelector('select[name="ternak_kesehatan_indeks"]').value =
+                                    data.detail.ternak_kesehatan || '';
                             }
                             if (document.querySelector('select[name="ternak_program_indeks"]')) {
-                                document.querySelector('select[name="ternak_program_indeks"]').value = data.detail.ternak_program || '';
+                                document.querySelector('select[name="ternak_program_indeks"]').value =
+                                    data.detail.ternak_program || '';
                             }
 
                             // Dates and measurements
-                            document.getElementById('edit-tanggal-masuk').value = data.detail.tanggal_masuk || '';
+                            document.getElementById('edit-tanggal-masuk').value = data.detail
+                                .tanggal_masuk || '';
                             if (document.getElementById('edit-tgl-terjual-mati')) {
-                                document.getElementById('edit-tgl-terjual-mati').value = data.detail.tgl_terjual_mati || '';
+                                document.getElementById('edit-tgl-terjual-mati').value = data.detail
+                                    .tgl_terjual_mati || '';
                             }
                             if (document.getElementById('edit-ternak-usia')) {
-                                document.getElementById('edit-ternak-usia').value = data.detail.ternak_usia || '';
+                                document.getElementById('edit-ternak-usia').value = data.detail
+                                    .ternak_usia || '';
                             }
                             if (document.getElementById('edit-lama-hari-dipeternakan')) {
-                                document.getElementById('edit-lama-hari-dipeternakan').value = data.detail.lama_hari_dipeternakan || '';
+                                document.getElementById('edit-lama-hari-dipeternakan').value = data
+                                    .detail.lama_hari_dipeternakan || '';
                             }
                             if (document.getElementById('edit-bb-masuk-lahir')) {
-                                document.getElementById('edit-bb-masuk-lahir').value = data.detail.bb_masuk_lahir || '';
+                                document.getElementById('edit-bb-masuk-lahir').value = data.detail
+                                    .bb_masuk_lahir || '';
                             }
                             if (document.getElementById('edit-bb-terbaru')) {
-                                document.getElementById('edit-bb-terbaru').value = data.detail.bb_terbaru || '';
+                                document.getElementById('edit-bb-terbaru').value = data.detail
+                                    .bb_terbaru || '';
                             }
                             if (document.getElementById('edit-tgl-timbang-terbaru')) {
-                                document.getElementById('edit-tgl-timbang-terbaru').value = data.detail.tgl_timbang_terbaru || '';
+                                document.getElementById('edit-tgl-timbang-terbaru').value = data.detail
+                                    .tgl_timbang_terbaru || '';
                             }
                         }
 
                         // Basic info
                         document.getElementById('edit-sex').value = data.sex_hewan || '';
                         if (document.querySelector('select[name="ternak_tipe_indeks"]')) {
-                            document.querySelector('select[name="ternak_tipe_indeks"]').value = data.ternak_tipe || '';
+                            document.querySelector('select[name="ternak_tipe_indeks"]').value = data
+                                .ternak_tipe || '';
                         }
 
                         // Refresh any TomSelect instances if they exist

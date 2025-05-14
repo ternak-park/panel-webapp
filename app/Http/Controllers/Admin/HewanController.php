@@ -25,85 +25,87 @@ use Illuminate\Support\Facades\Schema;
 
 class HewanController extends Controller
 {
-    public function index(Request $request)
-    {
-        $data = [];
-        $data['main'] = 'Hewan';
-        $data['judul'] = 'Manajemen Hewan';
-        $data['sub_judul'] = 'Data Hewan';
-        $data['hewan'] = TernakHewan::all();
-        $data['status'] = Status::all();
+   public function index(Request $request)
+{
+    $data = [];
+    $data['main'] = 'Hewan';
+    $data['judul'] = 'Manajemen Hewan';
+    $data['sub_judul'] = 'Data Hewan';
+    $data['hewan'] = TernakHewan::all();
+    $data['status'] = Status::all();
+    
+    // Tidak menggunakan Tipe model karena tidak ada
+    $data['tipe'] = collect([]);
+    
+    $data['kesehatan'] = Kesehatan::all();
+    $data['program'] = Program::all();
+    $data['kandang'] = TernakKandang::all();
+    $data['induk'] = TernakHewan::where('sex_hewan', 'Betina')
+        ->get();
 
-        // Tidak menggunakan Tipe model karena tidak ada
-        $data['tipe'] = collect([]);
+    $data['user'] = User::all();
+    $data['jenis'] = Jenis::all();
+    $data['jenisTernak'] = Jenis::all();
 
-        $data['kesehatan'] = Kesehatan::all();
-        $data['program'] = Program::all();
-        $data['kandang'] = TernakKandang::all();
-        $data['induk'] = TernakHewan::where('sex_hewan', 'Betina')
-            ->get();
-
-        $data['user'] = User::all();
-        $data['jenis'] = Jenis::all();
-        $data['jenisTernak'] = Jenis::all();
-
-        if ($request->ajax()) {
-            // Start with TernakHewan and join with DetailTernakHewan using ID
-            $query = TernakHewan::select([
-                'ternak_hewan.id',
-                'ternak_hewan.tag_hewan',
-                'ternak_hewan.sex_hewan',
-                'ternak_hewan.ternak_jenis_id',
-                'ternak_hewan.gambar_hewan'
-            ])
-                ->leftJoin('ternak_detail_hewan', 'ternak_hewan.id', '=', 'ternak_detail_hewan.ternak_tag');
-
-            // Add joins for related tables
-            if (Schema::hasTable('jenis')) {
-                $query->leftJoin('jenis', 'ternak_hewan.ternak_jenis_id', '=', 'jenis.id')
-                    ->addSelect('jenis.nama_jenis');
-            }
-
-            if (Schema::hasTable('program')) {
-                $query->leftJoin('program', 'ternak_detail_hewan.ternak_program', '=', 'program.id')
-                    ->addSelect('program.nama_program');
-            }
-
-            if (Schema::hasTable('status')) {
-                $query->leftJoin('status', 'ternak_detail_hewan.ternak_status', '=', 'status.id')
-                    ->addSelect('status.nama_status');
-            }
-
-            return Datatables::of($query)
-                ->addIndexColumn()
-                ->addColumn('action', function ($row) {
-                    return view('admin.hewan.action', ['id' => $row->id])->render();
-                })
-                ->addColumn('program', function ($row) {
-                    return $row->nama_program ?? 'Tidak tersedia';
-                })
-                ->addColumn('jenis', function ($row) {
-                    return $row->nama_jenis ?? 'Tidak tersedia';
-                })
-                ->addColumn('status', function ($row) {
-                    return $row->nama_status ?? 'Tidak tersedia';
-                })
-                ->rawColumns(['action'])
-                ->make(true);
+    if ($request->ajax()) {
+        // Start with TernakHewan query
+        $query = TernakHewan::select([
+            'ternak_hewan.id',
+            'ternak_hewan.tag_hewan',
+            'ternak_hewan.sex_hewan',
+            'ternak_hewan.ternak_jenis_id',
+            'ternak_hewan.gambar_hewan'
+        ]);
+        
+        // Add joins for related tables - using correct column names and aliases
+        if (Schema::hasTable('jenis')) {
+            $query->leftJoin('jenis', 'ternak_hewan.ternak_jenis_id', '=', 'jenis.id')
+                  ->addSelect('jenis.nama_jenis');
         }
-
-        // Rest of the code remains the same
-        $tracker = TernakHewan::select('sex_hewan', DB::raw('COUNT(*) as jumlah'))
-            ->groupBy('sex_hewan')
-            ->get();
-
-        $total = $tracker->sum('jumlah');
-
-        $data['tracker'] = $tracker;
-        $data['total'] = $total;
-
-        return view('admin.hewan.index', $data);
+        
+        // Join DetailTernakHewan using ID instead of tag_hewan
+        $query->leftJoin('ternak_detail_hewan', 'ternak_hewan.id', '=', 'ternak_detail_hewan.ternak_tag');
+        
+        if (Schema::hasTable('program')) {
+            $query->leftJoin('program', 'ternak_detail_hewan.ternak_program', '=', 'program.id')
+                  ->addSelect('program.nama_program');
+        }
+        
+        if (Schema::hasTable('status')) {
+            $query->leftJoin('status', 'ternak_detail_hewan.ternak_status', '=', 'status.id')
+                  ->addSelect('status.nama_status');
+        }
+        
+        return Datatables::of($query)
+            ->addIndexColumn()
+            ->addColumn('action', function ($row) {
+                return view('admin.hewan.action', ['id' => $row->id])->render();
+            })
+            ->addColumn('program', function ($row) {
+                return $row->nama_program ?? 'Tidak tersedia';
+            })
+            ->addColumn('jenis', function ($row) {
+                return $row->nama_jenis ?? 'Tidak tersedia';
+            })
+            ->addColumn('status', function ($row) {
+                return $row->nama_status ?? 'Tidak tersedia';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
+
+    // Rest of the code remains the same
+    $tracker = TernakHewan::select('sex_hewan', DB::raw('COUNT(*) as jumlah'))
+        ->groupBy('sex_hewan')
+        ->get();
+
+    $total = $tracker->sum('jumlah');
+
+    $data['tracker'] = $tracker;
+    $data['total'] = $total;
+
+    return view('admin.hewan.index', $data);
+}
 
 
 
