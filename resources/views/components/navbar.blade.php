@@ -344,7 +344,7 @@
                                </a>
                            </li>
                            {{-- Pakan --}}
-                           <li class="nav-item {{ Route::is('suppliers.index') ? 'active' : '' }}">
+                           {{-- <li class="nav-item {{ Route::is('suppliers.index') ? 'active' : '' }}">
                                <a class="nav-link" href="{{ route('suppliers.index') }}">
                                    <span
                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
@@ -364,7 +364,7 @@
                                    </span>
                                    <span class="nav-link-title"> Pakan </span>
                                </a>
-                           </li>
+                           </li> --}}
                            {{-- ATRIBUT --}}
                            <li
                                class="nav-item dropdown {{ Route::is('status.index', 'tipe.index', 'program.index', 'kesehatan.index') ? 'active' : '' }}">
@@ -391,8 +391,7 @@
 
                                            <a class="dropdown-item {{ Route::is('status.index') ? 'active' : '' }}"
                                                href="{{ route('status.index') }}"> Status </a>
-                                           <a class="dropdown-item {{ Route::is('tipe.index') ? 'active' : '' }}"
-                                               href="{{ route('tipe.index') }}"> Tipe </a>
+                                           
                                            <a class="dropdown-item {{ Route::is('program.index') ? 'active' : '' }}"
                                                href="{{ route('program.index') }}"> Program </a>
                                            <a class="dropdown-item {{ Route::is('kesehatan.index') ? 'active' : '' }}"

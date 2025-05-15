@@ -1,9 +1,12 @@
-$(document).ready(function () {
-    $.ajaxSetup({
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-    });
+$(document).ready(() => {
+  const $ = window.$ // Declare the $ variable
+  const Swal = window.Swal // Declare the Swal variable
+
+  $.ajaxSetup({
+    headers: {
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    },
+  })
 
     // Initialize datatable ngawe table utils : public/assets/js/utils/table-utils.js
     let table = TableUtils.initDataTable({

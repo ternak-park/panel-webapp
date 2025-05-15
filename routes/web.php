@@ -74,16 +74,6 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/{id}', [App\Http\Controllers\Admin\KondisiController::class, 'destroy'])->name('kondisi.destroy');
         });
 
-        /* Tipe */
-        Route::prefix('admin/ternak-tipe')->group(function () {
-            Route::get('/', [App\Http\Controllers\Admin\TipeController::class, 'index'])->name('tipe.index');
-            Route::get('/create', [App\Http\Controllers\Admin\TipeController::class, 'create'])->name('tipe.create');
-            Route::post('/', [App\Http\Controllers\Admin\TipeController::class, 'store'])->name('tipe.store');
-            Route::get('/{id}/edit', [App\Http\Controllers\Admin\TipeController::class, 'edit'])->name('tipe.edit');
-            Route::put('/{id}', [App\Http\Controllers\Admin\TipeController::class, 'update'])->name('tipe.update');
-            Route::delete('/{id}', [App\Http\Controllers\Admin\TipeController::class, 'destroy'])->name('tipe.destroy');
-            Route::get('/excel', [App\Http\Controllers\Admin\TipeController::class, 'excel'])->name('tipe.excel');
-        });
 
         /* Program */
         Route::prefix('admin/ternak-program')->group(function () {
