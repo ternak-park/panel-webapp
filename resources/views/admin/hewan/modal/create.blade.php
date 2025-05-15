@@ -317,4 +317,42 @@
         document.getElementById('ternak_tag').removeAttribute('readonly');
         document.getElementById('ternak_tag').removeAttribute('disabled');
     });
+    
+    // Disable tag_anak field if sex is "Jantan" (male)
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the sex select element
+        const sexSelect = document.getElementById('sex');
+        
+        // Function to toggle tag_anak field based on sex
+        function toggleTagAnakField() {
+            const isMale = sexSelect.value === 'Jantan';
+            
+            // If using TomSelect
+            if (window.tomSelectInstances && window.tomSelectInstances['select-labels-anak']) {
+                if (isMale) {
+                    window.tomSelectInstances['select-labels-anak'].disable();
+                    window.tomSelectInstances['select-labels-anak'].clear();
+                } else {
+                    window.tomSelectInstances['select-labels-anak'].enable();
+                }
+            } else {
+                // Fallback to standard DOM manipulation
+                const tagAnakSelect = document.getElementById('select-labels-anak');
+                if (tagAnakSelect) {
+                    tagAnakSelect.disabled = isMale;
+                    if (isMale) {
+                        tagAnakSelect.value = '';
+                    }
+                }
+            }
+        }
+        
+        // Set initial state
+        if (sexSelect) {
+            toggleTagAnakField();
+            
+            // Add event listener for changes
+            sexSelect.addEventListener('change', toggleTagAnakField);
+        }
+    });
 </script>

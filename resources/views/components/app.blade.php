@@ -24,7 +24,11 @@
     <link rel="stylesheet" href="{{ asset('assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css') }}">
 
 
+    <!-- First load the global utils -->
+    <script src="{{ asset('assets/js/utils/table-utils.js') }}"></script>
 
+    <!-- Then load the page-specific JS -->
+    <script src="{{ asset('assets/js/pages/hewan.js') }}"></script>
     <script src="{{ asset('assets/extra-libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/libs/list.js/dist/list.min.js?1684106062') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

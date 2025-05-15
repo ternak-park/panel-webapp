@@ -282,4 +282,46 @@
         document.getElementById('edit-ternak-tag').removeAttribute('readonly');
         document.getElementById('edit-ternak-tag').removeAttribute('disabled');
     });
+    
+    // Disable tag_anak field if sex is "Jantan" (male) in the edit form
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the edit sex select element
+        const editSexSelect = document.getElementById('edit-sex');
+        
+        // Function to toggle tag_anak field based on sex
+        function toggleEditTagAnakField() {
+            const isMale = editSexSelect.value === 'Jantan';
+            
+            // If using TomSelect
+            if (window.tomSelectInstances && window.tomSelectInstances['edit-select-labels-anak']) {
+                if (isMale) {
+                    window.tomSelectInstances['edit-select-labels-anak'].disable();
+                    window.tomSelectInstances['edit-select-labels-anak'].clear();
+                } else {
+                    window.tomSelectInstances['edit-select-labels-anak'].enable();
+                }
+            } else {
+                // Fallback to standard DOM manipulation
+                const editTagAnakSelect = document.getElementById('edit-select-labels-anak');
+                if (editTagAnakSelect) {
+                    editTagAnakSelect.disabled = isMale;
+                    if (isMale) {
+                        editTagAnakSelect.value = '';
+                    }
+                }
+            }
+        }
+        
+        // Add a listener for when the modal is shown to initialize the state
+        document.querySelector('#modal-edit').addEventListener('shown.bs.modal', function() {
+            if (editSexSelect) {
+                toggleEditTagAnakField();
+            }
+        });
+        
+        // Also add change event listener for the edit sex select
+        if (editSexSelect) {
+            editSexSelect.addEventListener('change', toggleEditTagAnakField);
+        }
+    });
 </script>
