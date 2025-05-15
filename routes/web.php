@@ -37,6 +37,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
         Route::post('/admin/hewan/import', [App\Http\Controllers\Admin\HewanController::class, 'import'])->name('hewan.import');
         Route::get('/admin/hewan/template', [App\Http\Controllers\Admin\HewanController::class, 'template'])->name('hewan.template');
+
+        Route::post('/admin/kandang/import', [App\Http\Controllers\Admin\KandangController::class, 'import'])->name('kandang.import');
+        Route::get('/admin/kandang/template', [App\Http\Controllers\Admin\KandangController::class, 'template'])->name('kandang.template');
         /* Supplier */
         Route::prefix('admin/suppliers')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\SupplierController::class, 'index'])->name('suppliers.index');
@@ -92,7 +95,18 @@ Route::middleware(['auth'])->group(function () {
         /* Kandang */
         Route::prefix('admin/kandang')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\KandangController::class, 'index'])->name('kandang.index');
+            // Route::post('/admin/kandang/import', [App\Http\Controllers\Admin\KandangController::class, 'import'])->name('kandang.import');
             Route::delete('/{id}', [App\Http\Controllers\Admin\KandangController::class, 'destroy'])->name('kandang.destroy');
+
+            Route::get('/create', [App\Http\Controllers\Admin\KandangController::class, 'create'])->name('kandang.create');
+            Route::post('/', [App\Http\Controllers\Admin\KandangController::class, 'store'])->name('kandang.store');
+            Route::get('/{id}/show', [App\Http\Controllers\Admin\KandangController::class, 'show'])->name('kandang.show');
+            Route::get('/{id}/edit', [App\Http\Controllers\Admin\KandangController::class, 'edit'])->name('kandang.edit');
+            Route::put('/{id}', [App\Http\Controllers\Admin\KandangController::class, 'update'])->name('kandang.update');
+        
+            Route::get('/detail/{id}', [App\Http\Controllers\Admin\KandangController::class, 'getDetailData']);
+            Route::get('/excel', [App\Http\Controllers\Admin\KandangController::class, 'excel'])->name('kandang.excel');
+            Route::post('/batch-delete', [App\Http\Controllers\Admin\KandangController::class, 'batchDelete'])->name('kandang.batch-delete');
         });
 
         /* Reproduksi */

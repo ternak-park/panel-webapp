@@ -9,8 +9,6 @@
                             <div class="page-pretitle">
                                 Overview
                             </div>
-                            {{-- <td>{{ $kandang->pemilik->name ?? 'Tidak Ada Pemilik' }}</td> --}}
-
                             <h2 class="page-title">
                                 {{ $judul }}
                             </h2>
@@ -18,40 +16,31 @@
                         <!-- Page title actions -->
                         <div class="col-12 col-md-auto ms-auto d-print-none">
                             <div class="btn-list">
+                               <button id="deleteSelected" class="btn d-none d-sm-inline-block disabled">
+                                    Hapus
+                                </button>
                                 <span class="d-none d-sm-inline">
-                                    <a href="{{ route('hewan.excel') }}" class="btn">
+                                    <a href="{{ route('kandang.excel') }}" class="btn">
                                         Cetak
                                     </a>
                                 </span>
-                                <button id="deleteSelected" class="btn btn-danger d-none d-sm-inline-block">
-                                    {{-- <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M4 7l16 0" />
-                                        <path d="M10 11l0 6" />
-                                        <path d="M14 11l0 6" />
-                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                    </svg> --}}
-                                    Hapus
-                                </button>
-
-                                <a href="{{ route('hewan.create') }}" class="btn btn-primary d-none d-sm-inline-block"
-                                    data-bs-toggle="modal" data-bs-target="#modal-tambah-hewan">
+                                <a href="#" class="btn btn-primary d-none d-sm-inline-block"
+                                    data-bs-toggle="modal" data-bs-target="#modal-import-csv">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round"
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-file">
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-file-upload">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                         <path d="M14 3v4a1 1 0 0 0 1 1h4" />
                                         <path
                                             d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                                        <path d="M12 11v6" />
+                                        <path d="M9.5 13.5l2.5 -2.5l2.5 2.5" />
                                     </svg>
                                     Import .csv
                                 </a>
-                                <a href="{{ route('hewan.create') }}" class="btn btn-primary d-none d-sm-inline-block"
-                                    data-bs-toggle="modal" data-bs-target="#modal-tambah-hewan">
+                                <a href="#" class="btn btn-primary d-none d-sm-inline-block"
+                                    data-bs-toggle="modal" data-bs-target="#modal-tambah-kandang">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -61,8 +50,8 @@
                                     </svg>
                                     Tambah {{ $main }}
                                 </a>
-                                <a href="" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
-                                    data-bs-target="#modal-tambahData" aria-label="Tambah Produk">
+                                <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
+                                    data-bs-target="#modal-tambah-kandang" aria-label="Tambah Kandang">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -81,7 +70,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Hewan</h3>
+                                <h3 class="card-title">Kandang</h3>
                             </div>
                             <div class="card-body border-bottom py-3">
                                 <div class="d-flex">
@@ -102,7 +91,7 @@
                                         Search:
                                         <div class="ms-2 d-inline-block">
                                             <input type="text" id="searchInput" class="form-control form-control-sm"
-                                                placeholder="Cari Hewan" aria-label="Search supplier">
+                                                placeholder="Cari Kandang" aria-label="Search kandang">
                                         </div>
                                     </div>
                                 </div>
@@ -116,13 +105,12 @@
                                                     aria-label="Pilih semua item" />
                                             </th>
                                             <th class="w-1">No</th>
-                                            <th>Kandang Tag</th>
-                                            <th>Hewan Tag</th>
-                                            <th>Tipe</th>
-                                            <th>Berat</th>
-                                            <th>Kondisi</th>
-                                            <th>Petugas</th>
-                                            <th class="w-1 text-end">Aksi</th>
+                                            <th>Kode Kandang</th>
+                                            <th>Total Ternak</th>
+                                            <th>Total BB</th>
+                                            <th>Nama Petugas</th>
+                                            <th>Nama Pemilik</th>
+                                            <th class="w-1">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -140,103 +128,10 @@
             </div>
         </div>
     </div>
-    {{-- @include('admin.hewan.modal.edit', [
-        'statusTernak' => $status,
-        'tipeTernak' => $tipe,
-        'kesehatanTernak' => $kesehatan,
-        'programTernak' => $program,
-        'kandangTernak' => $kandang,
-        'pemilikTernak' => $user,
-        'hewanInduk' => $induk,
-    ])
-    @include('admin.hewan.modal.create', [
-        'statusTernak' => $status,
-        'tipeTernak' => $tipe,
-        'kesehatanTernak' => $kesehatan,
-        'programTernak' => $program,
-        'kandangTernak' => $kandang,
-        'pemilikTernak' => $user,
-        'hewanInduk' => $induk,
-    ]) --}}
-    <script>
-        $(document).ready(function() {
-            $(document).on('click', '.delete', function() {
-                const id = $(this).data('id');
-                Swal.fire({
-                    title: 'Anda yakin?',
-                    text: 'Data akan dihapus secara permanen!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Ya, hapus!',
-                    cancelButtonText: 'Tidak, batal!',
-                    reverseButtons: true
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: "/admin/hewan/" + id,
-                            type: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            success: function(response) {
-                                Swal.fire(
-                                    'Dihapus!',
-                                    response.success || 'Data telah dihapus.',
-                                    'success'
-                                ).then(() => {
-                                    location.reload();
-                                });
-                            },
-                            error: function(err) {
-                                Swal.fire(
-                                    'Error!',
-                                    'Terjadi kesalahan saat menghapus data.',
-                                    'error'
-                                );
-                            }
-                        });
-                    } else {
-                        Swal.fire(
-                            'Cancelled',
-                            'Data tidak dihapus.',
-                            'info'
-                        );
-                    }
-                });
-            });
-        });
-    </script>
-    <script>
-        document.querySelectorAll('.btn-edit').forEach(button => {
-            button.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
-
-                // Lakukan fetch untuk mendapatkan data dari server
-                fetch(`/admin/hewan/${id}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        // Isi form di modal dengan data yang diambil
-                        document.getElementById('editHewanForm').setAttribute('action',
-                            `/admin/hewan/${id}`);
-                        document.getElementById('edit-ternak-tag').value = data.ternak_tag;
-                        document.getElementById('edit-ternak-induk').value = data.ternak_induk;
-                        document.getElementById('edit-sex').value = data.sex;
-                        document.getElementById('edit-tanggal-masuk').value = data.tanggal_masuk;
-                    })
-                    .catch(error => {
-                        console.error('Error fetching data:', error);
-                        alert('Terjadi kesalahan saat mengambil data.');
-                    });
-            });
-        });
-    </script>
-
-    <script>
-        // Enable or Disable Fields Before Submission
-        document.getElementById('hewanForm').addEventListener('submit', function() {
-            document.getElementById('ternak_tag').removeAttribute('readonly');
-            document.getElementById('ternak_tag').removeAttribute('disabled');
-        });
-    </script>
-
+    
+    @include('admin.kandang.modal.create')
+    @include('admin.kandang.modal.edit')
+    @include('admin.kandang.modal.import')
+    
+    <script src="{{ asset('assets/js/kode/kandang.js') }}"></script>
 </x-app>

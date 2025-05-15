@@ -5,41 +5,20 @@ $(document).ready(function () {
         },
     });
 
-    let table = $("#tableKandang").DataTable({
-        processing: true,
-        serverSide: true,
-        autoWidth: false,
-        // scrollX: true,
-        responsive: true,
-        pageLength: 10,
-        dom: "t",
-        classes: {
-            sTable: "table table-vcenter table-striped card-table",
-            sWrapper: "table-responsive",
-        },
-        language: {
-            lengthMenu: "",
-            info: "",
-            infoFiltered: "(disaring dari total _MAX_ data)",
-            emptyTable: "Tidak ada data",
-            infoEmpty: "Menampilkan 0 data",
-            zeroRecords: "Data tidak ditemukan",
-            pagingType: "simple",
-            paginate: {
-                previous: "", // Menghilangkan teks "Previous"
-                next: "", // Menghilangkan teks "Next"
-            },
-            processing: "Loading...", // Custom processing message
-        },
-        ajax: "/admin/kandang",
-        columns: [
-            {
-                // gawe checklist e
+    // Initialize datatable ngawe table utils : public/assets/js/utils/table-utils.js
+    let table = TableUtils.initDataTable({
+        tableId: 'tableKandang',
+        ajaxUrl: '/admin/kandang',
+        deleteUrl: '/admin/kandang/batch-delete',
+        deleteButtonId: 'deleteSelected',
+
+        columns: [{
+                // Checkbox column
                 data: null,
                 orderable: false,
                 searchable: false,
                 render: function (data, type, row) {
-                    return '<input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select item" />';
+                    return '<input class="form-check-input item-checkbox m-0 align-middle" type="checkbox" aria-label="Select item" data-id="' + row.id + '" />';
                 },
             },
             {
@@ -48,216 +27,297 @@ $(document).ready(function () {
                 orderable: false,
                 searchable: false,
             },
-            { data: "kode_kandang" },
-            { data: "hewan.tag" },
-            // { data: "hewan.sex" },
-            { data: "jenisDomba.nama_tipe", orderable: true, searchable: true },
             {
-                data: "beratDomba.berat_terakhir",
-                orderable: true,
-                searchable: true,
+                data: "kode_kandang",
+                name: "kode_kandang",
+                orderable: true
             },
             {
-                data: "kondisiDomba.nama_kesehatan",
-                orderable: true,
-                searchable: true,
+                data: "total_ternak",
+                name: "ternak_detail_kandang.total_ternak",
+                orderable: true
             },
             {
-                data: "kandang.petugas.nama_petugas",
-                orderable: true,
-                searchable: true,
+                data: "total_bb",
+                name: "ternak_detail_kandang.total_bb",
+                orderable: true
+            },
+            {
+                data: "petugas_name",
+                name: "petugas.nama_petugas",
+                orderable: true
+            },
+            {
+                data: "pemilik_name",
+                name: "pemilik.nama_pemilik",
+                orderable: true
             },
             {
                 data: "action",
+                name: "action",
                 orderable: false,
-                searchable: false,
+                searchable: false
             },
         ],
-        drawCallback: sihubDrawCallback,
-        initComplete: function () {
-            // Add sort indicators to the orderable columns
-            this.api()
-                .columns()
-                .every(function (index) {
-                    let column = this;
-                    let columnDef = table.settings().init().columns[index];
+    });
 
-                    if (columnDef && columnDef.orderable !== false) {
-                        let header = $(column.header());
+    /* gawe nge add indicator sortir kolom datatable */
+    table.on('init', function () {
+        table.columns().every(function (index) {
+            let column = this;
+            let columnDef = table.settings().init().columns[index];
 
-                        // Add Tabler.io sort icon - using their SVG format
-                        if (!header.find(".sort-icon").length) {
-                            header.append(
-                                ' <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm text-muted sort-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><polyline points="6 9 12 15 18 9" /></svg>'
-                            );
-                        }
+            if (columnDef && columnDef.orderable !== false) {
+                let header = $(column.header());
+                if (!header.find(".sort-icon").length) {
+                    header.append(' <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm text-muted sort-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><polyline points="6 9 12 15 18 9" /></svg>');
+                }
+                // Set the cursor style to pointer
+                header.css("cursor", "pointer");
+            }
+        });
+    });
 
-                        // Set the cursor style to pointer
-                        header.css("cursor", "pointer");
+    /* event listener change direction */
+    table.on("order.dt", function () {
+        const orderInfo = table.order()[0];
+        const columnIndex = orderInfo[0];
+        const direction = orderInfo[1];
+        /* reset all icon */
+        $(".sort-icon").each(function () {
+            $(this).html('<path stroke="none" d="M0 0h24v24H0z" fill="none" /><polyline points="6 9 12 15 18 9" /></svg>');
+        });
+        /* gawe update icon*/
+        const sortedHeader = $(table.column(columnIndex).header());
+        const sortIcon = sortedHeader.find(".sort-icon");
+
+        if (direction === "asc") {
+            sortIcon.html('<path stroke="none" d="M0 0h24v24H0z" fill="none" /><polyline points="6 15 12 9 18 15" /></svg>');
+        } else {
+            sortIcon.html('<path stroke="none" d="M0 0h24v24H0z" fill="none" /><polyline points="6 9 12 15 18 9" /></svg>');
+        }
+    });
+
+    // Single item delete handler - we keep this in kandang.js as it's specific to this page
+    $(document).on("click", ".delete", function () {
+        const id = $(this).data("id");
+        Swal.fire({
+            title: 'Anda yakin?',
+            text: 'Data akan dihapus secara permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Tidak, batal!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "/admin/kandang/" + id,
+                    type: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (response) {
+                        Swal.fire(
+                            'Dihapus!',
+                            response.success || 'Data telah dihapus.',
+                            'success'
+                        ).then(() => {
+                            // Refresh the table instead of full page reload
+                            table.ajax.reload();
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Delete error:", xhr.responseText);
+                        Swal.fire(
+                            'Error!',
+                            'Terjadi kesalahan saat menghapus data: ' +
+                            (xhr.responseJSON ? xhr.responseJSON.error : error),
+                            'error'
+                        );
                     }
                 });
+            }
+        });
+    });
+});
 
-            // Add event listener for sort direction change
-            this.api().on("order.dt", function () {
-                const orderInfo = table.order()[0];
-                const columnIndex = orderInfo[0];
-                const direction = orderInfo[1];
+/* -------------------- EDIT MODAL HANDLER GAWE EDIT MODAL ----------------------- */
+$(document).on("click", ".btn-edit", function () {
+    const id = $(this).data("id");
 
-                // Reset all icons first
-                $(".sort-icon").each(function () {
-                    $(this).html(
-                        '<path stroke="none" d="M0 0h24v24H0z" fill="none" /><polyline points="6 9 12 15 18 9" /></svg>'
-                    );
-                });
+    // Fetch kandang data
+    $.ajax({
+        url: `/admin/kandang/${id}/edit`,
+        method: "GET",
+        dataType: "json",
+        success: function (data) {
+            console.log('Edit data:', data); // For debugging
 
-                // Update the icon for the sorted column
-                const sortedHeader = $(table.column(columnIndex).header());
-                const sortIcon = sortedHeader.find(".sort-icon");
+            // Set form action
+            $("#editKandangForm").attr("action", `/admin/kandang/${id}`);
 
-                if (direction === "asc") {
-                    sortIcon.html(
-                        '<path stroke="none" d="M0 0h24v24H0z" fill="none" /><polyline points="6 15 12 9 18 15" /></svg>'
-                    );
-                } else {
-                    sortIcon.html(
-                        '<path stroke="none" d="M0 0h24v24H0z" fill="none" /><polyline points="6 9 12 15 18 9" /></svg>'
-                    );
-                }
+            // Basic Information
+            $("#edit-kode-kandang").val(data.kode_kandang || '');
+            $("#edit-total-ternak-kandang").val(data.total_ternak_kandang || '');
+
+            // Set values for TomSelect or standard select elements
+            setSelectOrTomSelectValue('edit-select-labels-pemilik', data.nama_pemilik_id || '');
+
+            // Detail Information
+            if (data.detail) {
+                $("#edit-total-ternak").val(data.detail.total_ternak || '0');
+                $("#edit-total-bb").val(data.detail.total_bb || '0');
+                setSelectOrTomSelectValue('edit-select-labels-petugas', data.detail.nama_petugas_id || '');
+            }
+
+            // Show modal
+            $("#modal-edit-kandang").modal("show");
+        },
+        error: function (xhr) {
+            console.error('Edit error:', xhr);
+            Swal.fire({
+                icon: "error",
+                title: "Kesalahan",
+                text: "Terjadi kesalahan saat mengambil data kandang: " +
+                    (xhr.responseJSON ? xhr.responseJSON.message : xhr.statusText)
             });
         },
     });
+});
 
-    // Select all checkbox
-    $('thead input[type="checkbox"]').on("change", function () {
-        var isChecked = this.checked;
-        table
-            .rows()
-            .nodes()
-            .to$()
-            .find('input[type="checkbox"]')
-            .prop("checked", isChecked);
-    });
+// Helper function to handle both TomSelect and standard selects
+function setSelectOrTomSelectValue(selectId, value) {
+    // Check if TomSelect is being used and if the instance exists
+    if (window.tomSelectInstances && window.tomSelectInstances[selectId]) {
+        const tomSelect = window.tomSelectInstances[selectId];
+        tomSelect.clear();
+        if (value) {
+            try {
+                tomSelect.setValue(value);
+            } catch (e) {
+                console.warn(`Error setting TomSelect value for ${selectId}:`, e);
+            }
+        }
+    } else {
+        // Use standard DOM select
+        const select = document.getElementById(selectId);
+        if (select) {
+            select.value = value || '';
+        }
+    }
+}
 
-    $("#pageLength").on("change", function () {
-        table.page.len($(this).val()).draw();
-    });
-
-    $("#searchInput").on("keyup", function () {
-        table.search($(this).val()).draw();
-    });
-
-    $(document).on("click", "#tablePagination .page-link", function (e) {
+// Form submission handling
+$(document).ready(function () {
+    // Create form submission
+    $('#addKandangForm').on('submit', function (e) {
         e.preventDefault();
-        if (!$(this).closest("li").hasClass("disabled")) {
-            table.page($(this).data("page")).draw("page");
-        }
-    });
 
-    $(document).ready(function () {
-        // Initial state check
-        updateDeleteButtonState();
+        const formData = new FormData(this);
 
-        // Toggle select all checkbox
-        $('thead input[type="checkbox"]').on("change", function () {
-            const isChecked = $(this).prop("checked");
-            $('#tableKandang tbody input[type="checkbox"]').prop(
-                "checked",
-                isChecked
-            );
-            updateDeleteButtonState();
-        });
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if (response.success) {
+                    // Close modal
+                    $('#modal-tambah-kandang').modal('hide');
 
-        // Individual checkbox change
-        $(document).on(
-            "change",
-            '#tableKandang tbody input[type="checkbox"]',
-            function () {
-                updateDeleteButtonState();
-            }
-        );
+                    // Show success message
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: response.message || 'Data kandang berhasil ditambahkan'
+                    }).then(() => {
+                        // Refresh datatable
+                        $('#tableKandang').DataTable().ajax.reload();
 
-        // Helper function to update delete button state
-        function updateDeleteButtonState() {
-            const checkedCount = $(
-                '#tableKandang tbody input[type="checkbox"]:checked'
-            ).length;
+                        // Reset form
+                        $('#addKandangForm')[0].reset();
 
-            // Disable button if exactly one or zero items are checked
-            if (checkedCount <= 1) {
-                $("#deleteSelected").prop("disabled", true);
-                $("#deleteSelected").addClass("disabled");
-            } else {
-                $("#deleteSelected").prop("disabled", false);
-                $("#deleteSelected").removeClass("disabled");
-            }
-        }
-
-        // Handle Delete Selected button click
-        $("#deleteSelected").on("click", function () {
-            const selectedRows = [];
-
-            // Get all checked rows
-            $('#tableKandang tbody input[type="checkbox"]:checked').each(
-                function () {
-                    const id = $(this).closest("tr").find(".delete").data("id");
-                    if (id) {
-                        selectedRows.push(id);
-                    }
-                }
-            );
-
-            if (selectedRows.length === 0) {
-                Swal.fire({
-                    title: "Peringatan",
-                    text: "Tidak ada data yang dipilih!",
-                    icon: "warning",
-                });
-                return;
-            }
-
-            Swal.fire({
-                title: "Anda yakin?",
-                text: `${selectedRows.length} data akan dihapus secara permanen!`,
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Ya, hapus!",
-                cancelButtonText: "Tidak, batal!",
-                reverseButtons: true,
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: "/admin/hewan/batch-delete", // Hard-coded URL instead of Blade template
-                        type: "POST",
-                        headers: {
-                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                                "content"
-                            ),
-                        },
-                        data: {
-                            ids: selectedRows,
-                        },
-                        success: function (response) {
-                            Swal.fire(
-                                "Dihapus!",
-                                response.success ||
-                                    "Data terpilih telah dihapus.",
-                                "success"
-                            ).then(() => {
-                                // Refresh the table instead of reloading the page
-                                $("#tableKandang").DataTable().ajax.reload();
+                        // Reset TomSelect instances if any
+                        if (window.tomSelectInstances) {
+                            Object.keys(window.tomSelectInstances).forEach(key => {
+                                if (key.startsWith('select-labels')) {
+                                    window.tomSelectInstances[key].clear();
+                                }
                             });
-                        },
-                        error: function (err) {
-                            console.error("Delete error:", err);
-                            Swal.fire(
-                                "Error!",
-                                "Terjadi kesalahan saat menghapus data.",
-                                "error"
-                            );
-                        },
+                        }
                     });
                 }
-            });
+            },
+            error: function (xhr) {
+                console.error('Add error:', xhr);
+
+                let errorMessage = 'Terjadi kesalahan saat menyimpan data';
+
+                if (xhr.responseJSON && xhr.responseJSON.errors) {
+                    const errors = xhr.responseJSON.errors;
+                    errorMessage = Object.values(errors).flat().join('<br>');
+                } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                }
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Kesalahan',
+                    html: errorMessage
+                });
+            }
+        });
+    });
+
+    // Edit form submission
+    $('#editKandangForm').on('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        formData.append('_method', 'PUT'); // For method spoofing
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if (response.success) {
+                    // Close modal
+                    $('#modal-edit-kandang').modal('hide');
+
+                    // Show success message
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: response.message || 'Data kandang berhasil diperbarui'
+                    }).then(() => {
+                        // Refresh datatable
+                        $('#tableKandang').DataTable().ajax.reload();
+                    });
+                }
+            },
+            error: function (xhr) {
+                console.error('Edit error:', xhr);
+
+                let errorMessage = 'Terjadi kesalahan saat memperbarui data';
+
+                if (xhr.responseJSON && xhr.responseJSON.errors) {
+                    const errors = xhr.responseJSON.errors;
+                    errorMessage = Object.values(errors).flat().join('<br>');
+                } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                }
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Kesalahan',
+                    html: errorMessage
+                });
+            }
         });
     });
 });
