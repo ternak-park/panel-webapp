@@ -46,7 +46,7 @@
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="{{ asset('assets/js/sihub-datatable.js') }}"></script>
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Ternak Park') }}</title>
     @vite('resources/js/app.js')
 </head>
 

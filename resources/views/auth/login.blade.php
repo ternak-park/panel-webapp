@@ -1,11 +1,11 @@
 <x-app>
 
-    <body class=" border-top-wide border-primary d-flex flex-column">
+    <body class=" border-top-wide border-teal d-flex flex-column">
         <script src="{{ asset('assets/js/demo.min.js?1667333929') }}"></script>
         <div class="page page-center">
             <div class="container container-tight py-4">
                 <div class="text-center mb-4">
-                    <a href="." class="navbar-brand navbar-brand-autodark"><img src="{{ asset('static/logo.webp') }}"
+                    <a href="." class="navbar-brand navbar-brand-autodark"><img src="{{ asset('static/logo2.webp') }}"
                             height="36" alt=""></a>
                 </div>
                 <div class="card card-md">
@@ -79,7 +79,7 @@
                                 </label>
                             </div>
                             <div class="form-footer">
-                                <button type="submit" class="btn btn-primary w-100">Masuk</button>
+                                <button type="submit" class="btn btn-teal w-100">Masuk</button>
                             </div>
                         </form>
                     </div>

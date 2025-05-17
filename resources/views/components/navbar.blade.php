@@ -7,7 +7,7 @@
            </button>
            <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
                <a href=".">
-                   <img src="{{ asset('static/logo.webp') }}" width="110" height="32" alt="Tabler"
+                   <img src="{{ asset('static/logo2.webp') }}" width="110" height="32" alt="Tabler"
                        class="navbar-brand-image" />
                </a>
            </h1>
@@ -16,10 +16,10 @@
                <div class="navbar-nav flex-row order-md-last">
                    <div class="nav-item d-none d-md-flex me-3">
                        <div class="btn-list">
-                           <a href="{{ route('register') }}" class="btn btn-outline-primary" rel="noreferrer">
+                           <a href="{{ route('register') }}" class="btn btn-outline-teal" rel="noreferrer">
                                Daftar
                            </a>
-                           <a href="{{ route('login') }}" class="btn btn-primary d-flex align-items-center"
+                           <a href="{{ route('login') }}" class="btn btn-teal d-flex align-items-center"
                                rel="noreferrer">
                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -35,7 +35,7 @@
                        </div>
                    </div>
                    <div class="nav-item d-md-none">
-                       <a href="{{ route('login') }}" class="btn btn-primary d-sm-none btn-icon">
+                       <a href="{{ route('login') }}" class="btn btn-teal d-sm-none btn-icon">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-login-2">
@@ -170,7 +170,7 @@
                                        <div class="list-group-item">
                                            <div class="row align-items-center">
                                                <div class="col-auto"><span
-                                                       class="status-dot status-dot-animated bg-green d-block"></span>
+                                                       class="status-dot status-dot-animated bg-teal d-block"></span>
                                                </div>
                                                <div class="col text-truncate">
                                                    <a href="#" class="text-body d-block">Example 4</a>
@@ -305,7 +305,7 @@
                                                     class="dropdown-item {{ Route::is('reproduksi.*') ? 'active' : '' }}">
                                                     Reproduksi
                                                     {{-- <span
-                                                        class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span> --}}
+                                                        class="badge badge-sm bg-teal-lt text-uppercase ms-auto">New</span> --}}
                                                 </a>
                                                 <a href="{{ route('fisik.index') }}"
                                                     class="dropdown-item {{ Route::is('fisik.*') ? 'active' : '' }}">
@@ -391,7 +391,7 @@
 
                                            <a class="dropdown-item {{ Route::is('status.index') ? 'active' : '' }}"
                                                href="{{ route('status.index') }}"> Status </a>
-                                           
+
                                            <a class="dropdown-item {{ Route::is('program.index') ? 'active' : '' }}"
                                                href="{{ route('program.index') }}"> Program </a>
                                            <a class="dropdown-item {{ Route::is('kesehatan.index') ? 'active' : '' }}"
@@ -428,7 +428,7 @@
                                            <a class="dropdown-item {{ Route::is('users.adalahAdmin') ? 'active' : '' }}"
                                                href="{{ route('users.adalahAdmin') }}">
                                                Admin
-                                               <span class="badge badge-sm bg-green-lt text-uppercase ms-auto"><svg
+                                               <span class="badge badge-sm bg-teal-lt text-uppercase ms-auto"><svg
                                                        xmlns="http://www.w3.org/2000/svg" width="24"
                                                        height="24" viewBox="0 0 24 24" fill="none"
                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
