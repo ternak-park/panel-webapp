@@ -1,75 +1,180 @@
-@extends('components.app')
-@section('title', 'Tambah Kandang')
+<div class="modal modal-blur fade" id="modal-tambah-kandang" tabindex="-1" role="dialog" aria-hidden="true"
+    data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tambah Data Kandang</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('kandang.store') }}" method="POST" id="addKandangForm">
+                @csrf
+                <div class="modal-body">
+                    <div class="nav-tabs-responsive">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a href="#tab-basic" class="nav-link active px-3" data-bs-toggle="tab" aria-selected="true" role="tab">
+                                    Informasi Dasar
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a href="#tab-detail" class="nav-link px-3" data-bs-toggle="tab" aria-selected="false" role="tab" tabindex="-1">
+                                    Detail Kandang
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
 
-@section('content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title">Tambah Kandang</div>
-                    <div class="float-right">
-                        <a href="{{ route('admin.kandang.index') }}" class="btn btn-secondary">
-                            <i class="fa fa-arrow-left"></i> Kembali
-                        </a>
+                    <div class="tab-content pt-3">
+                        <!-- Tab 1: Basic Information -->
+                        <div id="tab-basic" class="tab-pane active show" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3 mt-2">
+                                        <label class="form-label ps-1">Kode Kandang</label>
+                                        <input type="text" class="form-control px-2" name="kode_kandang" required>
+                                        <small class="form-hint">Contoh: KD-001, KD-002, dll.</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 mt-2">
+                                        <label class="form-label ps-1">Kapasitas Total</label>
+                                        <input type="number" class="form-control px-2" name="total_ternak_kandang" min="0" value="0" required>
+                                        <small class="form-hint">Jumlah maksimum hewan yang dapat ditampung</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3 mt-2">
+                                        <label class="form-label ps-1">Pemilik</label>
+                                        <select class="form-select px-2" id="select-labels-pemilik" name="nama_pemilik_id" required>
+                                            <option value="">Pilih Pemilik</option>
+                                            @foreach($pemilik as $p)
+                                                <option value="{{ $p->id }}"
+                                                    data-custom-properties='&lt;span class="badge bg-primary-lt"&gt;{{ $p->id }}&lt;/span&gt;'>
+                                                    {{ $p->nama_pemilik }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab 2: Detail Kandang -->
+                        <div id="tab-detail" class="tab-pane" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3 mt-2">
+                                        <label class="form-label ps-1">Total Ternak (Terisi)</label>
+                                        <input type="number" class="form-control px-2" name="total_ternak" min="0" value="0">
+                                        <small class="form-hint">Jumlah hewan yang saat ini ada di kandang</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 mt-2">
+                                        <label class="form-label ps-1">Total BB (kg)</label>
+                                        <input type="number" class="form-control px-2" name="total_bb" min="0" step="0.01" value="0">
+                                        <small class="form-hint">Total berat badan seluruh hewan dalam kandang</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3 mt-2">
+                                        <label class="form-label ps-1">Petugas</label>
+                                        <select class="form-select px-2" id="select-labels-petugas" name="nama_petugas_id">
+                                            <option value="">Pilih Petugas</option>
+                                            @foreach($petugas as $p)
+                                                <option value="{{ $p->id }}"
+                                                    data-custom-properties='&lt;span class="badge bg-primary-lt"&gt;{{ $p->id }}&lt;/span&gt;'>
+                                                    {{ $p->nama_petugas }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <form action="{{ route('admin.kandang.store') }}" method="POST">
-                        @csrf
-                        <div class="form-group">
-                            <label for="kode_kandang">Kode Kandang</label>
-                            <input type="text" name="kode_kandang" id="kode_kandang" class="form-control @error('kode_kandang') is-invalid @enderror" value="{{ old('kode_kandang') }}" required>
-                            @error('kode_kandang')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="jenis_id">Jenis</label>
-                            <select name="jenis_id" id="jenis_id" class="form-control @error('jenis_id') is-invalid @enderror" required>
-                                <option value="">Pilih Jenis</option>
-                                @foreach($jenis as $j)
-                                <option value="{{ $j->id }}" {{ old('jenis_id') == $j->id ? 'selected' : '' }}>{{ $j->nama }}</option>
-                                @endforeach
-                            </select>
-                            @error('jenis_id')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="kapasitas">Kapasitas</label>
-                            <input type="number" name="kapasitas" id="kapasitas" class="form-control @error('kapasitas') is-invalid @enderror" value="{{ old('kapasitas') }}" required>
-                            @error('kapasitas')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="status">Status</label>
-                            <select name="status" id="status" class="form-control @error('status') is-invalid @enderror" required>
-                                <option value="">Pilih Status</option>
-                                <option value="Tersedia" {{ old('status') == 'Tersedia' ? 'selected' : '' }}>Tersedia</option>
-                                <option value="Penuh" {{ old('status') == 'Penuh' ? 'selected' : '' }}>Penuh</option>
-                                <option value="Maintenance" {{ old('status') == 'Maintenance' ? 'selected' : '' }}>Maintenance</option>
-                            </select>
-                            @error('status')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                        </div>
-                    </form>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                        Batal
+                    </a>
+                    <button type="submit" class="btn btn-primary" id="btnSimpan">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M12 5l0 14" />
+                            <path d="M5 12l14 0" />
+                        </svg>
+                        Simpan
+                    </button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
-@endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize TomSelect for select elements if available
+        if (typeof TomSelect !== 'undefined') {
+            window.tomSelectInstances = window.tomSelectInstances || {};
+            
+            // Initialize for pemilik select
+            if (document.getElementById('select-labels-pemilik')) {
+                window.tomSelectInstances['select-labels-pemilik'] = new TomSelect('#select-labels-pemilik', {
+                    create: false,
+                    sortField: {
+                        field: 'text',
+                        direction: 'asc'
+                    },
+                    render: {
+                        option: function(data, escape) {
+                            return '<div>' +
+                                   (data.customProperties ? data.customProperties : '') +
+                                   '<span class="ms-2">' + escape(data.text) + '</span>' +
+                                   '</div>';
+                        },
+                        item: function(data, escape) {
+                            return '<div>' +
+                                   (data.customProperties ? data.customProperties : '') +
+                                   '<span class="ms-2">' + escape(data.text) + '</span>' +
+                                   '</div>';
+                        }
+                    }
+                });
+            }
+            
+            // Initialize for petugas select
+            if (document.getElementById('select-labels-petugas')) {
+                window.tomSelectInstances['select-labels-petugas'] = new TomSelect('#select-labels-petugas', {
+                    create: false,
+                    sortField: {
+                        field: 'text',
+                        direction: 'asc'
+                    },
+                    render: {
+                        option: function(data, escape) {
+                            return '<div>' +
+                                   (data.customProperties ? data.customProperties : '') +
+                                   '<span class="ms-2">' + escape(data.text) + '</span>' +
+                                   '</div>';
+                        },
+                        item: function(data, escape) {
+                            return '<div>' +
+                                   (data.customProperties ? data.customProperties : '') +
+                                   '<span class="ms-2">' + escape(data.text) + '</span>' +
+                                   '</div>';
+                        }
+                    }
+                });
+            }
+        }
+    });
+</script>

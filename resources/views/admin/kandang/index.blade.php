@@ -10,20 +10,20 @@
                                 Overview
                             </div>
                             <h2 class="page-title">
-                                {{ $judul ?? 'Data Kandang' }}
+                                {{ $judul }}
                             </h2>
                         </div>
                         <!-- Page title actions -->
                         <div class="col-12 col-md-auto ms-auto d-print-none">
                             <div class="btn-list">
+                               <button id="deleteSelected" class="btn d-none d-sm-inline-block disabled">
+                                    Hapus
+                                </button>
                                 <span class="d-none d-sm-inline">
-                                    <a href="{{ route('kandang.export.excel') }}" class="btn">
+                                    <a href="{{ route('kandang.excel') }}" class="btn">
                                         Cetak
                                     </a>
                                 </span>
-                                <button id="deleteSelected" class="btn btn-danger d-none d-sm-inline-block">
-                                    Hapus
-                                </button>
                                 <a href="#" class="btn btn-primary d-none d-sm-inline-block"
                                     data-bs-toggle="modal" data-bs-target="#modal-import-csv">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -39,7 +39,7 @@
                                     </svg>
                                     Import .csv
                                 </a>
-                                <a href="{{ route('kandang.create') }}" class="btn btn-primary d-none d-sm-inline-block"
+                                <a href="#" class="btn btn-primary d-none d-sm-inline-block"
                                     data-bs-toggle="modal" data-bs-target="#modal-tambah-kandang">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -48,10 +48,10 @@
                                         <path d="M12 5l0 14" />
                                         <path d="M5 12l14 0" />
                                     </svg>
-                                    Tambah {{ $main ?? 'Kandang' }}
+                                    Tambah {{ $main }}
                                 </a>
-                                <a href="" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
-                                    data-bs-target="#modal-tambahData" aria-label="Tambah Produk">
+                                <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
+                                    data-bs-target="#modal-tambah-kandang" aria-label="Tambah Kandang">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -96,25 +96,25 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="table-responsive">
-                                <table class="table table-vcenter table-striped card-table datatable" id="kandang-table">
+                                <table class="table table-vcenter table-striped card-table datatable" id="tableKandang">
                                     <thead>
                                         <tr>
                                             <th class="w-1">
                                                 <input class="form-check-input m-0 align-middle" type="checkbox"
-                                                    aria-label="Select all items" />
+                                                    aria-label="Pilih semua item" />
                                             </th>
-                                            <th class="w-1" style="width: 5%;">No</th>
-                                            <th style="width: 20%;">Kode Kandang</th>
-                                            <th style="width: 15%;">Total Ternak</th>
-                                            <th style="width: 20%;">Pemilik</th>
-                                            <th style="width: 20%;">Petugas</th>
-                                            <th class="w-1" style="width: 20%;">Aksi</th>
+                                            <th class="w-1">No</th>
+                                            <th>Kode Kandang</th>
+                                            <th>Total Ternak</th>
+                                            <th>Total BB</th>
+                                            <th>Nama Petugas</th>
+                                            <th>Nama Pemilik</th>
+                                            <th class="w-1">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- Your table content will be populated here -->
+                                        <!-- Table content will be dynamically loaded -->
                                     </tbody>
                                 </table>
                             </div>
@@ -128,130 +128,10 @@
             </div>
         </div>
     </div>
+    
+    @include('admin.kandang.modal.create')
+    @include('admin.kandang.modal.edit')
     @include('admin.kandang.modal.import')
-    @include('admin.kandang.modal.edit', [
-        'statusTernak' => $status ?? [],
-        'tipeTernak' => $tipe ?? [],
-        'kesehatanTernak' => $kesehatan ?? [],
-        'programTernak' => $program ?? [],
-        'kandangTernak' => $kandang ?? [],
-        'pemilikTernak' => $user ?? [],
-        'hewanInduk' => $induk ?? [],
-        'jenis' => $jenis ?? [],
-        'jenisTernak' => $jenisTernak ?? []
-    ])
-    @include('admin.kandang.modal.create', [
-        'statusTernak' => $status ?? [],
-        'tipeTernak' => $tipe ?? [],
-        'kesehatanTernak' => $kesehatan ?? [],
-        'programTernak' => $program ?? [],
-        'kandangTernak' => $kandang ?? [],
-        'pemilikTernak' => $user ?? [],
-        'hewanInduk' => $induk ?? [],
-        'jenis' => $jenis ?? [],
-        'jenisTernak' => $jenisTernak ?? []
-    ])
-    <script>
-        $(document).ready(function() {
-            $(document).on('click', '.delete', function() {
-                const id = $(this).data('id');
-                Swal.fire({
-                    title: 'Anda yakin?',
-                    text: 'Data akan dihapus secara permanen!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Ya, hapus!',
-                    cancelButtonText: 'Tidak, batal!',
-                    reverseButtons: true
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: "/admin/kandang/" + id,
-                            type: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            success: function(response) {
-                                Swal.fire(
-                                    'Dihapus!',
-                                    response.success || 'Data telah dihapus.',
-                                    'success'
-                                ).then(() => {
-                                    location.reload();
-                                });
-                            },
-                            error: function(err) {
-                                Swal.fire(
-                                    'Error!',
-                                    'Terjadi kesalahan saat menghapus data.',
-                                    'error'
-                                );
-                            }
-                        });
-                    } else {
-                        Swal.fire(
-                            'Cancelled',
-                            'Data tidak dihapus.',
-                            'info'
-                        );
-                    }
-                });
-            });
-        });
-    </script>
-    <script>
-        document.querySelectorAll('.btn-edit').forEach(button => {
-            button.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
-
-                // Lakukan fetch untuk mendapatkan data dari server
-                fetch(`/admin/kandang/${id}/edit`)
-                    .then(response => response.json())
-                    .then(data => {
-                        // Isi form di modal dengan data yang diambil
-                        document.getElementById('editKandangForm').setAttribute('action',
-                            `/admin/kandang/${id}`);
-                        document.getElementById('edit-kode-kandang').value = data.kode_kandang || '';
-                        document.getElementById('edit-total-ternak').value = data.total_ternak_kandang || '';
-
-                        // Set dropdown values
-                        if (document.querySelector('select[name="jenis_id"]')) {
-                            document.querySelector('select[name="jenis_id"]').value = data.jenis_id || '';
-                        }
-                        if (document.querySelector('select[name="pemilik_id"]')) {
-                            document.querySelector('select[name="pemilik_id"]').value = data.pemilik_id || '';
-                        }
-
-                        // Detail kandang information
-                        if (data.detail_kandang) {
-                            if (document.querySelector('select[name="petugas_id"]')) {
-                                document.querySelector('select[name="petugas_id"]').value = data.detail_kandang.petugas_id || '';
-                            }
-                        }
-
-                        // Refresh any TomSelect instances if they exist
-                        if (window.tomSelectInstances) {
-                            for (let key in window.tomSelectInstances) {
-                                if (window.tomSelectInstances[key]) {
-                                    window.tomSelectInstances[key].sync();
-                                }
-                            }
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching data:', error);
-                        alert('Terjadi kesalahan saat mengambil data.');
-                    });
-            });
-        });
-    </script>
-
-    <script>
-        // Enable or Disable Fields Before Submission
-        document.getElementById('kandangForm').addEventListener('submit', function() {
-            document.getElementById('kode_kandang').removeAttribute('readonly');
-            document.getElementById('kode_kandang').removeAttribute('disabled');
-        });
-    </script>
-
+    
+    <script src="{{ asset('assets/js/kode/kandang.js') }}"></script>
 </x-app>

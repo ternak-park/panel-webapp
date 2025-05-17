@@ -19,7 +19,7 @@
                         <div class="col-12 col-md-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 {{-- gawe hapus all --}}
-                                <button id="deleteSelected" class="btn d-none d-sm-inline-block">
+                                <button id="deleteSelected" class="btn d-none d-sm-inline-block disabled">
                                     Hapus
                                 </button>
                                 <span class="d-none d-sm-inline">

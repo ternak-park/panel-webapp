@@ -15,7 +15,7 @@ class KandangExport implements FromCollection, WithHeadings, WithMapping, Should
     */
     public function collection()
     {
-        return TernakKandang::with(['pemilik', 'detail_kandang.petugas'])->get();
+        return TernakKandang::with(['pemilik', 'detailTernakKandangs.petugas'])->get();
     }
 
     /**
@@ -25,23 +25,34 @@ class KandangExport implements FromCollection, WithHeadings, WithMapping, Should
     {
         return [
             'Kode Kandang',
+            'Total Ternak Kandang',
+            'Pemilik',
             'Total Ternak',
-            'Nama Pemilik',
-            'Nama Petugas',
+            'Total BB',
+            'Petugas',
+            'Tanggal Dibuat',
+            'Terakhir Diperbarui'
         ];
     }
 
     /**
      * @param mixed $row
+     *
      * @return array
      */
     public function map($row): array
     {
+        $detail = $row->detailTernakKandangs->first();
+        
         return [
             $row->kode_kandang,
             $row->total_ternak_kandang,
-            $row->pemilik->nama ?? 'N/A',
-            $row->detail_kandang->petugas->nama ?? 'N/A',
+            $row->pemilik ? $row->pemilik->nama_pemilik : 'Tidak Ada Pemilik',
+            $detail ? $detail->total_ternak : 0,
+            $detail ? $detail->total_bb : 0,
+            $detail && $detail->petugas ? $detail->petugas->nama_petugas : 'Tidak Ada Petugas',
+            $row->created_at->format('d/m/Y H:i:s'),
+            $row->updated_at->format('d/m/Y H:i:s')
         ];
     }
 }
