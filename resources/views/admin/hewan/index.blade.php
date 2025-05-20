@@ -309,5 +309,5 @@
             document.getElementById('ternak_tag').removeAttribute('disabled');
         });
     </script>
-
+    <script src="{{ asset('assets/js/datatable/hewan.js') }}"></script>
 </x-app>
