@@ -25,87 +25,87 @@ use Illuminate\Support\Facades\Schema;
 
 class HewanController extends Controller
 {
-   public function index(Request $request)
-{
-    $data = [];
-    $data['main'] = 'Hewan';
-    $data['judul'] = 'Manajemen Hewan';
-    $data['sub_judul'] = 'Data Hewan';
-    $data['hewan'] = TernakHewan::all();
-    $data['status'] = Status::all();
-    
-    // Tidak menggunakan Tipe model karena tidak ada
-    $data['tipe'] = collect([]);
-    
-    $data['kesehatan'] = Kesehatan::all();
-    $data['program'] = Program::all();
-    $data['kandang'] = TernakKandang::all();
-    $data['induk'] = TernakHewan::where('sex_hewan', 'Betina')
-        ->get();
+    public function index(Request $request)
+    {
+        $data = [];
+        $data['main'] = 'Hewan';
+        $data['judul'] = 'Manajemen Hewan';
+        $data['sub_judul'] = 'Data Hewan';
+        $data['hewan'] = TernakHewan::all();
+        $data['status'] = Status::all();
 
-    $data['user'] = User::all();
-    $data['jenis'] = Jenis::all();
-    $data['jenisTernak'] = Jenis::all();
+        // Tidak menggunakan Tipe model karena tidak ada
+        $data['tipe'] = collect([]);
 
-    if ($request->ajax()) {
-        // Start with TernakHewan query
-        $query = TernakHewan::select([
-            'ternak_hewan.id',
-            'ternak_hewan.tag_hewan',
-            'ternak_hewan.sex_hewan',
-            'ternak_hewan.ternak_jenis_id',
-            'ternak_hewan.gambar_hewan'
-        ]);
-        
-        // Add joins for related tables - using correct column names and aliases
-        if (Schema::hasTable('jenis')) {
-            $query->leftJoin('jenis', 'ternak_hewan.ternak_jenis_id', '=', 'jenis.id')
-                  ->addSelect('jenis.nama_jenis');
+        $data['kesehatan'] = Kesehatan::all();
+        $data['program'] = Program::all();
+        $data['kandang'] = TernakKandang::all();
+        $data['induk'] = TernakHewan::where('sex_hewan', 'Betina')
+            ->get();
+
+        $data['user'] = User::all();
+        $data['jenis'] = Jenis::all();
+        $data['jenisTernak'] = Jenis::all();
+
+        if ($request->ajax()) {
+            // Start with TernakHewan query
+            $query = TernakHewan::select([
+                'ternak_hewan.id',
+                'ternak_hewan.tag_hewan',
+                'ternak_hewan.sex_hewan',
+                'ternak_hewan.ternak_jenis_id',
+                'ternak_hewan.gambar_hewan'
+            ]);
+
+            // Add joins for related tables - using correct column names and aliases
+            if (Schema::hasTable('jenis')) {
+                $query->leftJoin('jenis', 'ternak_hewan.ternak_jenis_id', '=', 'jenis.id')
+                    ->addSelect('jenis.nama_jenis');
+            }
+
+            // Join DetailTernakHewan using ID instead of tag_hewan
+            $query->leftJoin('ternak_detail_hewan', 'ternak_hewan.id', '=', 'ternak_detail_hewan.ternak_tag');
+
+            if (Schema::hasTable('program')) {
+                $query->leftJoin('program', 'ternak_detail_hewan.ternak_program', '=', 'program.id')
+                    ->addSelect('program.nama_program');
+            }
+
+            if (Schema::hasTable('status')) {
+                $query->leftJoin('status', 'ternak_detail_hewan.ternak_status', '=', 'status.id')
+                    ->addSelect('status.nama_status');
+            }
+
+            return Datatables::of($query)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    return view('admin.hewan.action', ['id' => $row->id])->render();
+                })
+                ->addColumn('program', function ($row) {
+                    return $row->nama_program ?? 'Tidak tersedia';
+                })
+                ->addColumn('jenis', function ($row) {
+                    return $row->nama_jenis ?? 'Tidak tersedia';
+                })
+                ->addColumn('status', function ($row) {
+                    return $row->nama_status ?? 'Tidak tersedia';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
-        
-        // Join DetailTernakHewan using ID instead of tag_hewan
-        $query->leftJoin('ternak_detail_hewan', 'ternak_hewan.id', '=', 'ternak_detail_hewan.ternak_tag');
-        
-        if (Schema::hasTable('program')) {
-            $query->leftJoin('program', 'ternak_detail_hewan.ternak_program', '=', 'program.id')
-                  ->addSelect('program.nama_program');
-        }
-        
-        if (Schema::hasTable('status')) {
-            $query->leftJoin('status', 'ternak_detail_hewan.ternak_status', '=', 'status.id')
-                  ->addSelect('status.nama_status');
-        }
-        
-        return Datatables::of($query)
-            ->addIndexColumn()
-            ->addColumn('action', function ($row) {
-                return view('admin.hewan.action', ['id' => $row->id])->render();
-            })
-            ->addColumn('program', function ($row) {
-                return $row->nama_program ?? 'Tidak tersedia';
-            })
-            ->addColumn('jenis', function ($row) {
-                return $row->nama_jenis ?? 'Tidak tersedia';
-            })
-            ->addColumn('status', function ($row) {
-                return $row->nama_status ?? 'Tidak tersedia';
-            })
-            ->rawColumns(['action'])
-            ->make(true);
+
+        // Rest of the code remains the same
+        $tracker = TernakHewan::select('sex_hewan', DB::raw('COUNT(*) as jumlah'))
+            ->groupBy('sex_hewan')
+            ->get();
+
+        $total = $tracker->sum('jumlah');
+
+        $data['tracker'] = $tracker;
+        $data['total'] = $total;
+
+        return view('admin.hewan.index', $data);
     }
-
-    // Rest of the code remains the same
-    $tracker = TernakHewan::select('sex_hewan', DB::raw('COUNT(*) as jumlah'))
-        ->groupBy('sex_hewan')
-        ->get();
-
-    $total = $tracker->sum('jumlah');
-
-    $data['tracker'] = $tracker;
-    $data['total'] = $total;
-
-    return view('admin.hewan.index', $data);
-}
 
 
 
@@ -486,58 +486,74 @@ class HewanController extends Controller
         return Excel::download(new HewanExport, 'hewan.xlsx');
     }
 
-public function batchDelete(Request $request)
-{
-    try {
-        // Debug output to log
-        \Log::info('Batch Delete Request:', ['ids' => $request->ids]);
-        
-        // Validate the request
-        if (!$request->has('ids') || !is_array($request->ids) || empty($request->ids)) {
-            return response()->json(['error' => 'Tidak ada data yang dipilih untuk dihapus.'], 400);
-        }
-        
-        $ids = $request->ids;
-        
-        // Get TernakHewan records
-        $ternakHewans = TernakHewan::whereIn('id', $ids)->get();
-        
-        \Log::info('Found records:', ['count' => $ternakHewans->count()]);
-        
-        if ($ternakHewans->isEmpty()) {
-            return response()->json(['error' => 'Tidak ada data yang ditemukan.'], 404);
-        }
-
-        DB::beginTransaction();
-        
+    public function batchDelete(Request $request)
+    {
         try {
-            foreach ($ternakHewans as $hewan) {
-                // Delete related DetailTernakHewan records using the correct ID reference
-                DetailTernakHewan::where('ternak_tag', $hewan->id)->delete();
+            // Debug output to log
+            \Log::info('Batch Delete Request untuk Hewan:', ['ids' => $request->ids]);
 
-                // Delete image if exists
-                if ($hewan->gambar_hewan) {
-                    Storage::delete('public/hewan/' . $hewan->gambar_hewan);
-                }
-                
-                // Delete the animal record itself
-                $hewan->delete();
+            // Validate the request
+            if (!$request->has('ids') || !is_array($request->ids) || empty($request->ids)) {
+                return response()->json(['error' => 'Tidak ada data yang dipilih untuk dihapus.'], 400);
             }
-            
-            DB::commit();
-            
-            return response()->json(['success' => 'Data berhasil dihapus.']);
-            
+
+            $ids = $request->ids;
+            $successCount = 0;
+            $failCount = 0;
+
+            DB::beginTransaction();
+
+            try {
+                foreach ($ids as $id) {
+                    try {
+                        // Hapus detail hewan terlebih dahulu
+                        DB::table('ternak_detail_hewan')
+                            ->where('ternak_tag', $id)
+                            ->delete();
+
+                        // Kemudian hapus hewan
+                        $deleted = DB::table('ternak_hewan')
+                            ->where('id', $id)
+                            ->delete();
+
+                        if ($deleted) {
+                            $successCount++;
+                        } else {
+                            $failCount++;
+                            \Log::warning("Tidak dapat menghapus hewan dengan ID: $id");
+                        }
+                    } catch (\Exception $innerEx) {
+                        $failCount++;
+                        \Log::error("Error saat menghapus hewan ID $id: " . $innerEx->getMessage());
+                    }
+                }
+
+                // Commit transaksi jika setidaknya ada satu data yang berhasil dihapus
+                if ($successCount > 0) {
+                    DB::commit();
+
+                    $message = "$successCount data berhasil dihapus";
+                    if ($failCount > 0) {
+                        $message .= ", $failCount data gagal dihapus";
+                    }
+
+                    return response()->json(['success' => $message]);
+                } else {
+                    // Rollback jika tidak ada data yang berhasil dihapus
+                    DB::rollBack();
+                    return response()->json(['error' => 'Tidak ada data yang berhasil dihapus. Kemungkinan data sudah tidak ada atau terjadi kendala pada database.'], 500);
+                }
+
+            } catch (\Exception $e) {
+                DB::rollBack();
+                \Log::error('Error in batch delete transaction: ' . $e->getMessage());
+                return response()->json(['error' => 'Terjadi kesalahan dalam transaksi: ' . $e->getMessage()], 500);
+            }
         } catch (\Exception $e) {
-            DB::rollBack();
-            \Log::error('Error in batch delete transaction: ' . $e->getMessage());
-            return response()->json(['error' => 'Terjadi kesalahan dalam transaksi: ' . $e->getMessage()], 500);
+            \Log::error('Error in batch delete: ' . $e->getMessage());
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
-    } catch (\Exception $e) {
-        \Log::error('Error in batch delete: ' . $e->getMessage());
-        return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
     }
-}
 
     /* import csv */
     // Method untuk import CSV
