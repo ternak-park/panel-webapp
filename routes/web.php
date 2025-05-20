@@ -40,6 +40,10 @@ Route::middleware(['auth'])->group(function () {
 
         Route::post('/admin/kandang/import', [App\Http\Controllers\Admin\KandangController::class, 'import'])->name('kandang.import');
         Route::get('/admin/kandang/template', [App\Http\Controllers\Admin\KandangController::class, 'template'])->name('kandang.template');
+
+        Route::post('/admin/fisik/import', [App\Http\Controllers\Admin\FisikController::class, 'import'])->name('fisik.import');
+        Route::get('/admin/fisik/template', [App\Http\Controllers\Admin\FisikController::class, 'template'])->name('fisik.template');
+
         /* Supplier */
         Route::prefix('admin/suppliers')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\SupplierController::class, 'index'])->name('suppliers.index');
@@ -63,9 +67,17 @@ Route::middleware(['auth'])->group(function () {
         });
 
         /* Fisik */
-        Route::prefix('admin/ternak-fisik')->group(function () {
+        Route::prefix('admin/fisik')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\FisikController::class, 'index'])->name('fisik.index');
+            Route::get('/create', [App\Http\Controllers\Admin\FisikController::class, 'create'])->name('fisik.create');
+            Route::post('/', [App\Http\Controllers\Admin\FisikController::class, 'store'])->name('fisik.store');
+            Route::get('/{id}/show', [App\Http\Controllers\Admin\FisikController::class, 'show'])->name('fisik.show');
+            Route::get('/{id}/edit', [App\Http\Controllers\Admin\FisikController::class, 'edit'])->name('fisik.edit');
+            Route::put('/{id}', [App\Http\Controllers\Admin\FisikController::class, 'update'])->name('fisik.update');
             Route::delete('/{id}', [App\Http\Controllers\Admin\FisikController::class, 'destroy'])->name('fisik.destroy');
+            Route::get('/detail/{id}', [App\Http\Controllers\Admin\FisikController::class, 'getDetailData']);
+            Route::get('/excel', [App\Http\Controllers\Admin\FisikController::class, 'excel'])->name('fisik.excel');
+            Route::post('/batch-delete', [App\Http\Controllers\Admin\FisikController::class, 'batchDelete'])->name('fisik.batch-delete');
         });
 
         /* Kondisi */
@@ -93,7 +105,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{id}/show', [App\Http\Controllers\Admin\KandangController::class, 'show'])->name('kandang.show');
             Route::get('/{id}/edit', [App\Http\Controllers\Admin\KandangController::class, 'edit'])->name('kandang.edit');
             Route::put('/{id}', [App\Http\Controllers\Admin\KandangController::class, 'update'])->name('kandang.update');
-        
+
             Route::get('/detail/{id}', [App\Http\Controllers\Admin\KandangController::class, 'getDetailData']);
             Route::get('/excel', [App\Http\Controllers\Admin\KandangController::class, 'excel'])->name('kandang.excel');
             Route::post('/batch-delete', [App\Http\Controllers\Admin\KandangController::class, 'batchDelete'])->name('kandang.batch-delete');
