@@ -134,4 +134,5 @@
     @include('admin.kandang.modal.import')
     
     <script src="{{ asset('assets/js/kode/kandang.js') }}"></script>
+     <script src="{{ asset('assets/js/datatable/kandang.js') }}"></script>
 </x-app>

@@ -1,4 +1,3 @@
-// Enhanced hewan.js - improved edit functionality
 $(document).ready(function () {
     $.ajaxSetup({
         headers: {
@@ -6,7 +5,7 @@ $(document).ready(function () {
         },
     });
 
-    // Initialize datatable ngawe table utils : public/assets/js/utils/table-utils.js
+    // Initialize datatable using the TableUtils from the pasted code
     let table = TableUtils.initDataTable({
         tableId: 'tableHewan',
         ajaxUrl: '/admin/hewan',
@@ -122,9 +121,14 @@ $(document).ready(function () {
         }
     });
 
-    // Single item delete handler - we keep this in hewan.js as it's specific to this page
-    $(document).on("click", ".delete", function () {
+    // Manual delete button handler (separate from TableUtils)
+    // This is for the individual delete buttons in each row
+    $(document).on("click", ".action-delete", function (e) {
+        e.preventDefault();
         const id = $(this).data("id");
+        
+        console.log("Delete button clicked for ID:", id);
+        
         Swal.fire({
             title: 'Anda yakin?',
             text: 'Data akan dihapus secara permanen!',
@@ -142,21 +146,40 @@ $(document).ready(function () {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (response) {
+                        console.log("Delete success response:", response);
                         Swal.fire(
                             'Dihapus!',
                             response.success || 'Data telah dihapus.',
                             'success'
                         ).then(() => {
-                            // Refresh the table instead of full page reload
+                            // Reset all checked items to avoid stale data
+                            TableUtils.selectedIds = [];
+                            TableUtils.updateDeleteButtonState('deleteSelected');
+
+                            // Refresh the table
                             table.ajax.reload();
                         });
                     },
                     error: function (xhr, status, error) {
                         console.error("Delete error:", xhr.responseText);
+                        
+                        // Show detailed error message
+                        let errorMessage = 'Terjadi kesalahan saat menghapus data';
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            errorMessage = xhr.responseJSON.error;
+                        } else if (xhr.responseText) {
+                            try {
+                                const response = JSON.parse(xhr.responseText);
+                                errorMessage = response.error || errorMessage;
+                            } catch (e) {
+                                // If parsing fails, use the default message
+                                console.error("Error parsing response:", e);
+                            }
+                        }
+                        
                         Swal.fire(
                             'Error!',
-                            'Terjadi kesalahan saat menghapus data: ' +
-                            (xhr.responseJSON ? xhr.responseJSON.error : error),
+                            errorMessage,
                             'error'
                         );
                     }
@@ -165,6 +188,7 @@ $(document).ready(function () {
         });
     });
 });
+
 
 /* -------------------- EDIT MODAL HANDLER GAWE EDIT MODAL ----------------------- */
 $(document).on("click", ".btn-edit", function () {
