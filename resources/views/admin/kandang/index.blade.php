@@ -16,7 +16,7 @@
                         <!-- Page title actions -->
                         <div class="col-12 col-md-auto ms-auto d-print-none">
                             <div class="btn-list">
-                               <button id="deleteSelected" class="btn d-none d-sm-inline-block disabled">
+                                <button id="deleteSelected" class="btn d-none d-sm-inline-block disabled">
                                     Hapus
                                 </button>
                                 <span class="d-none d-sm-inline">
@@ -69,21 +69,17 @@
                 <div class="row row-cards">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
+                            {{-- <div class="card-header">
                                 <h3 class="card-title">Kandang</h3>
-                            </div>
+                            </div> --}}
                             <div class="card-body border-bottom py-3">
                                 <div class="d-flex">
                                     <div class="text-muted">
                                         Menampilkan
                                         <div class="mx-2 d-inline-block">
-                                            <select id="pageLength" class="form-control form-control-sm"
-                                                style="width:70px">
-                                                <option value="10">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>
+                                            <input type="text" id="customPageLength"
+                                                class="form-control form-control-sm" style="width:70px" value="10"
+                                                min="1" max="1000">
                                         </div>
                                         hasil
                                     </div>
@@ -128,11 +124,11 @@
             </div>
         </div>
     </div>
-    
+
     @include('admin.kandang.modal.create')
     @include('admin.kandang.modal.edit')
     @include('admin.kandang.modal.import')
-    
+
     <script src="{{ asset('assets/js/kode/kandang.js') }}"></script>
-     <script src="{{ asset('assets/js/datatable/kandang.js') }}"></script>
+    <script src="{{ asset('assets/js/datatable/kandang.js') }}"></script>
 </x-app>

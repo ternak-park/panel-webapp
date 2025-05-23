@@ -27,12 +27,12 @@ class HewanController extends Controller
         $data['sub_judul'] = 'Data Hewan';
         $data['hewan'] = TernakHewan::all();
         $data['status'] = Status::all();
-        $data['tipe'] = Tipe::all();
+        // $data['tipe'] = Tipe::all();
         $data['kesehatan'] = Kesehatan::all();
         $data['program'] = Program::all();
         $data['kandang'] = TernakKandang::all();
-        $data['induk'] = TernakHewan::where('sex', 'Betina') // assuming that the breeding stock are female
-        ->get();
+        // $data['induk'] = TernakHewan::where('sex', 'Betina') // assuming that the breeding stock are female
+        // ->get();
 
         $data['user'] = User::all();
 
@@ -56,17 +56,17 @@ class HewanController extends Controller
                 ->make(true);
         }
 
-        // Hitung jumlah hewan berdasarkan sex
-        $tracker = TernakHewan::select('sex', DB::raw('COUNT(*) as jumlah'))
-            ->groupBy('sex')
-            ->get();
+        // // Hitung jumlah hewan berdasarkan sex
+        // $tracker = TernakHewan::select('sex', DB::raw('COUNT(*) as jumlah'))
+        //     ->groupBy('sex')
+        //     ->get();
 
-        // Hitung total hewan untuk persentase
-        $total = $tracker->sum('jumlah');
+        // // Hitung total hewan untuk persentase
+        // $total = $tracker->sum('jumlah');
 
-        // Tambahkan data tracker dan total ke variabel
-        $data['tracker'] = $tracker;
-        $data['total'] = $total;
+        // // Tambahkan data tracker dan total ke variabel
+        // $data['tracker'] = $tracker;
+        // $data['total'] = $total;
 
         return view('executive.ternak.index', $data);
     }

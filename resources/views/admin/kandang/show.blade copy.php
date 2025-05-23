@@ -47,8 +47,43 @@
                         <!-- Tab Informasi Kandang -->
                         <div class="tab-pane active show" id="tab-info">
                             <div class="row">
+                                <div class="col-md-4">
+                                    <div class="text-center">
+                                        {{-- <span class="avatar avatar-xl mb-4 rounded"
+                                            style="
+                                                background-image: url('{{ asset('storage/kandang/default.jpg') }}');
+                                                background-size: cover;
+                                                background-position: center;
+                                                width: 100%;
+                                                width: 400px;
+                                                height: 400px;
+                                                aspect-ratio: 1/1;
+                                                border-radius: 50%;
+                                            ">
+                                        </span> --}}
+                                        {{-- <h3 class="mb-0">{{ $kandang->kode_kandang }}</h3>
+                                        <p class="text-muted">{{ $kandang->created_at->format('d-m-Y') }}</p> --}}
 
-                                <div class="col-md-12">
+                                        @php
+                                            $detailKandang = $kandang->detailTernakKandangs->first();
+                                            $jumlahHewan = $detailKandang ? $detailKandang->total_ternak : 0;
+                                            $kapasitas = $kandang->total_ternak_kandang ?? 0;
+
+                                            $status = 'Tersedia';
+                                            $statusClass = 'success';
+
+                                            if ($jumlahHewan >= $kapasitas && $kapasitas > 0) {
+                                                $status = 'Penuh';
+                                                $statusClass = 'danger';
+                                            } elseif ($jumlahHewan > 0) {
+                                                $status = 'Sebagian Terisi';
+                                                $statusClass = 'warning';
+                                            }
+                                        @endphp
+
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
                                     <div class="datagrid">
                                         <div class="datagrid-item">
                                             <div class="datagrid-title">Kode Kandang</div>
@@ -163,22 +198,6 @@
                                         <div class="datagrid-item">
                                             <div class="datagrid-title">Status Kandang</div>
                                             <div class="datagrid-content">
-                                                @php
-                                                    $detailKandang = $kandang->detailTernakKandangs->first();
-                                                    $jumlahHewan = $detailKandang ? $detailKandang->total_ternak : 0;
-                                                    $kapasitas = $kandang->total_ternak_kandang ?? 0;
-
-                                                    $status = 'Tersedia';
-                                                    $statusClass = 'success';
-
-                                                    if ($jumlahHewan >= $kapasitas && $kapasitas > 0) {
-                                                        $status = 'Penuh';
-                                                        $statusClass = 'danger';
-                                                    } elseif ($jumlahHewan > 0) {
-                                                        $status = 'Sebagian Terisi';
-                                                        $statusClass = 'warning';
-                                                    }
-                                                @endphp
                                                 <span class="badge bg-{{ $statusClass }}">{{ $status }}</span>
                                             </div>
                                         </div>

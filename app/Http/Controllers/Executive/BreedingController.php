@@ -27,12 +27,10 @@ class BreedingController extends Controller
         $data['sub_judul'] = 'Data Breeding';
         $data['hewan'] = TernakHewan::all();
         $data['status'] = Status::all();
-        $data['tipe'] = Tipe::all();
+        // $data['tipe'] = Tipe::all();
         $data['kesehatan'] = Kesehatan::all();
         $data['program'] = Program::all();
         $data['kandang'] = TernakKandang::all();
-        $data['induk'] = TernakHewan::where('sex', 'Betina') // assuming that the breeding stock are female
-        ->get();
 
         $data['user'] = User::all();
 
@@ -55,18 +53,6 @@ class BreedingController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-
-        // Hitung jumlah hewan berdasarkan sex
-        $tracker = TernakHewan::select('sex', DB::raw('COUNT(*) as jumlah'))
-            ->groupBy('sex')
-            ->get();
-
-        // Hitung total hewan untuk persentase
-        $total = $tracker->sum('jumlah');
-
-        // Tambahkan data tracker dan total ke variabel
-        $data['tracker'] = $tracker;
-        $data['total'] = $total;
 
         return view('executive.breeding.index', $data);
     }

@@ -105,12 +105,12 @@
                                                 <input class="form-check-input m-0 align-middle" type="checkbox"
                                                     aria-label="Select all items" />
                                             </th>
-                                            <th class="w-1" style="width: 5%;">No</th>
-                                            <th style="width: 15%;">Tag</th>
-                                            <th style="width: 15%;">Sex</th>
-                                            <th style="width: 15%;">Program</th>
-                                            <th style="width: 15%;">Jenis</th>
-                                            <th style="width: 15%;">Status</th>
+                                            <th class="w-1">No</th>
+                                            <th >Tag</th>
+                                            <th >Sex</th>
+                                            <th >Program</th>
+                                            <th >Jenis</th>
+                                            <th >Status</th>
                                             <th class="w-1" style="width: 20%;">Aksi</th>
                                         </tr>
                                     </thead>
