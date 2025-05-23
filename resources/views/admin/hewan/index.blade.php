@@ -96,7 +96,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="table-responsive">
                                 <table class="table table-vcenter table-striped card-table datatable" id="tableHewan">
                                     <thead>
