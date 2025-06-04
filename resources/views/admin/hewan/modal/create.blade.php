@@ -49,7 +49,7 @@
                                     <div class="mb-3 mt-2">
                                         <label class="form-label ps-1">Tag Hewan</label>
                                         <input type="text" class="form-control px-2" name="ternak_tag" id="ternak_tag"
-                                            value="{{ old('ternak_tag') }}" disabled readonly>
+                                            value="{{ old('ternak_tag') }}">
                                         @error('ternak_tag')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -317,16 +317,16 @@
         document.getElementById('ternak_tag').removeAttribute('readonly');
         document.getElementById('ternak_tag').removeAttribute('disabled');
     });
-    
+
     // Disable tag_anak field if sex is "Jantan" (male)
     document.addEventListener('DOMContentLoaded', function() {
         // Get the sex select element
         const sexSelect = document.getElementById('sex');
-        
+
         // Function to toggle tag_anak field based on sex
         function toggleTagAnakField() {
             const isMale = sexSelect.value === 'Jantan';
-            
+
             // If using TomSelect
             if (window.tomSelectInstances && window.tomSelectInstances['select-labels-anak']) {
                 if (isMale) {
@@ -346,11 +346,11 @@
                 }
             }
         }
-        
+
         // Set initial state
         if (sexSelect) {
             toggleTagAnakField();
-            
+
             // Add event listener for changes
             sexSelect.addEventListener('change', toggleTagAnakField);
         }

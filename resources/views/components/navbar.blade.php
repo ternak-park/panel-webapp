@@ -276,7 +276,7 @@
                            </li>
                             {{-- Ternak --}}
                            <li
-                               class="nav-item dropdown {{ Route::is('hewan.*', 'fisik.*','reproduksi.*' , 'kondisi.*') ? 'active' : '' }}">
+                               class="nav-item dropdown {{ Route::is('hewan.*', 'fisik.*', 'kondisi.*') ? 'active' : '' }}">
                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
                                    <span
@@ -300,13 +300,7 @@
                                             <div class="dropdown">
                                                 <a href="{{ route('hewan.index') }}"
                                                     class="dropdown-item {{ Route::is('hewan.*') ? 'active' : '' }}">
-                                                    Data </a>
-                                                <a href="{{ route('reproduksi.index') }}"
-                                                    class="dropdown-item {{ Route::is('reproduksi.*') ? 'active' : '' }}">
-                                                    Reproduksi
-                                                    {{-- <span
-                                                        class="badge badge-sm bg-teal-lt text-uppercase ms-auto">New</span> --}}
-                                                </a>
+                                                    Hewan </a>
                                                 <a href="{{ route('fisik.index') }}"
                                                     class="dropdown-item {{ Route::is('fisik.*') ? 'active' : '' }}">
                                                     Fisik
@@ -365,8 +359,8 @@
                                    <span class="nav-link-title"> Pakan </span>
                                </a>
                            </li> --}}
-                           {{-- ATRIBUT --}}
-                           <li
+                            {{-- ATRIBUT --}}
+                            {{-- <li
                                class="nav-item dropdown {{ Route::is('status.index', 'tipe.index', 'program.index', 'kesehatan.index') ? 'active' : '' }}">
                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
@@ -400,7 +394,7 @@
 
                                    </div>
                                </div>
-                           </li>
+                           </li> --}}
                            <li
                                class="nav-item dropdown {{ Route::is('users.index', 'users.adalahAdmin') ? 'active' : '' }}">
                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
